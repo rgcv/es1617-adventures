@@ -2,6 +2,8 @@
 
 ## Elementos do Grupo
 
+**80818** - Joana Arezes | joanarezes@outlook.com - JoanaArezes
+
 **80858** - Beatriz Grilo | biamsgrilo@gmail.com - BMSGrilo
 
 **81045** - Rui Ventura | rventura.pt@outlook.com - rgcv
