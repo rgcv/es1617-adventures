@@ -1,4 +1,5 @@
-# Adventure Builder
+# ES 16'17 - Grupo 01
 
-To run tests execute: mvn clean install
- 
+## Elementos do Grupo
+
+**81045** - Rui Ventura | rventura.pt@outlook.com - rgcv
