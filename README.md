@@ -1,4 +1,4 @@
-# ES 16'17 - Grupo 01
+﻿# ES 16'17 - Grupo 01
 
 ## Elementos do Grupo
 
@@ -9,6 +9,8 @@
 **81045** - Rui Ventura | rventura.pt@outlook.com - rgcv
 
 **81057** - Francisca Cambra | pamcambra@hotmail.com - kika96kika
+
+**81183** - Alexandre Machado | squill3x@hotmail.com - Squill3x
 
 **81196** - Gonçalo Baptista | gms_baptista@sapo.pt - gmsbaptista
 
