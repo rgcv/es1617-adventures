@@ -1,5 +1,15 @@
+# Eclipse
 .classpath
 .project
 .settings
+
+# Idea
+.idea
+*.iml
+
+# Maven
 target
+
+# JMeter
 jmeter.log
+
