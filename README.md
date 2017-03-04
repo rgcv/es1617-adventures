@@ -4,7 +4,7 @@
 
 | :hash: Número |     :memo: Nome     |              :email: E-mail              |          :octocat: GitHub          |  :package: Módulo  |
 |---------------|---------------------|------------------------------------------|------------------------------------|--------------------|
-|         80818 |        Joana Arezes |          <joanarezes@outlook.com>        | [JoanaArezes][80818@git]           |         TBA        |
+|         80818 |        Joana Arezes |          <joanarezes@outlook.com>        | [JoanaArezes][80818@git]           |       Activity        |
 |         80858 |       Beatriz Grilo |          <biamsgrilo@gmail.com>          | [BMSGrilo][80858@git]              |        Hotel       |
 |         81045 |         Rui Ventura |         <rventura.pt@outlook.com>        | [rgcv][81045@git]                  |    Bank + Broker   |
 |         81057 |    Francisca Cambra |           <pamcambra@hotmail.com>        | [kika96kika][81057@git]            |         TBA        |
