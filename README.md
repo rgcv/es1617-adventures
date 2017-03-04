@@ -4,7 +4,7 @@
 
 | :hash: Número |     :memo: Nome     |              :email: E-mail              |          :octocat: GitHub          |  :package: Módulo  |
 |---------------|---------------------|------------------------------------------|------------------------------------|--------------------|
-|         80818 |        Joana Arezes |          <joanarezes@outlook.com>        | [JoanaArezes][80818@git]           |       Activity        |
+|         80818 |        Joana Arezes |          <joanarezes@outlook.com>        | [JoanaArezes][80818@git]           |       Activity     |
 |         80858 |       Beatriz Grilo |          <biamsgrilo@gmail.com>          | [BMSGrilo][80858@git]              |        Hotel       |
 |         81045 |         Rui Ventura |         <rventura.pt@outlook.com>        | [rgcv][81045@git]                  |    Bank + Broker   |
 |         81057 |    Francisca Cambra |           <pamcambra@hotmail.com>        | [kika96kika][81057@git]            |         TBA        |
@@ -12,7 +12,7 @@
 |         81196 |    Gonçalo Baptista |        <gms_baptista@sapo.pt>            | [gmsbaptista][81196@git]           |         TBA        |
 |         81268 | Viktor Vasylkovskyi | <viktor.vasylkovskyi@tecnico.ulisboa.pt> | [vitiavas][81268@git]              |         TBA        |
 |         81338 |        Pedro Cerejo |        <pedro.cerejo@tecnico.ulisboa.pt> | [schimini][81338@git]              |        Hotel       |
-|         81670 |       João Oliveira |            <jafo1200@gmail.com>          | [joaoalexandreoliveira][81670@git] |         TBA        |
+|         81670 |       João Oliveira |            <jafo1200@gmail.com>          | [joaoalexandreoliveira][81670@git] |       Activity     |
 
 [80818@git]: https://github.com/JoanaArezes
 [80858@git]: https://github.com/BMSGrilo
