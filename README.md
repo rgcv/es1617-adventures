@@ -9,7 +9,7 @@
 |         81045 |         Rui Ventura |         <rventura.pt@outlook.com>        | [rgcv][81045@git]                  |    Bank + Broker   |
 |         81057 |    Francisca Cambra |           <pamcambra@hotmail.com>        | [kika96kika][81057@git]            |         TBA        |
 |         81183 |   Alexandre Machado |            <squill3x@hotmail.com>        | [squill3x][81183@git]              |        Hotel       |
-|         81196 |    Gonçalo Baptista |        <gms_baptista@sapo.pt>            | [gmsbaptista][81196@git]           |         TBA        |
+|         81196 |    Gonçalo Baptista |        <gms_baptista@sapo.pt>            | [gmsbaptista][81196@git]           |       Activity     |
 |         81268 | Viktor Vasylkovskyi | <viktor.vasylkovskyi@tecnico.ulisboa.pt> | [vitiavas][81268@git]              |         TBA        |
 |         81338 |        Pedro Cerejo |        <pedro.cerejo@tecnico.ulisboa.pt> | [schimini][81338@git]              |        Hotel       |
 |         81670 |       João Oliveira |            <jafo1200@gmail.com>          | [joaoalexandreoliveira][81670@git] |       Activity     |
