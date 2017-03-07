@@ -28,7 +28,21 @@ public class Hotel {
 		if (code.length() != Hotel.CODE_SIZE) {
 			throw new HotelException();
 		}
+		for (Hotel hotel : Hotel.hotels) {
+			if(hotel.code.equals(code)){
+				throw new HotelException();
+			}
+		}
 	}
+	
+	private void checkName(String name) {
+		if(name == null || name.trim().length() == 0)
+			throw new HotelException();
+		if(hotel.code == code){
+			throw new HotelException();
+		}
+	}
+	
 
 	public Room hasVacancy(Room.Type type, LocalDate arrival, LocalDate departure) {
 		for (Room room : this.rooms) {
