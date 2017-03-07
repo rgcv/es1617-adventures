@@ -79,4 +79,8 @@ public class Hotel {
 		return null;
 	}
 
+	public Set<Room> getRooms() {
+		return this.rooms;
+	}
+
 }

@@ -15,7 +15,7 @@ public class Room {
 	public static enum Type {
 		SINGLE, DOUBLE
 	}
-
+		
 	private final Hotel hotel;
 	private final String number;
 	private final Type type;
@@ -23,12 +23,33 @@ public class Room {
 
 	public Room(Hotel hotel, String number, Type type) {
 		this.hotel = hotel;
+		checkInt(number);
 		this.number = number;
+
+		checkRoom(number);
 		this.type = type;
-
 		this.hotel.addRoom(this);
+		
 	}
-
+		
+	private void checkRoom(String number) {
+		for (Room room : this.hotel.getRooms()) {
+			if(number.equals(room.getNumber())) {
+				throw new HotelException();
+			}
+		}
+	}
+	
+	private void checkInt(String number){
+		try { 
+			Integer.parseInt(number); 
+		} catch(NumberFormatException e) { 
+			throw new HotelException(); 
+		} catch(NullPointerException e) {
+			throw new HotelException();
+		}
+	}
+		
 	Hotel getHotel() {
 		return this.hotel;
 	}
