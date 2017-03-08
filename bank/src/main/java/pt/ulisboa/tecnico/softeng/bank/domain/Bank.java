@@ -18,18 +18,31 @@ public class Bank {
 	private final Set<Client> clients = new HashSet<>();
 	private final List<Operation> log = new ArrayList<>();
 
-	public Bank(String name, String code) {
-		checkCode(code);
-
+	public Bank(String name, String code) throws BankException {
+		checkName(name);
 		this.name = name;
+
+		checkCode(code);
 		this.code = code;
 
 		Bank.banks.add(this);
 	}
 
-	private void checkCode(String code) {
-		if (code.length() != Bank.CODE_SIZE) {
+	private void checkName(String name) {
+		if (name == null || name.trim().length() == 0) {
 			throw new BankException();
+		}
+	}
+
+	private void checkCode(String code) {
+		if (code == null || code.trim().length() != Bank.CODE_SIZE) {
+			throw new BankException();
+		}
+
+		for (Bank bank : Bank.banks) {
+			if (bank.getCode().equals(code)) {
+				throw new BankException();
+			}
 		}
 	}
 
