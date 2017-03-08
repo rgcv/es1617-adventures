@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import pt.ulisboa.tecnico.softeng.activity.domain.exception.ActivityException;
+
 public class BookingConstructorMethodTest {
 	private ActivityProvider provider;
 	private ActivityOffer offer;
@@ -27,6 +29,14 @@ public class BookingConstructorMethodTest {
 		Assert.assertTrue(booking.getReference().startsWith(this.provider.getCode()));
 		Assert.assertTrue(booking.getReference().length() > ActivityProvider.CODE_SIZE);
 		Assert.assertEquals(1, this.offer.getNumberOfBookings());
+	}
+	
+	@Test (expected = ActivityException.class)
+	public void reservation() {
+		Activity newActivity = new Activity(this.provider, "Atividade", 18, 80, 1);
+		ActivityOffer activityOffer = new ActivityOffer(newActivity, new LocalDate(2016, 12, 19), new LocalDate(2016, 12, 21));
+		new Booking(this.provider, activityOffer);
+		new Booking(this.provider, activityOffer);
 	}
 
 	@After
