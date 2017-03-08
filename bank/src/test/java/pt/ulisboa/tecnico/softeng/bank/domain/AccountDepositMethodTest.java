@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
+import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
+
 public class AccountDepositMethodTest {
 	private Bank bank;
 	private Account account;
@@ -26,6 +28,30 @@ public class AccountDepositMethodTest {
 		Assert.assertEquals(Operation.Type.DEPOSIT, operation.getType());
 		Assert.assertEquals(this.account, operation.getAccount());
 		Assert.assertEquals(50, operation.getValue());
+	}
+
+	@Test
+	public void zeroAmount() {
+		int balance = this.account.getBalance();
+
+		try {
+			this.account.deposit(0);
+			Assert.fail();
+		} catch (BankException be) {
+			Assert.assertEquals(balance, this.account.getBalance());
+		}
+	}
+
+	@Test
+	public void negativeAmount() {
+		int balance = this.account.getBalance();
+
+		try {
+			this.account.deposit(-1);
+			Assert.fail();
+		} catch (BankException be) {
+			Assert.assertEquals(balance, this.account.getBalance());
+		}
 	}
 
 	@After
