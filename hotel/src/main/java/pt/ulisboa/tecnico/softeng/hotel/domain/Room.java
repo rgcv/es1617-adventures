@@ -63,7 +63,7 @@ public class Room {
 	}
 
 	boolean isFree(Type type, LocalDate arrival, LocalDate departure) {
-		if (!type.equals(this.type)) {
+		if (!type.equals(this.type) || arrival.isAfter(departure)) {
 			return false;
 		}
 
