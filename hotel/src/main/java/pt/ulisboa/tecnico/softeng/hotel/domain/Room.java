@@ -80,11 +80,15 @@ public class Room {
 		if (!isFree(type, arrival, departure)) {
 			throw new HotelException();
 		}
-
+		
 		Booking booking = new Booking(this.hotel, arrival, departure);
 		this.bookings.add(booking);
 
 		return booking;
+	}
+
+	public Set<Booking> getBookings() {
+		return bookings;
 	}
 
 }

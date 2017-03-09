@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
+import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class RoomReserveMethodTest {
 	Room room;
@@ -27,7 +28,20 @@ public class RoomReserveMethodTest {
 		Assert.assertEquals(arrival, booking.getArrival());
 		Assert.assertEquals(departure, booking.getDeparture());
 	}
-
+		
+	@Test
+	public void wrongType(){
+		try{
+			LocalDate arrival = new LocalDate(2016, 12, 25);
+			LocalDate departure = new LocalDate(2016, 12, 27);
+			this.room.reserve(Type.DOUBLE, arrival, departure);	
+			Assert.fail();
+		} catch (HotelException he){
+			Assert.assertEquals(0, this.room.getBookings().size());
+		}	
+	}
+		
+	
 	@After
 	public void tearDown() {
 		Hotel.hotels.clear();

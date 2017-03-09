@@ -26,15 +26,24 @@ public class RoomConstructorMethodTest {
 		Assert.assertEquals(1, this.hotel.getNumberOfRooms());
 	}
 	
-	@Test(expected = HotelException.class)
-	public void UniqueRoom(){
-		new Room(this.hotel, "02", Type.DOUBLE);
-		new Room(this.hotel, "02", Type.DOUBLE);
-	}
+	public void uniqueRoom(){
+		try {
+			new Room(this.hotel, "01", Type.DOUBLE);
+			new Room(this.hotel, "01", Type.DOUBLE);
+			Assert.fail();
+		} catch (HotelException he) {
+			Assert.assertEquals(1, this.hotel.getNumberOfRooms());
+		}
+	}	
 	
-	@Test(expected = HotelException.class)
-	public void IntRoom(){
-		new Room(this.hotel, "AB", Type.DOUBLE);
+	public void intRoom(){
+		try{
+			new Room(this.hotel, "AB", Type.DOUBLE);
+			Assert.fail();
+		} catch (HotelException he){
+			Assert.assertEquals(1, this.hotel.getNumberOfRooms());
+		}
+		
 	}
 
 	@After
