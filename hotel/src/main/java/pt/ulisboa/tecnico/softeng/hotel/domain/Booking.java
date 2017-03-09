@@ -12,7 +12,7 @@ public class Booking {
 	private final LocalDate departure;
 
 	Booking(Hotel hotel, LocalDate arrival, LocalDate departure) throws HotelException {
-		if(hotel == null || arrival == null || departure == null || checkEqualOrAfter(arrival, departure)) {
+		if(hotel == null || arrival == null || departure == null || arrival.isAfter(departure)) {
 			throw new HotelException();
 		}
 		
@@ -25,28 +25,25 @@ public class Booking {
 		return this.reference;
 	}
 
-	LocalDate getArrival() {
+	public LocalDate getArrival() {
 		return this.arrival;
 	}
 
-	LocalDate getDeparture() {
+	public LocalDate getDeparture() {
 		return this.departure;
 	}
 
-	boolean conflict(LocalDate arrival, LocalDate departure) throws HotelException {
-		if (arrival.isAfter(this.arrival) && arrival.isBefore(this.departure)
-			|| departure.isAfter(this.arrival) && departure.isBefore(this.departure)
-			|| arrival.isBefore(this.arrival) && departure.isAfter(this.departure)) {
+	public boolean conflict(LocalDate arrival, LocalDate departure) throws HotelException {
+		if(arrival == null || departure == null
+				|| arrival.isAfter(this.arrival) && arrival.isBefore(this.departure)
+				|| departure.isAfter(this.arrival) && departure.isBefore(this.departure)
+				|| arrival.isBefore(this.arrival) && departure.isAfter(this.departure)) {
 			throw new HotelException();
 		}
 
 		return false;
 	}
-	
-	private boolean checkEqualOrAfter(LocalDate date, LocalDate refDate) {
-		return date.isEqual(refDate) || date.isAfter(refDate);
-	}
-	
+
 	public static int getCounter() {
 		return Booking.counter;
 	}
