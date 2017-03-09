@@ -25,7 +25,7 @@ public class Hotel {
 	}
 
 	private void checkCode(String code) {
-		if (code.length() != Hotel.CODE_SIZE) {
+		if (code == null || code.length() != Hotel.CODE_SIZE) {
 			throw new HotelException();
 		}
 		for (Hotel hotel : Hotel.hotels) {
@@ -39,7 +39,6 @@ public class Hotel {
 		if(name == null || name.trim().length() == 0)
 			throw new HotelException();
 	}
-	
 
 	public Room hasVacancy(Room.Type type, LocalDate arrival, LocalDate departure) {
 		for (Room room : this.rooms) {
