@@ -8,6 +8,9 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
 public class BankConstructorTest {
 
+	private static final String BANK_NAME = "Money";
+	private static final String BANK_CODE = "BK01";
+
 	@Before
 	public void setUp() {
 
@@ -15,10 +18,10 @@ public class BankConstructorTest {
 
 	@Test
 	public void success() {
-		Bank bank = new Bank("Money", "BK01");
+		Bank bank = new Bank(BANK_NAME, BANK_CODE);
 
-		Assert.assertEquals("Money", bank.getName());
-		Assert.assertEquals("BK01", bank.getCode());
+		Assert.assertEquals(BANK_NAME, bank.getName());
+		Assert.assertEquals(BANK_CODE, bank.getCode());
 		Assert.assertEquals(1, Bank.banks.size());
 		Assert.assertEquals(0, bank.getNumberOfAccounts());
 		Assert.assertEquals(0, bank.getNumberOfClients());
@@ -27,7 +30,7 @@ public class BankConstructorTest {
 	@Test
 	public void nullName() {
 		try {
-			new Bank(null, "BA01");
+			new Bank(null, BANK_CODE);
 			Assert.fail();
 		} catch (BankException be) {
 			Assert.assertTrue(Bank.banks.isEmpty());
@@ -37,7 +40,17 @@ public class BankConstructorTest {
 	@Test
 	public void emptyName() {
 		try {
-			new Bank("", "BA01");
+			new Bank("", BANK_CODE);
+			Assert.fail();
+		} catch (BankException be) {
+			Assert.assertTrue(Bank.banks.isEmpty());
+		}
+	}
+
+	@Test
+	public void nameWithBlanks() {
+		try {
+			new Bank("     ", BANK_CODE);
 			Assert.fail();
 		} catch (BankException be) {
 			Assert.assertTrue(Bank.banks.isEmpty());
@@ -47,7 +60,7 @@ public class BankConstructorTest {
 	@Test
 	public void nullCode() {
 		try {
-			new Bank("Bank 1", null);
+			new Bank(BANK_NAME, null);
 			Assert.fail();
 		} catch (BankException be) {
 			Assert.assertTrue(Bank.banks.isEmpty());
@@ -57,7 +70,17 @@ public class BankConstructorTest {
 	@Test
 	public void emptyCode() {
 		try {
-			new Bank("Bank 1", "");
+			new Bank(BANK_NAME, "");
+			Assert.fail();
+		} catch (BankException be) {
+			Assert.assertTrue(Bank.banks.isEmpty());
+		}
+	}
+
+	@Test
+	public void codeWithBlanks() {
+		try {
+			new Bank(BANK_NAME, "    ");
 			Assert.fail();
 		} catch (BankException be) {
 			Assert.assertTrue(Bank.banks.isEmpty());
@@ -67,7 +90,7 @@ public class BankConstructorTest {
 	@Test
     public void shortCode() {
 	    try {
-	        new Bank("Bank 1", "BA1");
+	        new Bank(BANK_NAME, "BK1");
 	        Assert.fail();
         } catch (BankException be) {
 	        Assert.assertTrue(Bank.banks.isEmpty());
@@ -77,7 +100,7 @@ public class BankConstructorTest {
 	@Test
     public void longCode() {
 	    try {
-	        new Bank("Bank 1", "BA001");
+	        new Bank(BANK_NAME, "BK001");
 	        Assert.fail();
         } catch (BankException be) {
 	        Assert.assertTrue(Bank.banks.isEmpty());
@@ -86,10 +109,10 @@ public class BankConstructorTest {
 
 	@Test
     public void uniqueCode() {
-	    Bank bank = new Bank("Bank 1", "BA01");
+	    Bank bank = new Bank(BANK_NAME, BANK_CODE);
 
 	    try {
-	        new Bank("Bank 2", "BA01");
+	        new Bank("Monee", BANK_CODE);
 	        Assert.fail();
         } catch (BankException be) {
             Assert.assertEquals(1, Bank.banks.size());
