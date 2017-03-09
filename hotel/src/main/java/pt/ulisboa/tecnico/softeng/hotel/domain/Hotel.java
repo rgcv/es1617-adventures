@@ -18,7 +18,7 @@ public class Hotel {
 
 	public Hotel(String code, String name) {
 		checkCode(code);
-
+		checkName(name);
 		this.code = code;
 		this.name = name;
 		Hotel.hotels.add(this);
@@ -38,9 +38,6 @@ public class Hotel {
 	private void checkName(String name) {
 		if(name == null || name.trim().length() == 0)
 			throw new HotelException();
-		if(hotel.code == code){
-			throw new HotelException();
-		}
 	}
 	
 
@@ -50,7 +47,7 @@ public class Hotel {
 				return room;
 			}
 		}
-		return null;
+		throw new HotelException();
 	}
 
 	String getCode() {
