@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import pt.ulisboa.tecnico.softeng.activity.domain.exception.ActivityException;
+
 public class ActivityOfferConstructorMethodTest {
 	private Activity activity;
 
@@ -28,6 +30,16 @@ public class ActivityOfferConstructorMethodTest {
 		Assert.assertEquals(0, offer.getNumberOfBookings());
 	}
 
+	@Test
+	public void endDateBeforeBegin () {
+		try {
+			new ActivityOffer(this.activity, new LocalDate(2017,01,24), new LocalDate(2017,01,23));
+			Assert.fail();
+		} catch (ActivityException ae){
+			Assert.assertEquals(0, this.activity.getNumberOfOffers());
+		}
+	}
+	
 	@After
 	public void tearDown() {
 		ActivityProvider.providers.clear();
