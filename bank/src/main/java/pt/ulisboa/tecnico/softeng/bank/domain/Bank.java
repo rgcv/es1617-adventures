@@ -61,7 +61,11 @@ public class Bank {
 	int getNumberOfClients() {
 		return this.clients.size();
 	}
-
+	
+	int getNumberOfOperations() {
+		return this.log.size();
+	}
+	
 	void addAccount(Account account) {
 		this.accounts.add(account);
 	}
