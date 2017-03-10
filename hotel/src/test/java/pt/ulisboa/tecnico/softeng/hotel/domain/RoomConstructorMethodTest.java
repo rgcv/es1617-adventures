@@ -26,6 +26,17 @@ public class RoomConstructorMethodTest {
 		Assert.assertEquals(1, this.hotel.getNumberOfRooms());
 	}
 	
+	@Test
+	public void noHotelRoom(){
+		try{
+			new Room(null, "02", Type.DOUBLE);
+			Assert.fail();
+		} catch (HotelException he){
+			Assert.assertEquals(0, this.hotel.getNumberOfRooms());
+		}	
+	}
+	
+	@Test
 	public void uniqueRoom(){
 		try {
 			new Room(this.hotel, "01", Type.DOUBLE);
@@ -36,15 +47,46 @@ public class RoomConstructorMethodTest {
 		}
 	}	
 	
-	public void intRoom(){
+	@Test
+	public void notNumberRoom(){
 		try{
 			new Room(this.hotel, "AB", Type.DOUBLE);
 			Assert.fail();
 		} catch (HotelException he){
-			Assert.assertEquals(1, this.hotel.getNumberOfRooms());
-		}
-		
+			Assert.assertEquals(0, this.hotel.getNumberOfRooms());
+		}	
+	}	
+	
+	@Test
+	public void emptyNumberRoom(){
+		try{
+			new Room(this.hotel, " ", Type.DOUBLE);
+			Assert.fail();
+		} catch (HotelException he){
+			Assert.assertEquals(0, this.hotel.getNumberOfRooms());
+		}	
+	}	
+	
+	@Test
+	public void noNumberRoom(){
+		try{
+			new Room(this.hotel, null, Type.DOUBLE);
+			Assert.fail();
+		} catch (HotelException he){
+			Assert.assertEquals(0, this.hotel.getNumberOfRooms());
+		}	
 	}
+	
+	@Test
+	public void noTypeRoom(){
+		try{
+			new Room(this.hotel, "03", null);
+			Assert.fail();
+		} catch (HotelException he){
+			Assert.assertEquals(0, this.hotel.getNumberOfRooms());
+		}	
+	}	
+	
 
 	@After
 	public void tearDown() {
