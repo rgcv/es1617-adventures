@@ -27,7 +27,28 @@ public class ActivityProviderConstructorMethodTest {
 	@Test(expected = ActivityException.class)
 	public void uniqueName() {
 		new ActivityProvider("XtremX", "Adventure++");
-		new ActivityProvider("Xtreme", "Adventure++");}
+		new ActivityProvider("Xtreme", "Adventure++");
+	}
+	
+	@Test(expected = ActivityException.class)
+	public void nullCode() {
+		new ActivityProvider(null, "Adventure++");
+	}
+	
+	@Test(expected = ActivityException.class)
+	public void nullName() {
+		new ActivityProvider("XtremX", null);
+	}
+	
+	@Test(expected = ActivityException.class)
+	public void emptyCode() {
+		new ActivityProvider("  ", "Adventure++");
+	}
+	
+	@Test(expected = ActivityException.class)
+	public void emptyName() {
+		new ActivityProvider("XtremX", "  ");
+	}
 	
 	@Test(expected = ActivityException.class)
 	public void shortCode() {
@@ -36,7 +57,8 @@ public class ActivityProviderConstructorMethodTest {
 	
 	@Test(expected = ActivityException.class)
 	public void longCode() {
-		new ActivityProvider("ExtremeEx", "Adventures");}
+		new ActivityProvider("ExtremeEx", "Adventures");
+	}
 
 	@After
 	public void tearDown() {

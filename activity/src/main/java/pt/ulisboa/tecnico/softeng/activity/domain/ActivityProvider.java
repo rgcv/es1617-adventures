@@ -27,6 +27,9 @@ public class ActivityProvider {
 	}
 
 	private void checkCode(String code) {
+		if (code == null || code.trim().length()==0) {
+			throw new ActivityException();	
+		}
 		if (code.length() != ActivityProvider.CODE_SIZE) {
 			throw new ActivityException();
 		}
@@ -38,6 +41,9 @@ public class ActivityProvider {
 	}
 	
 	private void checkName(String name) {
+		if (name == null || name.trim().length()==0) {
+			throw new ActivityException();	
+		}
 		for (ActivityProvider provider : ActivityProvider.providers) {
 			if (name == provider.getName()) {
 				throw new ActivityException();
