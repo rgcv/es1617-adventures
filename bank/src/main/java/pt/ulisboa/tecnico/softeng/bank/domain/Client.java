@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.softeng.bank.domain;
 
+import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
+
 public class Client {
 	private static int counter = 0;
 
@@ -8,6 +10,8 @@ public class Client {
 
 	public Client(Bank bank, String name) {
 		this.ID = Integer.toString(++Client.counter);
+		checkName(name);
+		checkBank(bank);
 		this.name = name;
 
 		bank.addClient(this);
@@ -21,4 +25,15 @@ public class Client {
 		return this.ID;
 	}
 
+	private void checkBank(Bank bank) {
+		if (bank == null) {
+			throw new BankException();
+		}
+	}
+
+	private void checkName(String name) {
+		if (name == null || name.trim().length() == 0) {
+			throw new BankException();
+		}
+	}
 }
