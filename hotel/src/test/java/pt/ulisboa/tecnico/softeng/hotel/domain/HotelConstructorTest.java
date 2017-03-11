@@ -39,8 +39,16 @@ public class HotelConstructorTest {
 	}
 	
 
-	@Test()
-	public void UniqueCode(){
+	@Test 
+	public void nullCode(){
+		try {
+			new Hotel(null, "RNL");
+		} catch (Exception e) {
+			Assert.assertTrue(Hotel.hotels.isEmpty());
+		}
+	}
+	@Test
+	public void uniqueCode(){
 		try {
 			new Hotel("XPTO123", "Batalha");
 			new Hotel("XPTO123", "Lindoso");
@@ -50,8 +58,8 @@ public class HotelConstructorTest {
 		}
 		
 	}
-	@Test()
-	public void ShortCode(){
+	@Test
+	public void shortCode(){
 		try {
 			new Hotel("XPTO12", "Mexico");
 			Assert.fail();
@@ -60,8 +68,8 @@ public class HotelConstructorTest {
 		}
 		
 	}
-	@Test()
-	public void LongCode(){
+	@Test
+	public void longCode(){
 		try {
 			new Hotel("XPTO1234", "EUA");
 			Assert.fail();
@@ -69,6 +77,15 @@ public class HotelConstructorTest {
 			Assert.assertTrue(Hotel.hotels.isEmpty());
 		}
 		
+	}
+
+	@Test 
+	public void nullName(){
+		try {
+			new Hotel("XPTO123", null);
+		} catch (Exception e) {
+			Assert.assertTrue(Hotel.hotels.isEmpty());
+		}
 	}
 
 	@After
