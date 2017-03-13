@@ -33,7 +33,7 @@ public class ActivityOfferHasVacancyMethodTest {
 		this.offer.addBooking(new Booking(provider, this.offer));
 		Assert.assertFalse(this.offer.hasVacancy());
 	}
-	
+
 	@Test
 	public void fullMinusOne() {
 		ActivityProvider provider = new ActivityProvider("XtremC", "ExtremeAdventurC");
