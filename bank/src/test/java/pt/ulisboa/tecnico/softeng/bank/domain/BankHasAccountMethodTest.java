@@ -54,7 +54,7 @@ public class BankHasAccountMethodTest {
 	
 	@Test(expected = BankException.class)
 	public void noMatchForIBAN() {
-			bank.getAccount("-123456789");
+		bank.getAccount("-123456789");
 	}
 
 	/* ------------------------------- */
