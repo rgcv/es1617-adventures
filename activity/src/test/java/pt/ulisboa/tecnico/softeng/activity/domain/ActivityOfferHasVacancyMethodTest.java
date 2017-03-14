@@ -25,9 +25,24 @@ public class ActivityOfferHasVacancyMethodTest {
 		Assert.assertTrue(this.offer.hasVacancy());
 	}
 
+	@Test
+	public void fullBookings() {
+		ActivityProvider provider = new ActivityProvider("XtremB", "ExtremeAdventurB");
+		this.offer.addBooking(new Booking(provider, this.offer));
+		this.offer.addBooking(new Booking(provider, this.offer));
+		this.offer.addBooking(new Booking(provider, this.offer));
+		Assert.assertFalse(this.offer.hasVacancy());
+	}
+	
+	@Test
+	public void fullMinusOne() {
+		ActivityProvider provider = new ActivityProvider("XtremC", "ExtremeAdventurC");
+		this.offer.addBooking(new Booking(provider, this.offer));
+		this.offer.addBooking(new Booking(provider, this.offer));
+		Assert.assertTrue(this.offer.hasVacancy());
+	}
 	@After
 	public void tearDown() {
 		ActivityProvider.providers.clear();
 	}
-
 }

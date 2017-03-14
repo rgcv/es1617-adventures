@@ -15,6 +15,7 @@ public class ActivityOffer {
 
 	public ActivityOffer(Activity activity, LocalDate begin, LocalDate end) {
 		checkDates(begin, end);
+		
 		this.begin = begin;
 		this.end = end;
 		this.capacity = activity.getCapacity();
@@ -42,7 +43,6 @@ public class ActivityOffer {
 
 	void addBooking(Booking booking) {
 		this.bookings.add(booking);
-
 	}
 
 	boolean available(LocalDate begin, LocalDate end) {
