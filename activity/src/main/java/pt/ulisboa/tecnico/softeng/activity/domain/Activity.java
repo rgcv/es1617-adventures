@@ -86,6 +86,9 @@ public class Activity {
 	}
 
 	Set<ActivityOffer> getOffers(LocalDate begin, LocalDate end, int age) {
+		if (this.offers.isEmpty()) {
+			throw new ActivityException();
+		}
 		Set<ActivityOffer> result = new HashSet<>();
 		for (ActivityOffer offer : this.offers) {
 			if (matchAge(age) && offer.available(begin, end)) {
