@@ -35,9 +35,9 @@ public class Booking {
 
 	public boolean conflict(LocalDate arrival, LocalDate departure) throws HotelException {
 		if(arrival == null || departure == null
-				|| arrival.isAfter(this.arrival) && arrival.isBefore(this.departure)
-				|| departure.isAfter(this.arrival) && departure.isBefore(this.departure)
-				|| arrival.isBefore(this.arrival) && departure.isAfter(this.departure)) {
+			|| (arrival.isAfter(this.arrival) || arrival.isEqual(this.arrival)) && (arrival.isBefore(this.departure) || arrival.isEqual(this.departure))
+			|| (departure.isAfter(this.arrival) || departure.isEqual(this.arrival)) && (departure.isBefore(this.departure) || departure.isEqual(this.departure))
+			|| arrival.isBefore(this.arrival) && departure.isAfter(this.departure)) {
 			throw new HotelException();
 		}
 

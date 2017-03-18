@@ -73,8 +73,48 @@ public class BookingConflictMethodTest {
 	}
 	
 	@Test(expected = HotelException.class)
+	public void conflictOverlapEqualStart() {
+		final LocalDate arrival = new LocalDate(2016, 12, 10);
+		final LocalDate departure = new LocalDate(2016, 12, 20);
+		
+		checkConflict(arrival, departure);
+	}
+	
+	@Test(expected = HotelException.class)
+	public void conflictOverlapEqualEnd() {
+		final LocalDate arrival = new LocalDate(2016, 12, 5);
+		final LocalDate departure = new LocalDate(2016, 12, 15);
+		
+		checkConflict(arrival, departure);
+	}
+	
+	@Test(expected = HotelException.class)
+	public void conflictOverlapEqualBoth() {
+		final LocalDate arrival = new LocalDate(2016, 12, 10);
+		final LocalDate departure = new LocalDate(2016, 12, 15);
+
+		checkConflict(arrival, departure);
+	}
+	
+	@Test(expected = HotelException.class)
 	public void conflictOverlapBoth() {
 		final LocalDate arrival = new LocalDate(2016, 12, 5);
+		final LocalDate departure = new LocalDate(2016, 12, 20);
+
+		checkConflict(arrival, departure);
+	}
+	
+	@Test(expected = HotelException.class)
+	public void conflictEqualStart() {
+		final LocalDate arrival = new LocalDate(2016, 12, 5);
+		final LocalDate departure = new LocalDate(2016, 12, 10);
+
+		checkConflict(arrival, departure);
+	}
+	
+	@Test(expected = HotelException.class)
+	public void conflictEqualEnd() {
+		final LocalDate arrival = new LocalDate(2016, 12, 15);
 		final LocalDate departure = new LocalDate(2016, 12, 20);
 
 		checkConflict(arrival, departure);
