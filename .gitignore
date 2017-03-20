@@ -1,6 +1,15 @@
+# Eclipse
 .classpath
 .project
 .settings
+
+# Maven
 target
+
+# JetBrains IntelliJ IDEA
+.idea/
+*.iml
+
+# JMeter
 jmeter.log
 infer-out
