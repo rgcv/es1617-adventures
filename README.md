@@ -1,16 +1,15 @@
-# Adventure Builder
+# ES 16'17 - Grupo 01
 
-To run tests execute: mvn clean install
-To check test coverage execute: mvn clean cobertura:cobertura
+## Elementos do Grupo
 
-|   Number   |          Name           |            Email        |   Name GitHUb  | Grupo |
-| ---------- | ----------------------- | ----------------------- | ---------------| ----- |
-|            |                         |                         |                |   1   |
-|            |                         |                         |                |   2   |
-|            |                         |                         |                |   3   |
-|            |                         |                         |                |   4   |
-|            |                         |                         |                |   5   |
-|            |                         |                         |                |   6   |
-|            |                         |                         |                |   7   |
-|            |                         |                         |                |   8   |
-|            |                         |                         |                |   9   |
+|  :hash: Number  | :memo: Name |     :envelope: Email      | :octocat: GitHub | :package: Grupo |
+|----------------:|-------------|---------------------------|------------------|:---------------:|
+|                 |             |                           |                  |        1        |
+|                 |             |                           |                  |        2        |
+|                 |             |                           |                  |        3        |
+|                 |             |                           |                  |        4        |
+|                 |             |                           |                  |        5        |
+|                 |             |                           |                  |        6        |
+|                 |             |                           |                  |        7        |
+|                 |             |                           |                  |        8        |
+|                 |             |                           |                  |        9        |
