@@ -9,12 +9,13 @@
 |                 |                  |                                   |                                       |        3        |
 |       **81045** |  Rui Ventura     |    <rventura.pt@outlook.com>      |             [rgcv][81045]             |        4        |
 |                 |                  |                                   |                                       |        5        |
-|                 |                  |                                   |                                       |        6        |
+|       **80858** |  Beatriz Grilo   |      <biamsgrilo@gmail.com>       |           [BMSGrilo][80858]           |        6        |
 |       **80818** |  Joana Arezes    |     <joanarezes@outlook.com>      |         [JoanaArezes][80818]          |        7        |
 |                 |                  |                                   |                                       |        8        |
 |       **81670** |  João Oliveira   |       <jafo1200@gmail.com>        |    [joaoalexandreoliveira][81670]     |        9        |
 
 [80818]: https://github.com/JoanaArezes
+[80858]: https://github.com/BMSGrilo
 [81045]: https://github.com/rgcv
 [81196]: https://github.com/gmsbaptista
 [81338]: https://github.com/schimini
