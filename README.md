@@ -11,12 +11,13 @@
 |                 |                  |                                   |                                       |        5        |
 |       **80858** |  Beatriz Grilo   |      <biamsgrilo@gmail.com>       |           [BMSGrilo][80858]           |        6        |
 |       **80818** |  Joana Arezes    |     <joanarezes@outlook.com>      |         [JoanaArezes][80818]          |        7        |
-|                 |                  |                                   |                                       |        8        |
+|       **81183** |  Alexandre Mac   | 		<squill3x@hotmail.com>       |          [Squill3x][81183]            |        8        |
 |       **81670** |  João Oliveira   |       <jafo1200@gmail.com>        |    [joaoalexandreoliveira][81670]     |        9        |
 
 [80818]: https://github.com/JoanaArezes
 [80858]: https://github.com/BMSGrilo
 [81045]: https://github.com/rgcv
+[81183]: https://github.com/Squill3x
 [81196]: https://github.com/gmsbaptista
 [81338]: https://github.com/schimini
 [81670]: https://github.com/joaoalexandreoliveira
