@@ -38,6 +38,10 @@ public class BulkRoomBooking {
 	public LocalDate getDeparture() {
 		return this.departure;
 	}
+	
+	public boolean getStatus() {
+		return this.cancelled;
+	}
 
 	public void processBooking() {
 		if (this.cancelled) {
