@@ -13,3 +13,7 @@ target
 # JMeter
 jmeter.log
 infer-out
+
+# Mac OSX
+.DS_Store
+
