@@ -48,8 +48,8 @@ public class BookingConstructorTest {
 		new Booking(this.hotel, this.arrival, this.arrival.minusDays(1));
 	}
 
-	@Test
-	public void arrivalEqualDeparture() { //invariant 'A room reservation must have the duration of at least one day' is being tested here
+	@Test(expected = HotelException.class)
+	public void arrivalEqualDeparture() {
 		new Booking(this.hotel, this.arrival, this.arrival);
 	}
 
