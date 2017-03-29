@@ -24,7 +24,7 @@ public class Booking {
 			throw new HotelException();
 		}
 
-		if (departure.isBefore(arrival)) {
+		if (departure.isBefore(arrival)) { //invariant 'A room reservation must have the duration of at least one day' is being verified here
 			throw new HotelException();
 		}
 	}
