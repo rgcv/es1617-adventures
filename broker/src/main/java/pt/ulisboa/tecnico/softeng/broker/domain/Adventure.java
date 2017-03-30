@@ -204,6 +204,7 @@ public class Adventure {
 				this.paymentConfirmation = BankInterface.processPayment(this.IBAN, this.amount);
 			} catch (BankException be) {
 				setState(State.CANCELLED);
+				break;
 			} catch (RemoteAccessException rae) {
 				// increment number of errors
 				// if (number of errors == 3) {
@@ -220,6 +221,7 @@ public class Adventure {
 				this.activityConfirmation = ActivityInterface.reserveActivity(this.begin, this.end, this.age);
 			} catch (ActivityException ae) {
 				setState(State.UNDO);
+				break;
 			} catch (RemoteAccessException rae) {
 				// increment number of errors
 				// if (number of errors == 5) {
@@ -240,6 +242,7 @@ public class Adventure {
 				this.roomConfirmation = HotelInterface.reserveRoom(Room.Type.SINGLE, this.begin, this.end);
 			} catch (HotelException rae) {
 				setState(State.UNDO);
+				break;
 			} catch (RemoteAccessException rae) {
 				// increment number of errors
 				// if (number of errors == 10) {
