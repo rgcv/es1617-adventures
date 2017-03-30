@@ -85,12 +85,12 @@ public class ReserveActivityStateProcessMethodTest {
     	new StrictExpectations() {
     		{
     			ActivityInterface.reserveActivity(begin, end, AGE);
-    			this.times = 5; //ReserveActivityState.MAX_REMOTE_ERRORS;
+    			this.times = ReserveActivityState.MAX_REMOTE_ERRORS;
     			this.result = new RemoteAccessException();
     		}
     	};
     	
-    	for (int i = 0; i < 5/*ReserveActivityState.MAX_REMOTE_ERRORS*/; i++) {
+    	for (int i = 0; i < ReserveActivityState.MAX_REMOTE_ERRORS; i++) {
     		this.adventure.process();
     	}
     	
