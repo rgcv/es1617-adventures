@@ -80,7 +80,7 @@ public class ConfirmedStateProcessMethodTest {
 
         Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
     }
-
+    
     @Test
     public void confirmedPaymentBankErrors(
             @Mocked final BankInterface bankInterface) {

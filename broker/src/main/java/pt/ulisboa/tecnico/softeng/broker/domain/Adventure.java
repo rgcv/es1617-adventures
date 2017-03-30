@@ -180,7 +180,7 @@ public class Adventure {
 			this.state = null;
 			break;
 		case UNDO:
-			this.state = null;
+			this.state = new UndoState();
 			break;
 		case CONFIRMED:
 			this.state = new ConfirmedState();
@@ -223,33 +223,7 @@ public class Adventure {
 
 			break;
 		case UNDO:
-			if (cancelPayment()) {
-				try {
-					this.paymentCancellation = BankInterface.cancelPayment(getPaymentConfirmation());
-				} catch (HotelException | RemoteAccessException ex) {
-					// does not change state
-				}
-			}
-
-			if (cancelActivity()) {
-				try {
-					this.activityCancellation = ActivityInterface.cancelReservation(getActivityConfirmation());
-				} catch (HotelException | RemoteAccessException ex) {
-					// does not change state
-				}
-			}
-
-			if (cancelRoom()) {
-				try {
-					this.roomCancellation = HotelInterface.cancelBooking(getRoomConfirmation());
-				} catch (HotelException | RemoteAccessException ex) {
-					// does not change state
-				}
-			}
-
-			if (!cancelPayment() && !cancelActivity() && !cancelRoom()) {
-				setState(State.CANCELLED);
-			}
+			this.state.process(this);
 			break;
 		case CONFIRMED:
 			this.state.process(this);

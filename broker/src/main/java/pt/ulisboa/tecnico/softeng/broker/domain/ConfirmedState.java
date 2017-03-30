@@ -47,7 +47,7 @@ public class ConfirmedState extends AdventureState {
 
             return;
         }
-        // System.out.println("Payment confirmation: " + operation.getReference());
+        //System.out.println("Payment confirmation: " + operation.getReference());
         // System.out.println("Type: " + operation.getType());
         // System.out.println("Value: " + operation.getValue());
 
