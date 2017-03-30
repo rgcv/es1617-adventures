@@ -52,10 +52,12 @@ public class ReserveActivityStateProcessMethodTest {
     
     @Test
     public void reserveActivityEqualDates(@Mocked final ActivityInterface activityInterface) {
-    	Adventure adventure2 = new Adventure(this.broker, this.begin, this.begin, AGE, IBAN, AMOUNT);
+        LocalDate date2 = new LocalDate(2016, 12, 19);
+    	Adventure adventure2 = new Adventure(this.broker, date2, date2, AGE, IBAN, AMOUNT);
+    	adventure2.setState(Adventure.State.RESERVE_ACTIVITY);
     	new StrictExpectations() {
     		{
-    			ActivityInterface.reserveActivity(begin, begin, AGE);
+    			ActivityInterface.reserveActivity(date2, date2, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
     		}
     	};
