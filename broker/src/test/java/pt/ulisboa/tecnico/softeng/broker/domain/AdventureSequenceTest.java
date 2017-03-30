@@ -27,6 +27,14 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 public class AdventureSequenceTest {
 	// declarations
 	
+
+	private static final String PAYMENT_CONFIRMATION = "PaymentConfirmation";
+	private static final String PAYMENT_CANCELLATION = "PaymentCancellation";
+	private static final String ACTIVITY_CONFIRMATION = "ActivityConfirmation";
+	private static final String ACTIVITY_CANCELLATION = "ActivityCancellation";
+	private static final String ROOM_CONFIRMATION = "RoomConfirmation";
+	private static final String ROOM_CANCELLATION = "RoomCancellation";
+	
 	private final LocalDate begin = new LocalDate(2017,07,15);
 	private final LocalDate end = new LocalDate(2017,07,31);
 	private static final int AGE = 22;
@@ -51,7 +59,7 @@ public class AdventureSequenceTest {
 		new Expectations(){
 			{
 			BankInterface.processPayment(IBAN, AMOUNT);
-			this.result = "paymentConfirmation";
+			this.result = PAYMENT_CONFIRMATION;
 			}			
 		};
 		adventure.process();
@@ -65,9 +73,9 @@ public class AdventureSequenceTest {
 		new Expectations(){
 			{
 			BankInterface.processPayment(IBAN, AMOUNT);
-			this.result = "paymentConfirmation";
+			this.result = PAYMENT_CONFIRMATION;
 			ActivityInterface.reserveActivity(begin, end, AGE);
-			this.result = "activityReference";
+			this.result = ACTIVITY_CONFIRMATION;
 			}			
 		};
 		adventure.process();
@@ -82,7 +90,7 @@ public class AdventureSequenceTest {
 		new Expectations(){
 			{
 			BankInterface.processPayment(IBAN, AMOUNT);
-			this.result = "paymentConfirmation";
+			this.result = PAYMENT_CONFIRMATION;
 			ActivityInterface.reserveActivity(begin, end, AGE);
 			this.result = new ActivityException();
 			}			
@@ -100,9 +108,9 @@ public class AdventureSequenceTest {
 		new Expectations(){
 			{
 			BankInterface.processPayment(IBAN, AMOUNT);
-			this.result = "paymentConfirmation";
+			this.result = PAYMENT_CONFIRMATION;
 			ActivityInterface.reserveActivity(begin, end, AGE);
-			this.result = "activityReference";
+			this.result = ACTIVITY_CONFIRMATION;
 			HotelInterface.reserveRoom(Type.SINGLE, begin, end);
 			this.result = new HotelException();
 			}			
@@ -112,6 +120,7 @@ public class AdventureSequenceTest {
 		adventure.process();
 		Assert.assertEquals(State.UNDO, adventure.getState());		
 	}
+		
 	
 	@After
 	public void tearDown() {
