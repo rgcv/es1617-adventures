@@ -48,12 +48,14 @@ public class AdventureSequenceTest {
 	}
 	
 	@Test
+	//process_payment
 	public void initialState() {
 		Adventure adventure = new Adventure(broker, begin, end, AGE, IBAN, AMOUNT);
 		Assert.assertEquals(State.PROCESS_PAYMENT, adventure.getState());
 	}
 		
 	@Test
+	//process_payment -> reserve_activity
 	public void reserveActivity(@Mocked BankInterface bankInterface) {
 		Adventure adventure = new Adventure(broker, begin, end, AGE, IBAN, AMOUNT);
 		new Expectations(){
@@ -67,6 +69,7 @@ public class AdventureSequenceTest {
 	}
 	
 	@Test
+	//process_payment -> reserve_activity -> book_room
 	public void bookRoom(@Mocked BankInterface bankInterface, 
 								@Mocked ActivityInterface activityInterface) {
 		Adventure adventure = new Adventure(broker, begin, end, AGE, IBAN, AMOUNT);
@@ -84,6 +87,7 @@ public class AdventureSequenceTest {
 	}
 	
 	@Test
+	//process_payment -> reserve_activity -> undo
 	public void reserveActivityUndo(@Mocked BankInterface bankInterface, 
 									@Mocked ActivityInterface activityInterface) {
 		Adventure adventure = new Adventure(broker, begin, end, AGE, IBAN, AMOUNT);
@@ -101,6 +105,7 @@ public class AdventureSequenceTest {
 	}
 	
 	@Test
+	//process_payment -> reserve_activity -> book_room -> undo
 	public void bookRoomUndo(@Mocked BankInterface bankInterface, 
 							@Mocked ActivityInterface activityInterface,
 							@Mocked HotelInterface hotelInterface) {
@@ -120,7 +125,47 @@ public class AdventureSequenceTest {
 		adventure.process();
 		Assert.assertEquals(State.UNDO, adventure.getState());		
 	}
-		
+	
+
+	@Test
+	//process_payment -> reserve_activity -> confirmed
+	public void reserveActivityConfirmed(@Mocked BankInterface bankInterface, 
+										@Mocked ActivityInterface activityInterface) {
+		Adventure adventure = new Adventure(broker, begin, begin, AGE, IBAN, AMOUNT);
+		new Expectations(){
+			{
+			BankInterface.processPayment(IBAN, AMOUNT);
+			this.result = PAYMENT_CONFIRMATION;
+			ActivityInterface.reserveActivity(begin, begin, AGE);
+			this.result = ACTIVITY_CONFIRMATION;
+			}			
+		};
+		adventure.process();
+		adventure.process();
+		Assert.assertEquals(State.CONFIRMED, adventure.getState());		
+	}
+	
+	@Test
+	//process_payment -> reserve_activity -> book_room -> confirmed
+	public void bookRoomConfirmed(@Mocked BankInterface bankInterface, 
+								@Mocked ActivityInterface activityInterface,
+								@Mocked HotelInterface hotelInterface) {
+		Adventure adventure = new Adventure(broker, begin, end, AGE, IBAN, AMOUNT);
+		new Expectations(){
+			{
+			BankInterface.processPayment(IBAN, AMOUNT);
+			this.result = PAYMENT_CONFIRMATION;
+			ActivityInterface.reserveActivity(begin, end, AGE);
+			this.result = ACTIVITY_CONFIRMATION;
+			HotelInterface.reserveRoom(Type.SINGLE, begin, end);
+			this.result = ROOM_CONFIRMATION;
+			}			
+		};
+		adventure.process();
+		adventure.process();
+		adventure.process();
+		Assert.assertEquals(State.CONFIRMED, adventure.getState());		
+	}
 	
 	@After
 	public void tearDown() {
