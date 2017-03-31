@@ -109,8 +109,31 @@ public class Bank {
 	}
 
 	public static BankOperationData getOperationData(String reference) {
-		// TODO implement
-		throw new BankException();
+		if (reference == null || reference.trim().equals("")) throw new BankException();
+		Operation op = null;
+		for (Bank bank : Bank.banks) {
+			if (bank.getOperation(reference) != null) {
+				op = bank.getOperation(reference);
+				break;
+			}
+		}
+		if (op == null) throw new BankException();
+		
+		BankOperationData bod = new BankOperationData();
+		bod.setReference(reference);
+		switch(op.getType()) {
+		case DEPOSIT:
+			bod.setType("Deposit");
+			break;
+		case WITHDRAW:
+			bod.setType("Withdraw");
+			break;
+		}
+		bod.setIban(op.getAccount().getIBAN());
+		bod.setValue(op.getValue());
+		bod.setTime(op.getTime());
+		
+		return bod;
 	}
 
 }
