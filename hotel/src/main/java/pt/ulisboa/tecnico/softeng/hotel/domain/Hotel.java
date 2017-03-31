@@ -95,7 +95,24 @@ public class Hotel {
 	}
 
 	public static String cancelBooking(String roomConfirmation) {
-		// TODO implement
+		if(roomConfirmation == null || roomConfirmation.equals("") || roomConfirmation.endsWith(" ")){
+			throw new HotelException();
+		}
+		String roomCancellation = null;
+		for (Hotel hotel : Hotel.hotels){
+			for(Room room : hotel.rooms ){
+				for(Booking booking : room.getBookings()){
+					if(booking.getReference().equals(roomConfirmation)){
+						room.getBookings().remove(booking);
+						roomCancellation = booking.getReference() + "Cancelled";
+						RoomBookingData rbd = new RoomBookingData();
+						rbd.setCancellation(roomCancellation);
+						rbd.setCancellationDate(new LocalDate());
+						return roomCancellation;
+					}
+				}
+			}
+		}
 		throw new HotelException();
 	}
 

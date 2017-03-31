@@ -52,6 +52,10 @@ public class Room {
 	int getNumberOfBookings() {
 		return this.bookings.size();
 	}
+	
+	Set<Booking> getBookings(){
+		return bookings;
+	}
 
 	boolean isFree(Type type, LocalDate arrival, LocalDate departure) {
 		if (!type.equals(this.type)) {
