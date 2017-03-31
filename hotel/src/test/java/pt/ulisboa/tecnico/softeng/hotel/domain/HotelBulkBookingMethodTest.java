@@ -13,6 +13,7 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class HotelBulkBookingMethodTest {
+    private static final String CODE = "HOLY350";
     private final LocalDate arrival = new LocalDate(2017, 3, 18);
     private final LocalDate departure = new LocalDate(2017, 3, 20);
     private Hotel hotel;
@@ -20,7 +21,7 @@ public class HotelBulkBookingMethodTest {
 
     @Before
     public void setUp() {
-        this.hotel = new Hotel("HOLY350", "Hollywood");
+        this.hotel = new Hotel(CODE, "Hollywood");
         new Room(this.hotel, "001", Type.SINGLE);
         new Room(this.hotel, "002", Type.DOUBLE);
         new Room(this.hotel, "003", Type.SINGLE);
@@ -33,7 +34,7 @@ public class HotelBulkBookingMethodTest {
 
         Assert.assertEquals(3, references.size());
         for (String ref : references)
-            Assert.assertTrue(ref.startsWith("HOLY350"));
+            Assert.assertTrue(ref.startsWith(CODE));
     }
 
     @Test(expected = HotelException.class)
