@@ -11,6 +11,10 @@ public class ActivityReservationData {
 	private LocalDate end;
 	private LocalDate cancellationDate;
 
+	public ActivityReservationData() {
+		//empty constructor
+	}
+
 	public String getReference() {
 		return this.reference;
 	}

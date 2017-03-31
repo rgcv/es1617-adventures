@@ -53,6 +53,16 @@ public class ActivityOffer {
 		this.bookings.add(booking);
 
 	}
+	
+	Booking findBooking(String bookingReference) {
+		for(Booking booking : bookings) {
+			if(booking.getReference().equals(bookingReference)) {
+				return booking;
+			}
+		}
+		
+		return null;
+	}
 
 	boolean available(LocalDate begin, LocalDate end) {
 		return hasVacancy() && matchDate(begin, end);

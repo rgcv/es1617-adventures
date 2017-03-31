@@ -59,6 +59,10 @@ public class ActivityProvider {
 	void addActivity(Activity activity) {
 		this.activities.add(activity);
 	}
+	
+	Set<Activity> getActivities() {
+		return activities;
+	}
 
 	public List<ActivityOffer> findOffer(LocalDate begin, LocalDate end, int age) {
 		List<ActivityOffer> result = new ArrayList<>();
@@ -84,9 +88,30 @@ public class ActivityProvider {
 		throw new ActivityException();
 	}
 
-	public static ActivityReservationData getActivityReservationData(String reference) {
-		// TODO implement
+	public static ActivityReservationData getActivityReservationData(String reference) throws ActivityException {
+		if(reference == null || providers == null || providers.isEmpty()) { throw new ActivityException(); }
+		
+		for(ActivityProvider provider : providers) {
+			Set<Activity> activities = provider.getActivities();
+			
+			for(Activity activity : activities) {
+				ActivityOffer offer = activity.findOffer(reference);
+				
+				if(offer == null) { throw new ActivityException(); }
+				
+				ActivityReservationData data = new ActivityReservationData();
+				data.setReference(reference); 
+				data.setCode(activity.getCode());
+				data.setName(activity.getName()); 
+				data.setBegin(offer.getBegin());
+				data.setEnd(offer.getEnd());
+				data.setCancellation(null); //FIXME: cancellation string
+				data.setCancellationDate(null); //FIXME: cancellation date
+				data.setReference(reference);
+				return data;
+			}
+		}
+		
 		throw new ActivityException();
 	}
-
 }

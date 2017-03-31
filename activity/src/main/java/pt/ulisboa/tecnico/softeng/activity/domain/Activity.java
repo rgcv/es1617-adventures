@@ -74,6 +74,16 @@ public class Activity {
 	void addOffer(ActivityOffer offer) {
 		this.offers.add(offer);
 	}
+	
+	ActivityOffer findOffer(String bookingReference) {
+		for(ActivityOffer offer : offers) {
+			if(offer.findBooking(bookingReference) != null) {
+				return offer;
+			}
+		}
+		
+		return null;
+	}
 
 	Set<ActivityOffer> getOffers(LocalDate begin, LocalDate end, int age) {
 		Set<ActivityOffer> result = new HashSet<>();
@@ -88,5 +98,9 @@ public class Activity {
 	boolean matchAge(int age) {
 		return age >= this.minAge && age <= this.maxAge;
 	}
-
+	
+	public static void resetCounter() {
+		Activity.counter = 0;
+	}
 }
+
