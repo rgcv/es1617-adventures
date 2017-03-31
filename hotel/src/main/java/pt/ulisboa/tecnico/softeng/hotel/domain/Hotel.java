@@ -117,7 +117,36 @@ public class Hotel {
 	}
 
 	public static RoomBookingData getRoomBookingData(String reference) {
-		// TODO implement
+		if (reference == null || reference.trim().equals("")) throw new HotelException();
+		
+
+		for (Hotel hotel : Hotel.hotels) {
+			for (Room room : hotel.rooms) {
+				for (Booking booking : room.getBookings()) {
+					if (booking.getReference().equals(reference)) {
+						RoomBookingData rbd = new RoomBookingData();
+						rbd.setReference(reference);
+						rbd.setHotelName(hotel.getName());
+						rbd.setHotelCode(hotel.getCode());
+						rbd.setRoomNumber(room.getNumber());
+						switch (room.getType()) {
+						case SINGLE:
+							rbd.setRoomType("Single");
+							break;
+						case DOUBLE:
+							rbd.setRoomType("Double");
+							break;
+						}
+						rbd.setArrival(booking.getArrival());
+						rbd.setDeparture(booking.getDeparture());
+						
+						rbd.setCancellation(null); // Not sure
+						rbd.setCancellationDate(null); // Not sure
+						return rbd;
+					}
+				}
+			}
+		}
 		throw new HotelException();
 	}
 
