@@ -32,9 +32,8 @@ public class HotelBulkBookingMethodTest {
                 this.departure);
 
         Assert.assertEquals(3, references.size());
-        Assert.assertTrue(references.contains("HOLY3501")); // Only possible
-        Assert.assertTrue(references.contains("HOLY3502")); // because of
-        Assert.assertTrue(references.contains("HOLY3503")); // white-box testing
+        for (String ref : references)
+            Assert.assertTrue(ref.startsWith("HOLY350"));
     }
 
     @Test(expected = HotelException.class)
