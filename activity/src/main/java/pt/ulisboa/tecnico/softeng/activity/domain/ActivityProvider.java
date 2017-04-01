@@ -84,7 +84,28 @@ public class ActivityProvider {
 	}
 
 	public static String cancelReservation(String activityConfirmation) {
-		// TODO implement
+		if (activityConfirmation == null || activityConfirmation.equals("") || activityConfirmation.endsWith(" ")) {
+			throw new ActivityException();
+		}
+		String activityCancellation = null;
+		Booking b;
+		
+		for (ActivityProvider ap : ActivityProvider.providers) {
+			for (Activity activity : ap.getActivities()) {
+				for (ActivityOffer offer : activity.getAllOffers()) {
+					b = offer.findBooking(activityConfirmation);
+					if (b == null) break;
+					
+					offer.getBookings().remove(b);
+					activityCancellation = b.getReference() + "Cancelled";
+					
+					ActivityReservationData ard = new ActivityReservationData();
+					ard.setCancellation(activityCancellation);
+					ard.setCancellationDate(new LocalDate());
+					return activityCancellation;
+				}
+			}
+		}
 		throw new ActivityException();
 	}
 

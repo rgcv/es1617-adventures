@@ -27,8 +27,8 @@ public class UndoState extends AdventureState {
     	String paymentCancellation = "";
     	String activityCancellation = "";
     	String roomCancellation = "";
+    	
 		if (adventure.cancelPayment()) {
-
 			try {
 				paymentCancellation = BankInterface.cancelPayment(adventure.getPaymentConfirmation());
 			} catch (HotelException | RemoteAccessException ex) {

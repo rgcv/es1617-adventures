@@ -63,6 +63,10 @@ public class ActivityOffer {
 		
 		return null;
 	}
+	
+	Set<Booking> getBookings() {
+		return this.bookings;
+	}
 
 	boolean available(LocalDate begin, LocalDate end) {
 		return hasVacancy() && matchDate(begin, end);

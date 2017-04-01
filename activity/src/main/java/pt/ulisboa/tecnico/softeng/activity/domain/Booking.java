@@ -25,4 +25,5 @@ public class Booking {
 	public String getReference() {
 		return this.reference;
 	}
+	
 }

@@ -84,6 +84,10 @@ public class Activity {
 		
 		return null;
 	}
+	
+	Set<ActivityOffer> getAllOffers() {
+		return this.offers;
+	}
 
 	Set<ActivityOffer> getOffers(LocalDate begin, LocalDate end, int age) {
 		Set<ActivityOffer> result = new HashSet<>();

@@ -25,7 +25,6 @@ public class ActivityCancelReservationMethodTest {
 		this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
 		this.activity = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
 		this.offer = new ActivityOffer(activity, begin, end);
-		new Booking(provider,offer);
 		activityConfirmation = ActivityProvider.reserveActivity(begin, end, MIN_AGE);
 	}
 
