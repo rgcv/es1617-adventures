@@ -16,8 +16,8 @@ import pt.ulisboa.tecnico.softeng.hotel.dataobjects.RoomBookingData;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class ConfirmedState extends AdventureState {
-    private static final int MAX_ERRORS = 5;
-    private static final int MAX_REMOTE_ERRORS = 20;
+    static final int MAX_ERRORS = 5;
+    static final int MAX_REMOTE_ERRORS = 20;
 
     private static Logger logger = LoggerFactory.getLogger(ConfirmedState.class);
 
