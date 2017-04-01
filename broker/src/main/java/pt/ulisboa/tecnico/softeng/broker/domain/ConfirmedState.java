@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import pt.ulisboa.tecnico.softeng.activity.dataobjects.ActivityReservationData;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 import pt.ulisboa.tecnico.softeng.bank.dataobjects.BankOperationData;
@@ -15,8 +16,8 @@ import pt.ulisboa.tecnico.softeng.hotel.dataobjects.RoomBookingData;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class ConfirmedState extends AdventureState {
-    public static final int MAX_ERRORS = 5;
-    public static final int MAX_REMOTE_ERRORS = 20;
+    private static final int MAX_ERRORS = 5;
+    private static final int MAX_REMOTE_ERRORS = 20;
 
     private static Logger logger = LoggerFactory.getLogger(ConfirmedState.class);
 
@@ -47,9 +48,9 @@ public class ConfirmedState extends AdventureState {
 
             return;
         }
-        //System.out.println("Payment confirmation: " + operation.getReference());
-        // System.out.println("Type: " + operation.getType());
-        // System.out.println("Value: " + operation.getValue());
+        System.out.println("Payment confirmation: " + operation.getReference());
+        System.out.println("Type: " + operation.getType());
+        System.out.println("Value: " + operation.getValue());
 
         ActivityReservationData reservation;
         try {
@@ -65,9 +66,9 @@ public class ConfirmedState extends AdventureState {
 
             return;
         }
-        // System.out.println("Activity confirmation: " + reservation.getReference());
-        // System.out.println("Begin: " + reservation.getBegin());
-        // System.out.println("End: " + reservation.getEnd());
+        System.out.println("Activity confirmation: " + reservation.getReference());
+        System.out.println("Begin: " + reservation.getBegin());
+        System.out.println("End: " + reservation.getEnd());
 
 
         if (adventure.getRoomConfirmation() != null) {
@@ -85,9 +86,9 @@ public class ConfirmedState extends AdventureState {
 
                 return;
             }
-            // System.out.println("Room confirmation: " + booking.getReference());
-            // System.out.println("Arrival: " + booking.getArrival());
-            // System.out.println("Departure: " + booking.getDeparture());
+            System.out.println("Room confirmation: " + booking.getReference());
+            System.out.println("Arrival: " + booking.getArrival());
+            System.out.println("Departure: " + booking.getDeparture());
         }
 
         resetNumOfErrors();
