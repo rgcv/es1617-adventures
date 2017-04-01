@@ -241,6 +241,7 @@ public class AdventureSequenceTest {
 		Assert.assertEquals(State.CANCELLED, adventure.getState());
 	}
 	
+	
 	@After
 	public void tearDown() {
 		//tear down of variables in setup
