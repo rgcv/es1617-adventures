@@ -170,4 +170,15 @@ public class UndoStateProcessMethodTest {
 		this.adventure.process();
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
+	@Test
+	public void CancellRoomActivityPaymentException(@Mocked final BankInterface bankInterface,
+			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface hotelInterface) {
+    	this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
+    	this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+    	this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
+		
+    	this.adventure.process();
+		
+		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
+	}
 }
