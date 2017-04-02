@@ -52,19 +52,18 @@ public class BulkRoomBookingProcessBookingMethodTest {
 	@Test
 	public void success() {
 		final BulkRoomBooking booking = new BulkRoomBooking(numberOfRooms, arrival, departure);
+		Set<String> processResult = new HashSet<String>();
 		
-		new StrictExpectations(hotel, booking) {
+		new StrictExpectations(hotel, booking, processResult) {
 			{
 				booking.processBooking();
-
-				final Set<String> result = new HashSet<String>();
+				
 				for(int i = 1; i <= numberOfRooms; i++) {
-					result.add(hotelCode + i);
+					processResult.add(hotelCode + i);
 				}
-
-				this.result = result;
 			}
 		};
+		booking.getReferences().addAll(processResult); //Simulates execution of processBooking
 		
 		booking.processBooking();
 
