@@ -16,10 +16,8 @@ import mockit.Tested;
 import mockit.integration.junit4.JMockit;
 
 import pt.ulisboa.tecnico.softeng.activity.domain.Booking;
-import pt.ulisboa.tecnico.softeng.broker.exception.RemoteAccessException;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
-import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 @RunWith(JMockit.class)
 public class BulkRoomBookingProcessBookingMethodTest {
@@ -53,9 +51,11 @@ public class BulkRoomBookingProcessBookingMethodTest {
 	
 	@Test
 	public void success() {
-		new StrictExpectations(hotel) {
+		final BulkRoomBooking booking = new BulkRoomBooking(numberOfRooms, arrival, departure);
+		
+		new StrictExpectations(hotel, booking) {
 			{
-				Hotel.bulkBooking(numberOfRooms, arrival, departure);
+				booking.processBooking();
 
 				final Set<String> result = new HashSet<String>();
 				for(int i = 1; i <= numberOfRooms; i++) {
@@ -65,13 +65,13 @@ public class BulkRoomBookingProcessBookingMethodTest {
 				this.result = result;
 			}
 		};
-
-		final BulkRoomBooking booking = new BulkRoomBooking(numberOfRooms, arrival, departure);
+		
 		booking.processBooking();
 
 		Assert.assertEquals(arrival, booking.getArrival());
 		Assert.assertEquals(departure, booking.getDeparture());
 		Assert.assertEquals(NOT_CANCELLED, booking.getStatus());
+		Assert.assertEquals(numberOfRooms, booking.getNumber());
 		Assert.assertEquals(numberOfRooms, booking.getReferences().size());
 
 		final Set<String> references = booking.getReferences();
@@ -87,8 +87,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{
-				Hotel.bulkBooking(-1, arrival, departure);
-				result = new HotelException();
+				booking.processBooking();
 			}
 		};
 
@@ -106,8 +105,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{
-				Hotel.bulkBooking(numberOfRooms, arrival, departure);
-				result = new HotelException();
+				booking.processBooking();
 			}
 		};
 		
@@ -127,8 +125,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{
-				Hotel.bulkBooking(numberOfRooms, arrival, departure);
-				result = new HotelException();
+				booking.processBooking();
 			}
 		};
 		
@@ -153,8 +150,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{
-				Hotel.bulkBooking(numberOfRooms, arrival, departure);
-				result = new HotelException();
+				booking.processBooking();
 			}
 		};
 		
@@ -169,8 +165,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{
-				Hotel.bulkBooking(numberOfRooms, arrival, departure);
-				result = new HotelException();
+				booking.processBooking();
 			}
 		};
 		
@@ -185,8 +180,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{	
-				Hotel.bulkBooking(badNumberOfRooms, arrival, departure);
-				result = new HotelException();	
+				booking.processBooking();
 			}
 		};
 
@@ -199,8 +193,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{	
-				Hotel.bulkBooking(numberOfRooms, arrival, departure);
-				result = new RemoteAccessException();
+				booking.processBooking();
 			}
 		};
 
@@ -217,8 +210,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{	
-				Hotel.bulkBooking(badNumberOfRooms, arrival, departure);
-				result = new HotelException();
+				booking.processBooking();
 			}
 		};
 
@@ -235,8 +227,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		new StrictExpectations(hotel, booking) {
 			{	
-				Hotel.bulkBooking(numberOfRooms, arrival, departure);
-				result = new RemoteAccessException();
+				booking.processBooking();
 			}
 		};
 
