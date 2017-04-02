@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.softeng.broker.domain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ulisboa.tecnico.softeng.bank.dataobjects.BankOperationData;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
 import pt.ulisboa.tecnico.softeng.broker.exception.RemoteAccessException;
@@ -28,11 +29,13 @@ public class ProcessPaymentState extends AdventureState {
 			adventure.setPaymentConfirmation(pc);
 			adventure.setState(State.RESERVE_ACTIVITY);
 			
-			// System.out.println("Payment confirmation: " + operation.getReference());
-			// System.out.println("Type: " + operation.getType());
-			// System.out.println("Value: " + operation.getValue());
-			
 			this.resetNumOfRemoteErrors();
+			
+			BankOperationData operation = BankInterface.getOperationData(pc);
+			System.out.println("Payment: " + operation.getReference());
+			System.out.println("Type: " + operation.getType());
+			System.out.println("Value: " + operation.getValue());
+			
 		} catch (BankException be) {
 			adventure.setState(State.CANCELLED);
 			return;
@@ -42,6 +45,7 @@ public class ProcessPaymentState extends AdventureState {
 				adventure.setState(State.CANCELLED);
 			return;
 		}
+		
 	}
 	
 	

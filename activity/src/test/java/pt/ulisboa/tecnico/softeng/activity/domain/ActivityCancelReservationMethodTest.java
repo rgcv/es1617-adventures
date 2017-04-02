@@ -12,18 +12,17 @@ public class ActivityCancelReservationMethodTest {
 	
 	private static final int MIN_AGE = 18;
 	private static final int MAX_AGE = 40;
-	private static final int CAPACITY = 0;
+	private static final int CAPACITY = 5;
 	private static final LocalDate begin = new LocalDate(2017,07,24);
 	private static final LocalDate end = new LocalDate(2017,07,27);
 	private ActivityProvider provider;
-	private Activity activity;
 	private ActivityOffer offer;
 	private String activityConfirmation;
 
 	@Before
 	public void setUp() {
 		this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
-		this.activity = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
+		Activity activity = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
 		this.offer = new ActivityOffer(activity, begin, end);
 		activityConfirmation = ActivityProvider.reserveActivity(begin, end, MIN_AGE);
 	}
@@ -32,7 +31,6 @@ public class ActivityCancelReservationMethodTest {
 	public void success() {
 		String activityCancellation = ActivityProvider.cancelReservation(activityConfirmation);
 		
-		Assert.assertEquals("XtremX1", activityConfirmation);
 		Assert.assertEquals("XtremX1Cancelled", activityCancellation);
 		Assert.assertEquals(0, this.offer.getNumberOfBookings());
 	}
