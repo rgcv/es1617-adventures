@@ -79,7 +79,7 @@ public class AdventureConstructorMethodTest {
 	}
 
 	@Test
-    public void atLeastOneDayApart() {
+    public void atLeastOneDayApart() { // FIXME: This should succeed
 	    try {
 	        new Adventure(this.broker, this.begin, this.begin, AGE, IBAN, AMOUNT);
 	        Assert.fail();
@@ -97,6 +97,9 @@ public class AdventureConstructorMethodTest {
 			Assert.assertEquals(0, this.broker.getNumberOfAdventures());
 		}
 	}
+	
+	// success: ageEqualToMinimum
+	// success: ageEqualToMaximum
 
 	@Test
 	public void ageGreaterThanMaximum() {
@@ -107,6 +110,7 @@ public class AdventureConstructorMethodTest {
 			Assert.assertEquals(0, this.broker.getNumberOfAdventures());
 		}
 	}
+	
 
 	@Test
 	public void nullIBAN() {
@@ -157,6 +161,8 @@ public class AdventureConstructorMethodTest {
 			Assert.assertEquals(0, this.broker.getNumberOfAdventures());
 		}
 	}
+	
+	// success: oneAmount
 
 	@After
 	public void tearDown() {

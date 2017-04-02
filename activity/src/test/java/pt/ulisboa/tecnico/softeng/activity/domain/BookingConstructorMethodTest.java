@@ -32,13 +32,16 @@ public class BookingConstructorMethodTest {
 	}
 	
 	@Test (expected = ActivityException.class)
-	public void reservation() {
+	public void bookingEqualCapacity() {
 		Activity newActivity = new Activity(this.provider, "Atividade", 18, 80, 1);
 		ActivityOffer activityOffer = new ActivityOffer(newActivity, new LocalDate(2016, 12, 19), new LocalDate(2016, 12, 21));
 		new Booking(this.provider, activityOffer);
 		new Booking(this.provider, activityOffer);
 	}
-
+	
+	// failure: nullProvider
+	// failure: nullOffer
+	
 	@After
 	public void tearDown() {
 		ActivityProvider.providers.clear();

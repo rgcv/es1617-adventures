@@ -9,6 +9,9 @@ import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class BookingConstructorTest {
+	// To avoid code repetition
+	LocalDate arrival = new LocalDate(2016, 12, 10);
+	LocalDate departure = new LocalDate(2016, 12, 15);
 	private Hotel hotel;
 	int counter = 0;
 	private int multiple = 10;
@@ -20,59 +23,48 @@ public class BookingConstructorTest {
 	
 	@Test
 	public void successSingle() {
-		LocalDate arrival = new LocalDate(2016, 12, 10);
-		LocalDate departure = new LocalDate(2016, 12, 15);
-		
 		createBooking(hotel, arrival, departure);
 	}
 	
 	@Test(expected = HotelException.class)
-	public void failureSingleNull() {
-		createBooking(null, null, null);
+	public void nullHotel() {
+		new Booking(null, null, null); // This should tested individually
 	}
 	
+	// failure: nullArrival
+	// failure: nullDeparture
+
+	/* This shouldn't faill
 	@Test(expected = HotelException.class)
 	public void failureSingleDate() {
-		LocalDate arrival = new LocalDate(2016, 12, 15);
-		LocalDate departure = new LocalDate(2016, 12, 10);
-		
-		createBooking(hotel, arrival, departure);
-	}
+		new Booking(hotel, arrival, arrival);
+	}*/
 	
 	@Test
 	public void successMultiple() {
-		LocalDate arrival = new LocalDate(2016, 12, 10);
-		LocalDate departure = new LocalDate(2016, 12, 15);
-		
 		for(int index = 0; index < multiple; index++) {
 			createBooking(hotel, arrival, departure);
 		}
 	}
-	
+
+	/**
+	 * Actually, this is testing the creating of bookings when the first argument is null,
+	 * which is already done above in nullHotel.
+	 *
 	@Test(expected = HotelException.class)
 	public void failureMultipleNull() {
-		LocalDate arrival = new LocalDate(2016, 12, 10);
-		LocalDate departure = new LocalDate(2016, 12, 15);
-		
 		for(int index = 0; index < multiple - 1; index++) {
 			createBooking(hotel, arrival, departure);
 		}
 		
-		createBooking(null, null, null);
+		createBooking(null, null, null); // Again, this is only testing the first null
 	}
+	 */
 	
+	// Actually this is testing the creation of Bookings with invalid dates
 	@Test(expected = HotelException.class)
-	public void failureMultipleDate() {
-		LocalDate goodArrival = new LocalDate(2016, 12, 10);
-		LocalDate goodDeparture = new LocalDate(2016, 12, 15);
-		LocalDate badArrival = new LocalDate(2016, 12, 15);
-		LocalDate badDeparture = new LocalDate(2016, 12, 10);
-		
-		for(int index = 0; index < multiple - 1; index++) {
-			createBooking(hotel, goodArrival, goodDeparture);
-		}
-		
-		createBooking(hotel, badArrival, badDeparture);
+	public void failureDepartureBeforeArrival() { 
+		new Booking(hotel, arrival, arrival.minusDays(1));
 	}
 
 	@After

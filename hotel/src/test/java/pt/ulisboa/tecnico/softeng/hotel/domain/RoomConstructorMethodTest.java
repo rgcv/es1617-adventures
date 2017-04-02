@@ -58,14 +58,16 @@ public class RoomConstructorMethodTest {
 	}	
 	
 	@Test
-	public void emptyNumberRoom(){
+	public void spacesNumberRoom(){
 		try{
-			new Room(this.hotel, " ", Type.DOUBLE);
+			new Room(this.hotel, " ", Type.DOUBLE); // This is number with spaces, not empty
 			Assert.fail();
 		} catch (HotelException he){
 			Assert.assertEquals(0, this.hotel.getNumberOfRooms());
 		}	
 	}	
+	
+	// failure: emptyNumberRoom
 	
 	@Test
 	public void noNumberRoom(){
@@ -85,9 +87,8 @@ public class RoomConstructorMethodTest {
 		} catch (HotelException he){
 			Assert.assertEquals(0, this.hotel.getNumberOfRooms());
 		}	
-	}	
+	}
 	
-
 	@After
 	public void tearDown() {
 		Hotel.hotels.clear();

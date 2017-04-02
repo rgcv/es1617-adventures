@@ -52,7 +52,7 @@ public class AccountConstructorMethodTest {
 	}
 	
 	@Test
-	public void bankHasClient() {
+	public void clientDoesNotBelongToBank() {
 		try {
 			new Account(this.bank, new Client(new Bank("Dollar", "AK01"), "Antonio"));
 			Assert.fail();

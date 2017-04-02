@@ -41,6 +41,14 @@ public class AccountWithdrawMethodTest {
 			Assert.assertEquals(balance, this.account.getBalance());
 		}
 	}
+	
+	// failure: negativeAmount
+	// failure: zeroAmount
+	// success: oneAmount (because 0 + 1)
+
+	// success: equalToBalance 
+	// failure: equalToBalancePlusOne
+	
 	/* -----------------------------------------------------------*/
 
 	@After

@@ -19,6 +19,10 @@ public class Activity {
 
 	public Activity(ActivityProvider provider, String name, int minAge, int maxAge, int capacity) {
 		
+		// What if provider is null?
+		// What if name is null?
+		// What if name is empty?
+		
 		checkMinAge(minAge);
 		checkMaxAge(maxAge);
 		checkCapacity(capacity);

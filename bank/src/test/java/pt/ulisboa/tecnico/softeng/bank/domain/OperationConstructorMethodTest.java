@@ -78,6 +78,8 @@ public class OperationConstructorMethodTest {
 		}
 	}
 	
+	// success: oneAmount (because 0 + 1)
+	
 	/* -----------------------------------------------------------*/
 	
 	@After

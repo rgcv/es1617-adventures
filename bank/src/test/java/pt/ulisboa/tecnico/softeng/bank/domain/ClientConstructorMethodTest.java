@@ -36,7 +36,7 @@ public class ClientConstructorMethodTest {
 	}
 	
 	@Test
-	public void emptyName() {
+	public void nameWithSpaces() {
 		try{
 			new Client(this.bank, " ");
 			Assert.fail();
@@ -44,6 +44,8 @@ public class ClientConstructorMethodTest {
 			Assert.assertEquals(0, this.bank.getNumberOfClients());
 		}
 	}
+	
+	// failure: emptyName (by empty I mean "")
 	
 	@Test
 	public void nullBank() {

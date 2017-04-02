@@ -34,6 +34,11 @@ public class ActivityProviderFindOfferMethodTest {
 		Assert.assertEquals(1, offers.size());
 		Assert.assertTrue(offers.contains(this.offer));
 	}
+	
+	// failure: nullBeginDate
+	// failure: nullEndDate
+	
+	// failure: illegalAge
 
 	@Test(expected = ActivityException.class)
 	public void emptyActivitySet() {
@@ -57,7 +62,7 @@ public class ActivityProviderFindOfferMethodTest {
 	}
 	
 	@Test
-	public void twoOffersinActivity() {
+	public void twoOffersInActivity() {
 		ActivityProvider provider = new ActivityProvider("XtremA", "ExtremeAdventure2");
 		Activity activity = new Activity(provider, "Rock Climbing", 18, 80, 25);
 
@@ -74,7 +79,7 @@ public class ActivityProviderFindOfferMethodTest {
 	}
 	
 	@Test
-	public void twoOffersinActivities() {
+	public void twoOffersInActivities() {
 		ActivityProvider provider = new ActivityProvider("XtremB", "ExtremeAdventure3");
 		Activity activity1 = new Activity(provider, "Rock Surfing", 18, 80, 25);
 		Activity activity2 = new Activity(provider, "Rock Diving", 18, 80, 25);

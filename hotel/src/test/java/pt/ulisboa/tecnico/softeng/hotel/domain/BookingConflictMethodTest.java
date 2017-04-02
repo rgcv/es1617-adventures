@@ -10,142 +10,92 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class BookingConflictMethodTest {
 	Booking booking;
-	LocalDate arrival;
-	LocalDate departure;
+	LocalDate arrival = new LocalDate(2016, 12, 10);
+	LocalDate departure = new LocalDate(2016, 12, 15);
 	String reference;
 
 	@Before
 	public void setUp() {
 		final Hotel hotel = new Hotel("HOTELID", "HotelName");
-
-		arrival = new LocalDate(2016, 12, 10);
-		departure = new LocalDate(2016, 12, 15);
 		booking = new Booking(hotel, arrival, departure);
 		reference = booking.getReference();
 	}
 
 	@Test
 	public void noConflictBefore() {
-		final LocalDate arrival = new LocalDate(2016, 12, 5);
-		final LocalDate departure = new LocalDate(2016, 12, 9);
-		
-		checkConflict(arrival, departure);
+		Assert.assertFalse(booking.conflict(arrival.minusDays(5), arrival.minusDays(1)));
 	}
 	
 	@Test
 	public void noConflictAfter() {
-		final LocalDate arrival = new LocalDate(2016, 12, 16);
-		final LocalDate departure = new LocalDate(2016, 12, 20);
-
-		checkConflict(arrival, departure);
+		Assert.assertFalse(booking.conflict(departure.plusDays(1), departure.plusDays(5)));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictBetweenEqualStart() {
-		final LocalDate arrival = new LocalDate(2016, 12, 10);
-		final LocalDate departure = new LocalDate(2016, 12, 14);
-
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival, departure.minusDays(1)));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictBetweenEqualEnd() {
-		final LocalDate arrival = new LocalDate(2016, 12, 11);
-		final LocalDate departure = new LocalDate(2016, 12, 15);
-
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival.plusDays(1), departure));
 	}
 
-	@Test(expected = HotelException.class)
+	@Test
 	public void conflictOverlapStart() {
-		final LocalDate arrival = new LocalDate(2016, 12, 12);
-		final LocalDate departure = new LocalDate(2016, 12, 20);
-
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival.plusDays(2), departure.plusDays(5)));
 	}
 
-	@Test(expected = HotelException.class)
+	@Test
 	public void conflictOverlapEnd() {
-		final LocalDate arrival = new LocalDate(2016, 12, 5);
-		final LocalDate departure = new LocalDate(2016, 12, 12);
-
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival.minusDays(5), arrival.plusDays(2)));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictOverlapEqualStart() {
-		final LocalDate arrival = new LocalDate(2016, 12, 10);
-		final LocalDate departure = new LocalDate(2016, 12, 20);
-		
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival, departure.plusDays(5)));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictOverlapEqualEnd() {
-		final LocalDate arrival = new LocalDate(2016, 12, 5);
-		final LocalDate departure = new LocalDate(2016, 12, 15);
-		
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival.minusDays(5), departure));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictOverlapEqualBoth() {
-		final LocalDate arrival = new LocalDate(2016, 12, 10);
-		final LocalDate departure = new LocalDate(2016, 12, 15);
-
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival, departure));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictOverlapBoth() {
-		final LocalDate arrival = new LocalDate(2016, 12, 5);
-		final LocalDate departure = new LocalDate(2016, 12, 20);
-
-		checkConflict(arrival, departure);
+		Assert.assertTrue(booking.conflict(arrival.minusDays(5), departure.plusDays(5)));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictEqualStart() {
-		final LocalDate arrival = new LocalDate(2016, 12, 5);
-		final LocalDate departure = new LocalDate(2016, 12, 10);
-
-		checkConflict(arrival, departure);
+		Assert.assertFalse(booking.conflict(arrival.minusDays(5), arrival));
 	}
-	
-	@Test(expected = HotelException.class)
+
+	@Test
 	public void conflictEqualEnd() {
-		final LocalDate arrival = new LocalDate(2016, 12, 15);
-		final LocalDate departure = new LocalDate(2016, 12, 20);
-
-		checkConflict(arrival, departure);
+		Assert.assertFalse(booking.conflict(departure, departure.plusDays(5)));
 	}
-	
+
 	@Test(expected = HotelException.class)
 	public void conflictNull() {
-		final LocalDate arrival = null;
-		final LocalDate departure = null;
-		
-		checkConflict(arrival, departure);
+		booking.conflict(null, null);
 	}
 	
 	@After
 	public void tearDown() {
-		Hotel.hotels.clear();
-		Booking.resetCounter();
-	}
-	
-	private void checkConflict(LocalDate arrival, LocalDate departure) throws HotelException {
-		try {
-			Assert.assertFalse(booking.conflict(arrival, departure));
-		}
-		finally {
-			ensureNoChanges();
-		}
-	}
-	
-	private void ensureNoChanges() {
+		// When using @After annotation the code will be executed after each test,
+		// therefore we write this asserts here. Or create a proper method for them
+		// using the @After annotation.
 		Assert.assertEquals(booking.getReference(), reference);
 		Assert.assertEquals(booking.getArrival(), arrival);
 		Assert.assertEquals(booking.getDeparture(), departure);
-	}
+		
+		Hotel.hotels.clear();
+		Booking.resetCounter();
+	}	
 }

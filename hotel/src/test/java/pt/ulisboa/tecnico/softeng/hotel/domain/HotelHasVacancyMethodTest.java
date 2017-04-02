@@ -28,6 +28,10 @@ public class HotelHasVacancyMethodTest {
 		Assert.assertEquals("01", room.getNumber());
 	}
 	
+	// failure: nullType
+	// failure: nullArrival
+	// failure: nullDeparture
+	
 	@Test(expected = HotelException.class)
 	public void wrongType(){
 		LocalDate arrival = new LocalDate(2016, 12, 19);
@@ -35,6 +39,10 @@ public class HotelHasVacancyMethodTest {
 		
 		this.hotel.hasVacancy(Type.SINGLE, arrival, departure);
 	}
+	
+	// failure: noVacancy
+	// failure: noVacancyEmptyRoomSet
+	
 	@Test(expected = HotelException.class)
 	public void switchDate(){
 		LocalDate arrival = new LocalDate(2016, 12, 21);

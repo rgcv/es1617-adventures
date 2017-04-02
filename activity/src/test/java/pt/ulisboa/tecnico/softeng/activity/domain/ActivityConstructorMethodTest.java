@@ -9,6 +9,8 @@ import pt.ulisboa.tecnico.softeng.activity.domain.exception.ActivityException;
 
 public class ActivityConstructorMethodTest {
 	private ActivityProvider provider;
+	
+	// Define constants instead of magic numbers (see ActivityMatchAgeMethodTest.java for an example)
 
 	@Before
 	public void setUp() {
@@ -29,20 +31,34 @@ public class ActivityConstructorMethodTest {
 		Assert.assertEquals(1, this.provider.getNumberOfActivities());
 	}
 	
+	// failure: nullProvider
+	// failure: nullProviderName
+	// failure: emptyProviderName
+	
+	// success: maxAgeEquals100
+	
 	@Test (expected = ActivityException.class)
 	public void maxAge() {
 		new Activity(this.provider, "Atividade", 18, 101, 1);
 	}
+	
+	// success: minAgeEquals18
 	
 	@Test (expected = ActivityException.class)
 	public void minAge() {
 		new Activity(this.provider, "Atividade", 17, 23, 1);
 	}
 	
+	// success: minAgeEqualMaxAge
+	
+	// failure: minAgeGreaterThanMaxAgePlusOne
+	
 	@Test (expected = ActivityException.class)
 	public void ageDifference() {
 		new Activity(this.provider, "Atividade", 23, 18, 1);
 	}
+	
+	// success: capacityEquals1
 	
 	@Test (expected = ActivityException.class)
 	public void minCapacity() {

@@ -24,6 +24,10 @@ public class HotelConstructorTest {
 		Assert.assertEquals(0, hotel.getNumberOfRooms());
 		Assert.assertEquals(1, Hotel.hotels.size());
 	}
+	
+	/*
+	 * Already done below
+	 *
 	@Test(expected = HotelException.class)
 	public void UniqueCode(){
 		new Hotel("XPTO123", "Batalha");
@@ -37,6 +41,7 @@ public class HotelConstructorTest {
 	public void LongCode(){
 		new Hotel("XPTO1234", "EUA");
 	}
+	*/
 	
 
 	@Test 
@@ -47,6 +52,10 @@ public class HotelConstructorTest {
 			Assert.assertTrue(Hotel.hotels.isEmpty());
 		}
 	}
+	
+	// failure: emptyCode
+	// failure: blankCode
+	
 	@Test
 	public void uniqueCode(){
 		try {
@@ -87,7 +96,10 @@ public class HotelConstructorTest {
 			Assert.assertTrue(Hotel.hotels.isEmpty());
 		}
 	}
-
+	
+	// failure: emptyName
+	// failure: blankName
+	
 	@After
 	public void tearDown() {
 		Hotel.hotels.clear();

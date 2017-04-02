@@ -40,7 +40,12 @@ public class RoomReserveMethodTest {
 			Assert.assertEquals(0, this.room.getBookings().size());
 		}	
 	}
-		
+	
+	// failure: nullType
+	// failure: nullArrival
+	// failure: nullDeparture
+	
+	// failure: alreadyReserved
 	
 	@After
 	public void tearDown() {

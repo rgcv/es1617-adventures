@@ -29,7 +29,13 @@ public class ActivityOfferConstructorMethodTest {
 		Assert.assertEquals(1, this.activity.getNumberOfOffers());
 		Assert.assertEquals(0, offer.getNumberOfBookings());
 	}
+	
+	// failure: nullActivity
+	// failure: nullBeginDate
+	// failure: nullEndDate
 
+	// success: beginDateEqualsEndDate
+	
 	@Test
 	public void endDateBeforeBegin () {
 		try {

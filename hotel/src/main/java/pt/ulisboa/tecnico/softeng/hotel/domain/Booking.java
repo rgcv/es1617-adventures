@@ -34,11 +34,30 @@ public class Booking {
 	}
 
 	public boolean conflict(LocalDate arrival, LocalDate departure) throws HotelException {
-		if(arrival == null || departure == null
-			|| (arrival.isAfter(this.arrival) || arrival.isEqual(this.arrival)) && (arrival.isBefore(this.departure) || arrival.isEqual(this.departure))
-			|| (departure.isAfter(this.arrival) || departure.isEqual(this.arrival)) && (departure.isBefore(this.departure) || departure.isEqual(this.departure))
-			|| arrival.isBefore(this.arrival) && departure.isAfter(this.departure)) {
+		// Please consider code readability and return true whenever there's a conflict.
+		// Exceptions should be used whenever there's is an inconsistency or a faulty situation.
+		
+		//if(arrival == null || departure == null
+		//	|| (arrival.isAfter(this.arrival) || arrival.isEqual(this.arrival)) && (arrival.isBefore(this.departure) || arrival.isEqual(this.departure))
+		//	|| (departure.isAfter(this.arrival) || departure.isEqual(this.arrival)) && (departure.isBefore(this.departure) || departure.isEqual(this.departure))
+		//	|| arrival.isBefore(this.arrival) && departure.isAfter(this.departure)) {
+		//	throw new HotelException();
+		//}
+		
+		if (arrival == null || departure == null || departure.isBefore(arrival)) {
 			throw new HotelException();
+		}
+		
+		if ((arrival.equals(this.arrival) || arrival.isAfter(this.arrival)) && arrival.isBefore(this.departure)) {
+			return true;
+		}
+		
+		if ((departure.equals(this.departure) || departure.isBefore(this.departure)) && departure.isAfter(this.arrival)) {
+			return true;
+		}
+		
+		if ((arrival.isBefore(this.arrival) && departure.isAfter(this.departure))) {
+			return true;
 		}
 
 		return false;
