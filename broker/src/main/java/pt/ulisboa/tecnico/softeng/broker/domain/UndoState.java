@@ -24,13 +24,10 @@ public class UndoState extends AdventureState {
 
     @Override
     public void process(Adventure adventure) {
-    	String paymentCancellation = "";
-    	String activityCancellation = "";
-    	String roomCancellation = "";
-    	
+   	
 		if (adventure.cancelPayment()) {
 			try {
-				paymentCancellation = BankInterface.cancelPayment(adventure.getPaymentConfirmation());
+				adventure.setPaymentCancellation(BankInterface.cancelPayment(adventure.getPaymentConfirmation()));
 			} catch (HotelException | RemoteAccessException ex) {
 				return;
 			}
@@ -38,7 +35,7 @@ public class UndoState extends AdventureState {
 
 		if (adventure.cancelActivity()) {
 			try {
-				activityCancellation = ActivityInterface.cancelReservation(adventure.getActivityConfirmation());
+				adventure.setActivityCancellation(ActivityInterface.cancelReservation(adventure.getActivityConfirmation()));
 			} catch (HotelException | RemoteAccessException ex) {
 				return;
 			}
@@ -46,13 +43,13 @@ public class UndoState extends AdventureState {
 
 		if (adventure.cancelRoom()) {
 			try {
-				roomCancellation = HotelInterface.cancelBooking(adventure.getRoomConfirmation());
+				adventure.setRoomCancellation(HotelInterface.cancelBooking(adventure.getRoomConfirmation()));
 			} catch (HotelException | RemoteAccessException ex) {
 				return;
 			}
 		}
 
-		if (paymentCancellation == "" && activityCancellation == "" && roomCancellation == "") {
+		if (adventure.cancelRoom() == false && adventure.cancelActivity() == false && adventure.cancelPayment() == false) {
 			adventure.setState(State.CANCELLED);
 		}       
     }
