@@ -23,12 +23,13 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 @RunWith(JMockit.class)
 public class AdventureSequenceTest {
-	// declarations
-	
 
 	private static final String PAYMENT_CONFIRMATION = "PaymentConfirmation";
 	private static final String ACTIVITY_CONFIRMATION = "ActivityConfirmation";
 	private static final String ROOM_CONFIRMATION = "RoomConfirmation";
+	protected static final Object PAYMENT_CANCELLATION = "PaymentCancellation";
+	protected static final Object ACTIVITY_CANCELLATION = "ActivityCancellation";
+	protected static final Object ROOM_CANCELLATION = "RoomCancellation";
 	
 	private final LocalDate begin = new LocalDate(2017,07,15);
 	private final LocalDate end = new LocalDate(2017,07,31);
@@ -131,6 +132,13 @@ public class AdventureSequenceTest {
 				this.result = PAYMENT_CONFIRMATION;
 				ActivityInterface.reserveActivity(begin, end, AGE);
 				this.result = new ActivityException();
+				
+				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
+				this.result = PAYMENT_CANCELLATION;/*
+				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
+				this.result = ACTIVITY_CANCELLATION;
+				HotelInterface.cancelBooking(ROOM_CONFIRMATION);
+				this.result = ROOM_CANCELLATION;*/
 			}
 		};
 		Assert.assertEquals(State.PROCESS_PAYMENT, adventure.getState());
@@ -226,6 +234,13 @@ public class AdventureSequenceTest {
 				this.result = ACTIVITY_CONFIRMATION;
 				HotelInterface.reserveRoom(Type.SINGLE, begin, end);
 				this.result = new HotelException();
+				
+				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
+				this.result = PAYMENT_CANCELLATION;
+				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
+				this.result = ACTIVITY_CANCELLATION;/*
+				HotelInterface.cancelBooking(ROOM_CONFIRMATION);
+				this.result = ROOM_CANCELLATION;*/
 			}			
 		};
 		Assert.assertEquals(State.PROCESS_PAYMENT, adventure.getState());
