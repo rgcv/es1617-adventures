@@ -122,10 +122,9 @@ public class Hotel {
 
 	public static RoomBookingData getRoomBookingData(String reference) {
 		if (reference == null || reference.trim().equals("")) throw new HotelException();
-		
 
 		for (Hotel hotel : Hotel.hotels) {
-			for (Room room : hotel.rooms) {
+			for (Room room : hotel.getRooms()) {
 				for (Booking booking : room.getBookings()) {
 					if (booking.getReference().equals(reference)) {
 						RoomBookingData rbd = new RoomBookingData();
