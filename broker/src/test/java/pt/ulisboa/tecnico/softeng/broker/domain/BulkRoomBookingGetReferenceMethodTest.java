@@ -18,6 +18,7 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.HotelInterface;
 import pt.ulisboa.tecnico.softeng.hotel.dataobjects.RoomBookingData;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
+import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 
 @RunWith(JMockit.class)
@@ -100,6 +101,22 @@ public class BulkRoomBookingGetReferenceMethodTest {
 		
 		Assert.assertTrue(booking.getStatus());
 		
+	}
+	
+	@Test
+	public void catchHotelException(@Mocked HotelInterface hotel) {
+		new Expectations() {
+			{
+				hotel.getRoomBookingData(anyString);
+				result = new HotelException();
+			}
+		};
+		
+		booking.addRemoteError();
+		
+		booking.getReference("Single");
+		
+		Assert.assertEquals(0, booking.getRemoteErrors());
 	}
 	
 	@After
