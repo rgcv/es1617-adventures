@@ -40,10 +40,15 @@ public class HotelgetRoomBookingDataMethodTest {
 		Assert.assertEquals(1,hotel.getRooms().size());
 		Assert.assertEquals(1, room.getBookings().size());
 		
+		String reference = null;
+		for (Booking booking : room.getBookings()) {
+			reference =  booking.getReference();
+		}
+		if(reference == null) Assert.fail();
 		
-		RoomBookingData rbd = Hotel.getRoomBookingData(REFERENCE);
+		RoomBookingData rbd = Hotel.getRoomBookingData(reference);
 		
-		Assert.assertEquals(REFERENCE, rbd.getReference());
+		Assert.assertEquals(reference, rbd.getReference());
 		Assert.assertEquals(HNAME, rbd.getHotelName());
 		Assert.assertEquals(HCODE, rbd.getHotelCode());
 		Assert.assertEquals(RNUMBER, rbd.getRoomNumber());
