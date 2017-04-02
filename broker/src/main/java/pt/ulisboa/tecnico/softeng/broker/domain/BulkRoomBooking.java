@@ -119,14 +119,14 @@ public class BulkRoomBooking {
 			RoomBookingData data = null;
 			try {
 				data = HotelInterface.getRoomBookingData(reference);
-				// this.numberOfRemoteErrors = 0;
+				setRemoteErrors(0);
 			} catch (HotelException he) {
-				// this.numberOfRemoteErrors = 0;
+				setRemoteErrors(0);
 			} catch (RemoteAccessException rae) {
-				// this.numberOfRemoteErrors++;
-				// if (this.numberOfRemoteErrors == MAX_REMOTE_ERRORS) {
-				// this.cancelled = true;
-				// }
+				addRemoteError();
+				if (getRemoteErrors() == MAX_REMOTE_ERRORS) {
+					setStatus(true);
+				}
 			}
 
 			if (data != null && data.getRoomType().equals(type)) {
