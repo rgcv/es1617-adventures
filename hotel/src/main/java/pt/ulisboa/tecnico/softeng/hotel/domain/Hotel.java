@@ -164,19 +164,23 @@ public class Hotel {
 		Set<Room> rooms = new HashSet<>();
 		for (Hotel hotel : Hotel.hotels) {
 			for (Room room : hotel.rooms) {
-				for (Type type : Type.values())
+				for (Type type : Type.values()) {
 					if (room.isFree(type, arrival, departure))
 						rooms.add(room);
+				}
 			}
 		}
 
 		if (rooms.size() < number)
 			throw new HotelException();
 
-		Set<String> references = new HashSet<>();
+		Set<String> references = new HashSet<>(number);
 		for (Room room : rooms) {
 			Booking booking = room.reserve(room.getType(), arrival, departure);
 			references.add(booking.getReference());
+			--number;
+
+			if (number == 0) break;
 		}
 
         return references;
