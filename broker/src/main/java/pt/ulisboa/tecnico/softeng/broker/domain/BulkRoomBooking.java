@@ -78,7 +78,8 @@ public class BulkRoomBooking {
 	}
 
 	public void processBooking() {
-		if(getStatus()) {
+		if(getStatus() || getNumber() < 0 || getArrival() == null 
+			|| getDeparture() == null || getArrival().isAfter(getDeparture())) {
 			return;
 		}
 
