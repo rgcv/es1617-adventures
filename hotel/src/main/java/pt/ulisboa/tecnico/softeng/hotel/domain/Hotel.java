@@ -12,7 +12,7 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 public class Hotel {
 	public static Set<Hotel> hotels = new HashSet<>();
 
-	static final int CODE_SIZE = 7;
+	public static final int CODE_SIZE = 7;
 
 	private final String code;
 	private final String name;
@@ -61,6 +61,10 @@ public class Hotel {
 
 	String getName() {
 		return this.name;
+	}
+	
+	public Set<Room> getRooms() {
+		return rooms;
 	}
 
 	void addRoom(Room room) {

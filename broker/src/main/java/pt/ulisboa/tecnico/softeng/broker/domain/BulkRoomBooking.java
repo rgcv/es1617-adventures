@@ -15,7 +15,13 @@ public class BulkRoomBooking {
 	private final int number;
 	private final LocalDate arrival;
 	private final LocalDate departure;
-	private final boolean cancelled = false;
+	private boolean cancelled = false;
+	
+	private int numberOfRemoteErrors = 0;
+	private int numberOfHotelExceptions = 0;
+	
+	public static final int MAX_HOTEL_EXCEPTIONS = 5;
+	public static final int MAX_REMOTE_ERRORS = 5;
 
 	public BulkRoomBooking(int number, LocalDate arrival, LocalDate departure) {
 		this.number = number;
@@ -39,12 +45,32 @@ public class BulkRoomBooking {
 		return this.departure;
 	}
 	
+	public void setStatus(boolean cancelled) {
+		this.cancelled = cancelled;
+	} 
+	
 	public boolean getStatus() {
 		return this.cancelled;
 	}
+	
+	public void addHotelException() {
+		this.numberOfHotelExceptions++;
+	}
+	
+	public int getHotelExceptions() {
+		return this.numberOfHotelExceptions;
+	}
+	
+	public void addRemoteError() {
+		this.numberOfRemoteErrors++;
+	}
+	
+	public int getRemoteErrors() {
+		return this.numberOfRemoteErrors;
+	}
 
 	public void processBooking() {
-		if (this.cancelled) {
+		if(this.cancelled) {
 			return;
 		}
 
