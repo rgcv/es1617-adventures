@@ -105,7 +105,7 @@ public class Bank {
 
 	public static String cancelPayment(String reference) {
 		
-		if (reference.trim().equals("") || reference == null) throw new BankException();
+		if (reference == null || reference.trim().equals("")) throw new BankException();
 		
 		Operation opW = null;
 		for (Bank bank : banks){
