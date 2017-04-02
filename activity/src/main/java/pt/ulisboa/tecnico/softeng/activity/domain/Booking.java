@@ -26,4 +26,8 @@ public class Booking {
 		return this.reference;
 	}
 	
+	public static void resetCounter() {
+		counter = 0;
+	}
+	
 }
