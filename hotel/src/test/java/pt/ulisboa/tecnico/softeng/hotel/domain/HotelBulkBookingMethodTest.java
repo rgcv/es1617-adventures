@@ -28,11 +28,21 @@ public class HotelBulkBookingMethodTest {
     }
 
     @Test
-    public void success() {
+    public void bookAllRooms() {
         Set<String> references = Hotel.bulkBooking(3, this.arrival,
                 this.departure);
 
         Assert.assertEquals(3, references.size());
+        for (String ref : references)
+            Assert.assertTrue(ref.startsWith(CODE));
+    }
+
+    @Test
+    public void bookSomeOfTheRooms() {
+        Set<String> references = Hotel.bulkBooking(2, this.arrival,
+                this.departure);
+
+        Assert.assertEquals(2, references.size());
         for (String ref : references)
             Assert.assertTrue(ref.startsWith(CODE));
     }
