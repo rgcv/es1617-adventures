@@ -104,8 +104,23 @@ public class Bank {
 	}
 
 	public static String cancelPayment(String reference) {
-		// TODO implement
-		throw new BankException();
+		
+		if (reference.trim().equals("") || reference == null) throw new BankException();
+		
+		Operation opW = null;
+		for (Bank bank : banks){
+			opW = bank.getOperation(reference);
+			if (!opW.equals(null)){
+				break;
+			}
+		}
+		
+		if (opW.getType() == Operation.Type.DEPOSIT || opW.equals(null)) throw new BankException();
+		
+		Account acc = opW.getAccount();
+		int result = opW.getValue();
+		
+		return acc.deposit(result);
 	}
 
 	public static BankOperationData getOperationData(String reference) {

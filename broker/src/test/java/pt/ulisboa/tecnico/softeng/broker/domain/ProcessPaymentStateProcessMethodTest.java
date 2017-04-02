@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Mocked;
 import mockit.StrictExpectations;
@@ -41,7 +42,7 @@ public class ProcessPaymentStateProcessMethodTest {
 	
 	@Test
 	public void success(@Mocked final BankInterface bankInterface) {
-		new StrictExpectations() {
+		new Expectations() {
 			{
 				BankInterface.processPayment(IBAN, AMOUNT);
 				this.result = PAYMENT_CONFIRMATION;

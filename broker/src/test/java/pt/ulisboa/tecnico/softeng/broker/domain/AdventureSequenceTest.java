@@ -134,11 +134,7 @@ public class AdventureSequenceTest {
 				this.result = new ActivityException();
 				
 				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
-				this.result = PAYMENT_CANCELLATION;/*
-				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
-				this.result = ACTIVITY_CANCELLATION;
-				HotelInterface.cancelBooking(ROOM_CONFIRMATION);
-				this.result = ROOM_CANCELLATION;*/
+				this.result = PAYMENT_CANCELLATION;
 			}
 		};
 		Assert.assertEquals(State.PROCESS_PAYMENT, adventure.getState());
@@ -238,9 +234,7 @@ public class AdventureSequenceTest {
 				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
 				this.result = PAYMENT_CANCELLATION;
 				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
-				this.result = ACTIVITY_CANCELLATION;/*
-				HotelInterface.cancelBooking(ROOM_CONFIRMATION);
-				this.result = ROOM_CANCELLATION;*/
+				this.result = ACTIVITY_CANCELLATION;
 			}			
 		};
 		Assert.assertEquals(State.PROCESS_PAYMENT, adventure.getState());
