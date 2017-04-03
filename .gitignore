@@ -1,8 +1,23 @@
+# Eclipse
 .classpath
 .project
 .settings
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Maven
 target
+
+# JMeter
 jmeter.log
-infer-out
-.DS_Store
+
+# FF Props file
 fenix-framework.properties
+
+# macOS
+.DS_Store
+
+# infer
+infer-out
