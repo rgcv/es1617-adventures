@@ -8,4 +8,8 @@ class Activity {
     int capacity;
 }
 
-class Booking;
+class Booking {
+    String reference;
+    String cancellation;
+    LocalDate cancellationDate;
+}
