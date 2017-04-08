@@ -9,45 +9,45 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ActivityOfferGetBookingMethodTest {
-	private ActivityProvider provider;
-	private ActivityOffer offer;
+    private ActivityProvider provider;
+    private ActivityOffer offer;
 
-	@Before
-	public void setUp() {
-		this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
-		Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
+    @Before
+    public void setUp() {
+        this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
+        Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
 
-		LocalDate begin = new LocalDate(2016, 12, 19);
-		LocalDate end = new LocalDate(2016, 12, 21);
+        LocalDate begin = new LocalDate(2016, 12, 19);
+        LocalDate end = new LocalDate(2016, 12, 21);
 
-		this.offer = new ActivityOffer(activity, begin, end);
-	}
+        this.offer = new ActivityOffer(activity, begin, end);
+    }
 
-	@Test
-	public void success() {
-		Booking booking = new Booking(this.provider, this.offer);
+    @Test
+    public void success() {
+        Booking booking = new Booking(this.provider, this.offer);
 
-		assertEquals(booking, this.offer.getBooking(booking.getReference()));
-	}
+        assertEquals(booking, this.offer.getBooking(booking.getReference()));
+    }
 
-	@Test
-	public void successCancelled() {
-		Booking booking = new Booking(this.provider, this.offer);
-		booking.cancel();
+    @Test
+    public void successCancelled() {
+        Booking booking = new Booking(this.provider, this.offer);
+        booking.cancel();
 
-		assertEquals(booking, this.offer.getBooking(booking.getCancellation()));
-	}
+        assertEquals(booking, this.offer.getBooking(booking.getCancellation()));
+    }
 
-	@Test
-	public void doesNotExist() {
-		new Booking(this.provider, this.offer);
+    @Test
+    public void doesNotExist() {
+        new Booking(this.provider, this.offer);
 
-		assertNull(this.offer.getBooking("XPTO"));
-	}
+        assertNull(this.offer.getBooking("XPTO"));
+    }
 
-	@After
-	public void tearDown() {
-		ActivityProvider.providers.clear();
-	}
+    @After
+    public void tearDown() {
+        ActivityProvider.providers.clear();
+    }
 
 }

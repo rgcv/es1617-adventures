@@ -4,10 +4,10 @@ class Bank {
 }
 
 relation DomainRootHasBankApplication {
-	.pt.ist.fenixframework.DomainRoot playsRole root {
-		multiplicity 1..1;
-	}
-	Bank playsRole bank {
-		multiplicity 0..*;
-	}
+    .pt.ist.fenixframework.DomainRoot playsRole root {
+        multiplicity 1..1;
+    }
+    Bank playsRole bank {
+        multiplicity 0..*;
+    }
 }

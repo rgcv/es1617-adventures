@@ -11,39 +11,39 @@ import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityProviderCancelReservationMethodTest {
-	private ActivityProvider provider;
-	private ActivityOffer offer;
+    private ActivityProvider provider;
+    private ActivityOffer offer;
 
-	@Before
-	public void setUp() {
-		this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
-		Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
+    @Before
+    public void setUp() {
+        this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
+        Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
 
-		LocalDate begin = new LocalDate(2016, 12, 19);
-		LocalDate end = new LocalDate(2016, 12, 21);
-		this.offer = new ActivityOffer(activity, begin, end);
-	}
+        LocalDate begin = new LocalDate(2016, 12, 19);
+        LocalDate end = new LocalDate(2016, 12, 21);
+        this.offer = new ActivityOffer(activity, begin, end);
+    }
 
-	@Test
-	public void success() {
-		Booking booking = new Booking(this.provider, this.offer);
+    @Test
+    public void success() {
+        Booking booking = new Booking(this.provider, this.offer);
 
-		String cancel = ActivityProvider.cancelReservation(booking.getReference());
+        String cancel = ActivityProvider.cancelReservation(booking.getReference());
 
-		assertTrue(booking.isCancelled());
-		assertEquals(cancel, booking.getCancellation());
-	}
+        assertTrue(booking.isCancelled());
+        assertEquals(cancel, booking.getCancellation());
+    }
 
-	@Test(expected = ActivityException.class)
-	public void doesNotExist() {
-		new Booking(this.provider, this.offer);
+    @Test(expected = ActivityException.class)
+    public void doesNotExist() {
+        new Booking(this.provider, this.offer);
 
-		ActivityProvider.cancelReservation("XPTO");
-	}
+        ActivityProvider.cancelReservation("XPTO");
+    }
 
-	@After
-	public void tearDown() {
-		ActivityProvider.providers.clear();
-	}
+    @After
+    public void tearDown() {
+        ActivityProvider.providers.clear();
+    }
 
 }

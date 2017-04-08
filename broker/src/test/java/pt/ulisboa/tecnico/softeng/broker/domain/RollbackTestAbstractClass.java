@@ -12,29 +12,29 @@ import pt.ulisboa.tecnico.softeng.activity.domain.ActivityProvider;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 
 public abstract class RollbackTestAbstractClass {
-	@Before
-	public void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
-		try {
-			FenixFramework.getTransactionManager().begin(false);
-			populate4Test();
-		} catch (WriteOnReadError | NotSupportedException | SystemException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            FenixFramework.getTransactionManager().begin(false);
+            populate4Test();
+        } catch (WriteOnReadError | NotSupportedException | SystemException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@After
-	public void tearDown() {
-		Hotel.hotels.clear();
-		ActivityProvider.providers.clear();
+    @After
+    public void tearDown() {
+        Hotel.hotels.clear();
+        ActivityProvider.providers.clear();
 
-		try {
-			FenixFramework.getTransactionManager().rollback();
-		} catch (IllegalStateException | SecurityException | SystemException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            FenixFramework.getTransactionManager().rollback();
+        } catch (IllegalStateException | SecurityException | SystemException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public abstract void populate4Test();
+    public abstract void populate4Test();
 
 }
