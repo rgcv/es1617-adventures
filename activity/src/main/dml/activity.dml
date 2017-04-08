@@ -1,3 +1,9 @@
 package pt.ulisboa.tecnico.softeng.activity.domain;
 
-class Activity;
+class Activity {
+    String name;
+    String code;
+    int minAge;
+    int maxAge;
+    int capacity;
+}
