@@ -1,6 +1,9 @@
 package pt.ulisboa.tecnico.softeng.bank.domain;
 
-class Bank;
+class Bank{
+	String name;
+	String code;
+}
 
 class Account;
 
