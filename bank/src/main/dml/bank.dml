@@ -1,7 +1,6 @@
 package pt.ulisboa.tecnico.softeng.bank.domain;
 
-class Bank {
-}
+class Bank;
 
 relation DomainRootHasBankApplication {
     .pt.ist.fenixframework.DomainRoot playsRole root {
