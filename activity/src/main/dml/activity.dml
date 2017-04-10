@@ -8,20 +8,30 @@ class Activity {
     int capacity;
 }
 
-class Booking {
-    String reference;
-    String cancellation;
-    LocalDate cancellationDate;
-}
-
 class ActivityOffer {
 	LocalDate begin;
 	LocalDate end;
 	int capacity;
 }
 
+class Booking {
+    String reference;
+    String cancellation;
+    LocalDate cancellationDate;
+}
+
+
+relation ActivityhasActivityOffers {
+	Activity playsRole activity {
+		multiplicity 1..1;
+	}
+	ActivityOffer playsRole offer {
+		multiplicity 0..*;
+	}
+}
+
 relation ActivityOfferhasBookings {
-	ActivityOffer playsRole activityoffer {
+	ActivityOffer playsRole offer {
 		multiplicity 1..1;
 	}
 	Booking playsRole booking {
