@@ -16,6 +16,15 @@ class Booking {
 
 class ActivityOffer {
 	LocalDate begin;
-    LocalDate end;
-    int capacity;
+	LocalDate end;
+	int capacity;
+}
+
+relation ActivityOfferhasBookings {
+	ActivityOffer playsRole activityoffer {
+		multiplicity 1..1;
+	}
+	Booking playsRole booking {
+		multiplicity 0..*;
+	}
 }
