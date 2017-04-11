@@ -6,17 +6,15 @@ public class Account extends Account_Base{
     private static int counter = 0;
 
     private final Bank bank;
-    private final String IBAN;
     private final Client client;
-    private int balance;
 
     public Account(Bank bank, Client client) {
         checkArguments(bank, client);
 
         this.bank = bank;
-        this.IBAN = bank.getCode() + Integer.toString(++Account.counter);
+        setIBAN(bank.getCode() + Integer.toString(++Account.counter));
         this.client = client;
-        this.balance = 0;
+        setBalance(0);
 
         bank.addAccount(this);
     }
@@ -36,16 +34,8 @@ public class Account extends Account_Base{
         return this.bank;
     }
 
-    public String getIBAN() {
-        return this.IBAN;
-    }
-
     public Client getClient() {
         return this.client;
-    }
-
-    public int getBalance() {
-        return this.balance;
     }
 
     public String deposit(int amount) {
@@ -53,19 +43,19 @@ public class Account extends Account_Base{
             throw new BankException();
         }
 
-        this.balance = this.balance + amount;
+        setBalance(getBalance() + amount);
 
         Operation operation = new Operation(Operation.Type.DEPOSIT, this, amount);
         return operation.getReference();
     }
 
     public String withdraw(int amount) {
-        if (amount <= 0 || amount > this.balance) {
+        if (amount <= 0 || amount > getBalance()) {
             throw new BankException();
         }
 
-        this.balance = this.balance - amount;
-
+        setBalance(getBalance() - amount);
+        
         return new Operation(Operation.Type.WITHDRAW, this, amount).getReference();
     }
 

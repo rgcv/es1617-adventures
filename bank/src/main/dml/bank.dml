@@ -5,7 +5,10 @@ class Bank{
 	String code;
 }
 
-class Account;
+class Account{
+    String IBAN;
+    int balance;
+}
 
 relation DomainRootHasBankApplication {
     .pt.ist.fenixframework.DomainRoot playsRole root {
