@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.hotel.dataobjects.RoomBookingData;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
-public class Hotel {
+public class Hotel extends Hotel_Base{
     public static Set<Hotel> hotels = new HashSet<>();
 
     static final int CODE_SIZE = 7;
@@ -25,6 +25,10 @@ public class Hotel {
         this.code = code;
         this.name = name;
         Hotel.hotels.add(this);
+    }
+    
+    public void delete() {
+    	deleteDomainObject();
     }
 
     private void checkArguments(String code, String name) {
