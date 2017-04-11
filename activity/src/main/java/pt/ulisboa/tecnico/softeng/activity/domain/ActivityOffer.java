@@ -16,6 +16,16 @@ public class ActivityOffer extends ActivityOffer_Base {
 
         activity.addOffer(this);
     }
+    
+    public void delete() {
+    	setActivity(null);
+    	
+    	for (Booking booking : getBookingSet()) {
+    		booking.delete();
+    	}
+    	
+    	deleteDomainObject();
+    }
 
     private void checkArguments(Activity activity, LocalDate begin, LocalDate end) {
         if (activity == null || begin == null || end == null) {
