@@ -1,3 +1,8 @@
 package pt.ulisboa.tecnico.softeng.hotel.domain;
 
-class Room;
+enum Room.Type as RoomType;
+
+class Room {
+    String number;
+    RoomType type;
+}
