@@ -25,8 +25,18 @@ class Booking {
     LocalDate cancellationDate;
 }
 
+relation DomainRootHasActivityProviders {
+    .pt.ist.fenixframework.DomainRoot playsRole root {
+        multiplicity 1..1;
+    }
 
-relation ActivityhasActivityOffers {
+    ActivityProvider playsRole provider {
+        multiplicity 0..*;
+    }
+}
+
+
+relation ActivityHasActivityOffers {
 	Activity playsRole activity {
 		multiplicity 1..1;
 	}
@@ -35,7 +45,7 @@ relation ActivityhasActivityOffers {
 	}
 }
 
-relation ActivityOfferhasBookings {
+relation ActivityOfferHasBookings {
 	ActivityOffer playsRole offer {
 		multiplicity 1..1;
 	}
