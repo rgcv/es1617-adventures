@@ -14,6 +14,12 @@ public class Booking extends Booking_Base {
 
         offer.addBooking(this);
     }
+    
+    public void delete() {
+    	setOffer(null);
+    	
+    	deleteDomainObject();
+    }
 
     private void checkArguments(ActivityProvider provider, ActivityOffer offer) {
         if (provider == null || offer == null) {
