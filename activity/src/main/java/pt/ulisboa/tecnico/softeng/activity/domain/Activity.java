@@ -25,6 +25,16 @@ public class Activity extends Activity_Base {
 
         provider.addActivity(this);
     }
+    
+    public void delete() {
+    	//Missing setProvider....
+    	
+    	for (ActivityOffer offer : getOfferSet()) {
+    		offer.delete();
+    	}
+    	
+    	deleteDomainObject();
+    }
 
     private void checkArguments(ActivityProvider provider, String name, int minAge, int maxAge, int capacity) {
         if (provider == null || name == null || name.trim().equals("")) {
