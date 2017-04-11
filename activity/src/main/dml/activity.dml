@@ -15,7 +15,8 @@ class ActivityOffer {
 }
 
 class ActivityProvider {
-
+	String name;
+	String code;
  }
 
 class Booking {

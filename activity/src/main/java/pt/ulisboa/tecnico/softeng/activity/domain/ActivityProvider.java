@@ -15,15 +15,13 @@ public class ActivityProvider extends ActivityProvider_Base {
 
     static final int CODE_SIZE = 6;
 
-    private final String name;
-    private final String code;
     private final Set<Activity> activities = new HashSet<>();
 
     public ActivityProvider(String code, String name) {
         checkArguments(code, name);
 
-        this.code = code;
-        this.name = name;
+        setCode(code);
+        setname(name);
 
         ActivityProvider.providers.add(this);
     }
@@ -42,14 +40,6 @@ public class ActivityProvider extends ActivityProvider_Base {
                 throw new ActivityException();
             }
         }
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getCode() {
-        return this.code;
     }
 
     int getNumberOfActivities() {
