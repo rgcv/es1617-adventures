@@ -12,17 +12,16 @@ public class Room extends Room_Base {
         SINGLE, DOUBLE
     }
 
-    private final Hotel hotel;
     private final Set<Booking> bookings = new HashSet<>();
 
     public Room(Hotel hotel, String number, Type type) {
         checkArguments(hotel, number, type);
 
-        this.hotel = hotel;
+        setHotel(hotel);
         setNumber(number);
         setType(type);
 
-        this.hotel.addRoom(this);
+        getHotel().addRoom(this);
     }
 
     private void checkArguments(Hotel hotel, String number, Type type) {
@@ -35,9 +34,6 @@ public class Room extends Room_Base {
         }
     }
 
-    public Hotel getHotel() {
-        return this.hotel;
-    }
 
     int getNumberOfBookings() {
         return this.bookings.size();
@@ -56,6 +52,11 @@ public class Room extends Room_Base {
 
         return true;
     }
+    
+    public void delete() {
+        setHotel(null);
+        deleteDomainObject();
+    }
 
     public Booking reserve(Type type, LocalDate arrival, LocalDate departure) {
         if (type == null || arrival == null || departure == null) {
@@ -66,7 +67,7 @@ public class Room extends Room_Base {
             throw new HotelException();
         }
 
-        Booking booking = new Booking(this.hotel, arrival, departure);
+        Booking booking = new Booking(getHotel(), arrival, departure);
         this.bookings.add(booking);
 
         return booking;

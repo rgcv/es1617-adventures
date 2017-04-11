@@ -11,3 +11,12 @@ class Room {
     String number;
     RoomType type;
 }
+
+relation HotelHasRoom {
+    Hotel playsRole hotel {
+        multiplicity 1..1;
+    }
+    Room playsRole room {
+        multiplicity 0..*;
+    }
+}
