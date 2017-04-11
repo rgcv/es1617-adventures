@@ -19,7 +19,7 @@ relation DomainRootHasBankApplication {
     }
 }
 
-relation BankgetAccount{
+relation BankhasAccount{
     Bank playsRole bank {
         multiplicity 1..1;
     }

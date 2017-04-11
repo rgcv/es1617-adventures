@@ -5,13 +5,11 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 public class Account extends Account_Base{
     private static int counter = 0;
 
-    //private final Bank bank;
     private final Client client;
 
     public Account(Bank bank, Client client) {
         checkArguments(bank, client);
 
-        //this.bank = bank;
         setBank(bank);
         setIBAN(bank.getCode() + Integer.toString(++Account.counter));
         this.client = client;
@@ -30,10 +28,6 @@ public class Account extends Account_Base{
         }
 
     }
-    //APAGAR!
-    /*Bank getBank() {
-        return this.bank;
-    }*/
 
     public Client getClient() {
         return this.client;
