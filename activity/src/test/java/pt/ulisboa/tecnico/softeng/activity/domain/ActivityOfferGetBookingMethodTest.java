@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import pt.ist.fenixframework.FenixFramework;
+
 public class ActivityOfferGetBookingMethodTest {
     private ActivityProvider provider;
     private ActivityOffer offer;
@@ -47,7 +49,7 @@ public class ActivityOfferGetBookingMethodTest {
 
     @After
     public void tearDown() {
-        ActivityProvider.providers.clear();
+        FenixFramework.getDomainRoot().getProviderSet().clear();
     }
 
 }

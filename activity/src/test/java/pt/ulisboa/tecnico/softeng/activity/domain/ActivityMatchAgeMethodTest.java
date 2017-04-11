@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import pt.ist.fenixframework.FenixFramework;
+
 public class ActivityMatchAgeMethodTest {
     private static final int MIN_AGE = 25;
     private static final int MAX_AGE = 80;
@@ -41,7 +43,7 @@ public class ActivityMatchAgeMethodTest {
 
     @After
     public void tearDown() {
-        ActivityProvider.providers.clear();
+        FenixFramework.getDomainRoot().getProviderSet().clear();
     }
 
 }

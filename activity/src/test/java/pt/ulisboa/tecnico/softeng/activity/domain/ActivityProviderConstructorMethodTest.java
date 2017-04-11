@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityProviderConstructorMethodTest {
@@ -18,7 +19,7 @@ public class ActivityProviderConstructorMethodTest {
 
         Assert.assertEquals(PROVIDER_NAME, provider.getName());
         Assert.assertTrue(provider.getCode().length() == ActivityProvider.CODE_SIZE);
-        Assert.assertEquals(1, ActivityProvider.providers.size());
+        Assert.assertEquals(1, FenixFramework.getDomainRoot().getProviderSet().size());
         Assert.assertEquals(0, provider.getNumberOfActivities());
     }
 
@@ -60,7 +61,7 @@ public class ActivityProviderConstructorMethodTest {
             new ActivityProvider(PROVIDER_CODE, "Hello");
             fail();
         } catch (ActivityException ae) {
-            Assert.assertEquals(1, ActivityProvider.providers.size());
+            Assert.assertEquals(1, FenixFramework.getDomainRoot().getProviderSet().size());
         }
     }
 
@@ -72,13 +73,13 @@ public class ActivityProviderConstructorMethodTest {
             new ActivityProvider("123456", PROVIDER_NAME);
             fail();
         } catch (ActivityException ae) {
-            Assert.assertEquals(1, ActivityProvider.providers.size());
+            Assert.assertEquals(1, FenixFramework.getDomainRoot().getProviderSet().size());
         }
     }
 
     @After
     public void tearDown() {
-        ActivityProvider.providers.clear();
+        FenixFramework.getDomainRoot().getProviderSet().clear();
     }
 
 }

@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import pt.ist.fenixframework.FenixFramework;
+
 public class ActivityOfferHasVacancyMethodTest {
     private ActivityProvider provider;
     private ActivityOffer offer;
@@ -65,7 +67,7 @@ public class ActivityOfferHasVacancyMethodTest {
 
     @After
     public void tearDown() {
-        ActivityProvider.providers.clear();
+        FenixFramework.getDomainRoot().getProviderSet().clear();
     }
 
 }

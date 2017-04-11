@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.dataobjects.ActivityReservationData;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
@@ -74,7 +75,7 @@ public class ActivityProviderActivityReservationDataMethodTest {
 
     @After
     public void tearDown() {
-        ActivityProvider.providers.clear();
+        FenixFramework.getDomainRoot().getProviderSet().clear();
     }
 
 }
