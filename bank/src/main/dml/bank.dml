@@ -10,6 +10,8 @@ class Account{
     int balance;
 }
 
+class Operation;
+
 relation DomainRootHasBankApplication {
     .pt.ist.fenixframework.DomainRoot playsRole root {
         multiplicity 1..1;

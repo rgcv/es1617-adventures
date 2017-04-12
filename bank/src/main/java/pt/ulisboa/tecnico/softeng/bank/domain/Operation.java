@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
-public class Operation {
+public class Operation extends Operation_Base{
     public static enum Type {
         DEPOSIT, WITHDRAW
     };
