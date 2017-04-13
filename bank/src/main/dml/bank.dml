@@ -1,31 +1,40 @@
 package pt.ulisboa.tecnico.softeng.bank.domain;
 
-class Bank{
+class Bank {
 	String name;
 	String code;
 }
 
-class Account{
+class Account {
     String IBAN;
     int balance;
 }
 
-class Operation;
+enum Operation.Type;
+
+class Operation {
+    String reference;
+    int value;
+    DateTime time;
+    Operation.Type type;
+}
 
 relation DomainRootHasBankApplication {
     .pt.ist.fenixframework.DomainRoot playsRole root {
         multiplicity 1..1;
     }
+
     Bank playsRole bank {
         multiplicity 0..*;
     }
 }
 
-relation BankhasAccount{
+relation BankhasAccount {
     Bank playsRole bank {
         multiplicity 1..1;
     }
-	Account playsRole account{
+
+	Account playsRole account {
 		multiplicity 0..*;
     }
 }
