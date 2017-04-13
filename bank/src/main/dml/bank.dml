@@ -19,7 +19,10 @@ class Operation {
     Operation.Type type;
 }
 
-class Client;
+class Client {
+    String name;
+    String ID;
+}
 
 relation DomainRootHasBankApplication {
     .pt.ist.fenixframework.DomainRoot playsRole root {
