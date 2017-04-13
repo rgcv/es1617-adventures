@@ -19,6 +19,8 @@ class Operation {
     Operation.Type type;
 }
 
+class Client;
+
 relation DomainRootHasBankApplication {
     .pt.ist.fenixframework.DomainRoot playsRole root {
         multiplicity 1..1;
