@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.softeng.bank.domain;
 
+import java.util.Set;
+
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
 public class Client extends Client_Base {
@@ -21,6 +23,11 @@ public class Client extends Client_Base {
     }
 
     public void delete() {
+        Set<Account> accounts = getAccountSet();
+        for(Account account : accounts) {
+    	    account.delete();
+        }
+
         deleteDomainObject();
     }
 }
