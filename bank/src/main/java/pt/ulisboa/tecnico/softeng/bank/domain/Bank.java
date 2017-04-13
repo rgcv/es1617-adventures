@@ -22,9 +22,6 @@ public class Bank extends Bank_Base {
         for(Account account : getAccountSet()){
         	account.delete();
         }
-        for(Client client : getClientSet()) {
-        	client.delete();
-        }
         for(Operation operation : getOperationSet()) {
         	operation.delete();
         }
@@ -53,15 +50,11 @@ public class Bank extends Bank_Base {
     }
 
     int getNumberOfClients() {
-        return getClientSet.size();
+        return getClientSet().size();
     }
 
     boolean hasClient(Client client) {
-        return getClientSet.contains(client);
-    }
-
-    void addClient(Client client) {
-        getClientSet.add(client);
+        return getClientSet().contains(client);
     }
 
     void addLog(Operation operation) {
