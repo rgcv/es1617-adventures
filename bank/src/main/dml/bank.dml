@@ -50,3 +50,13 @@ relation OperationHasAccount {
         multiplicity 1..1;
     }
 }
+
+relation BankHasClient {
+	Bank playsRole bank {
+		multiplicity 1..1;
+	}
+	
+	Client playsRole client {
+		multiplicity 0..*;
+	}
+}
