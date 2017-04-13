@@ -4,7 +4,10 @@ import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
-public class Booking {
+
+import pt.ist.fenixframework.FenixFramework;
+
+public class Booking extends Booking_Base {
     private static int counter = 0;
 
     private final String reference;
@@ -19,8 +22,8 @@ public class Booking {
         this.reference = hotel.getCode() + Integer.toString(++Booking.counter);
         this.arrival = arrival;
         this.departure = departure;
+        
     }
-
     private void checkArguments(Hotel hotel, LocalDate arrival, LocalDate departure) {
         if (hotel == null || arrival == null || departure == null) {
             throw new HotelException();

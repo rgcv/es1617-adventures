@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.hotel.domain;
 
 enum Room.Type as RoomType;
 
+
 class Hotel {
     String code;
     String name;
@@ -11,6 +12,8 @@ class Room {
     String number;
     RoomType type;
 }
+
+class Booking;
 
 relation DomainRoothasHotel {
     .pt.ist.fenixframework.DomainRoot playsRole root {
@@ -29,4 +32,3 @@ relation HotelHasRoom {
         multiplicity 0..*;
     }
 }
-
