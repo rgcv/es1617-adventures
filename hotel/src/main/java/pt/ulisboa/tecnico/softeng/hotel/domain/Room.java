@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.softeng.hotel.domain;
 
-import java.util.HashSet;
-import java.util.Set;
 
 import org.joda.time.LocalDate;
 
@@ -12,7 +10,7 @@ public class Room extends Room_Base {
         SINGLE, DOUBLE
     }
 
-    private final Set<Booking> bookings = new HashSet<>();
+
 
     public Room(Hotel hotel, String number, Type type) {
         checkArguments(hotel, number, type);
@@ -35,16 +33,13 @@ public class Room extends Room_Base {
     }
 
 
-    int getNumberOfBookings() {
-        return this.bookings.size();
-    }
 
     boolean isFree(Type type, LocalDate arrival, LocalDate departure) {
         if (!type.equals(getType())) {
             return false;
         }
 
-        for (Booking booking : this.bookings) {
+        for (Booking booking : getBookingSet()) {
             if (booking.conflict(arrival, departure)) {
                 return false;
             }
@@ -53,10 +48,7 @@ public class Room extends Room_Base {
         return true;
     }
     
-    public void delete() {
-        setHotel(null);
-        deleteDomainObject();
-    }
+
 
     public Booking reserve(Type type, LocalDate arrival, LocalDate departure) {
         if (type == null || arrival == null || departure == null) {
@@ -68,13 +60,24 @@ public class Room extends Room_Base {
         }
 
         Booking booking = new Booking(getHotel(), arrival, departure);
-        this.bookings.add(booking);
+        getBookingSet().add(booking);
 
         return booking;
     }
 
+    
+    public void delete() {
+        setHotel(null);
+
+        for (Booking booking : getBookingSet()) {
+            booking.delete();
+        }
+
+        deleteDomainObject();
+    }
+
     public Booking getBooking(String reference) {
-        for (Booking booking : this.bookings) {
+        for (Booking booking : getBookingSet()) {
             if (booking.getReference().equals(reference)
                     || (booking.isCancelled() && booking.getCancellation().equals(reference))) {
                 return booking;

@@ -38,3 +38,14 @@ relation HotelHasRoom {
         multiplicity 0..*;
     }
 }
+
+
+relation RoomHasBooking {
+    Room playsRole room {
+        multiplicity 1..1;
+    }
+    Booking playsRole booking {
+        multiplicity 0..*;
+    }
+}
+
