@@ -11,14 +11,12 @@ public class Operation extends Operation_Base {
 
     private static int counter = 0;
 
-    Account account;
-
     public Operation(Type type, Account account, int value) {
         checkArguments(type, account, value);
 
         setReference(account.getBank().getCode() + Integer.toString(++Operation.counter));
         setType(type);
-        this.account = account;
+        setAccount(account);
         setValue(value);
         setTime(DateTime.now());
 
@@ -29,10 +27,6 @@ public class Operation extends Operation_Base {
         if(type == null || account == null || value <= 0) {
             throw new BankException();
         }
-    }
-
-    public Account getAccount() {
-        return this.account;
     }
 
     public String revert() {
@@ -47,6 +41,8 @@ public class Operation extends Operation_Base {
     }
 
     public void delete() {
-    	deleteDomainObject();
+        setAccount(null);
+
+        deleteDomainObject();
     }
 }
