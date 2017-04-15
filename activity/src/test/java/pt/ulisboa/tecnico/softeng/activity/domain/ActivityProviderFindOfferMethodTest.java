@@ -11,7 +11,7 @@ import org.junit.Test;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
-public class ActivityProviderFindOfferMethodTest {
+public class ActivityProviderFindOfferMethodTest extends RollbackTestAbstractClass{
     private static final int MIN_AGE = 25;
     private static final int MAX_AGE = 80;
     private static final int CAPACITY = 25;
@@ -24,7 +24,7 @@ public class ActivityProviderFindOfferMethodTest {
     private ActivityOffer offer;
 
     @Before
-    public void setUp() {
+    public void populate4Test() {
         this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
         this.activity = new Activity(this.provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
 

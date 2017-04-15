@@ -9,14 +9,14 @@ import org.junit.Test;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
-public class ActivityOfferMatchDateMethodTest {
+public class ActivityOfferMatchDateMethodTest extends RollbackTestAbstractClass{
     private final LocalDate begin = new LocalDate(2016, 12, 19);
     private final LocalDate end = new LocalDate(2016, 12, 23);
 
     private ActivityOffer offer;
 
     @Before
-    public void setUp() {
+    public void populate4Test() {
         ActivityProvider provider = new ActivityProvider("XtremX", "ExtremeAdventure");
         Activity activity = new Activity(provider, "Bush Walking", 18, 80, 3);
 

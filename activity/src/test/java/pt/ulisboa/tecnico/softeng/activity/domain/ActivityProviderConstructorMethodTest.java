@@ -9,9 +9,12 @@ import org.junit.Test;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
-public class ActivityProviderConstructorMethodTest {
+public class ActivityProviderConstructorMethodTest extends RollbackTestAbstractClass {
     private static final String PROVIDER_CODE = "XtremX";
     private static final String PROVIDER_NAME = "Adventure++";
+    
+    @Override
+    public void populate4Test(){}
 
     @Test
     public void success() {

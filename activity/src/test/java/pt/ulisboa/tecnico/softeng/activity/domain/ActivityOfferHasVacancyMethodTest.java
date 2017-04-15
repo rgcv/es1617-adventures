@@ -8,12 +8,12 @@ import org.junit.Test;
 
 import pt.ist.fenixframework.FenixFramework;
 
-public class ActivityOfferHasVacancyMethodTest {
+public class ActivityOfferHasVacancyMethodTest extends RollbackTestAbstractClass{
     private ActivityProvider provider;
     private ActivityOffer offer;
 
     @Before
-    public void setUp() {
+    public void populate4Test() {
         this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
         Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
 
