@@ -52,7 +52,7 @@ public class ActivityProvider extends ActivityProvider_Base {
         }
     }
 
-    private int getNumberOfActivities() {
+    public int getNumberOfActivities() {
         return getActivitySet().size();
     }
     
