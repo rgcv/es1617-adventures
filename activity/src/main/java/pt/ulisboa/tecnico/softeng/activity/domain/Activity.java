@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class Activity extends Activity_Base {
@@ -27,7 +28,13 @@ public class Activity extends Activity_Base {
     }
     
     public void delete() {
-    	//Missing setProvider....
+    	
+    	Set<ActivityProvider> providers = FenixFramework.getDomainRoot().getProviderSet();
+    	
+    	for(ActivityProvider provider : providers) {
+    		if(provider.getActivitySet().contains(this))
+    			provider.removeActivity(this);
+    	}
     	
     	for (ActivityOffer offer : getOfferSet()) {
     		offer.delete();
