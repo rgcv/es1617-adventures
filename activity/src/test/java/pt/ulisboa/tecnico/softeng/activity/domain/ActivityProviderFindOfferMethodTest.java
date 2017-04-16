@@ -3,12 +3,9 @@ package pt.ulisboa.tecnico.softeng.activity.domain;
 import java.util.List;
 
 import org.joda.time.LocalDate;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityProviderFindOfferMethodTest extends RollbackTestAbstractClass{
@@ -23,7 +20,7 @@ public class ActivityProviderFindOfferMethodTest extends RollbackTestAbstractCla
     private Activity activity;
     private ActivityOffer offer;
 
-    @Before
+    @Override
     public void populate4Test() {
         this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
         this.activity = new Activity(this.provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
@@ -128,10 +125,4 @@ public class ActivityProviderFindOfferMethodTest extends RollbackTestAbstractCla
 
         Assert.assertEquals(1, offers.size());
     }
-
-    @After
-    public void tearDown() {
-        FenixFramework.getDomainRoot().getProviderSet().clear();
-    }
-
 }

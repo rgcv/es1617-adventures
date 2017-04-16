@@ -1,11 +1,8 @@
 package pt.ulisboa.tecnico.softeng.activity.domain;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityConstructorMethodTest extends RollbackTestAbstractClass{
@@ -15,7 +12,7 @@ public class ActivityConstructorMethodTest extends RollbackTestAbstractClass{
     private static final int CAPACITY = 30;
     private ActivityProvider provider;
 
-    @Before
+    @Override
     public void populate4Test() {
         this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
     }
@@ -128,11 +125,6 @@ public class ActivityConstructorMethodTest extends RollbackTestAbstractClass{
     @Test(expected = ActivityException.class)
     public void zeroCapacity() {
         new Activity(this.provider, PROVIDER_NAME, MIN_AGE, MAX_AGE, 0);
-    }
-
-    @After
-    public void tearDown() {
-        FenixFramework.getDomainRoot().getProviderSet().clear();
     }
 
 }

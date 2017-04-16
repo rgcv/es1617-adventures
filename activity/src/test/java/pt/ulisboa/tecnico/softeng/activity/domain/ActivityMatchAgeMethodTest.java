@@ -1,11 +1,7 @@
 package pt.ulisboa.tecnico.softeng.activity.domain;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import pt.ist.fenixframework.FenixFramework;
 
 public class ActivityMatchAgeMethodTest extends RollbackTestAbstractClass {
     private static final int MIN_AGE = 25;
@@ -13,7 +9,7 @@ public class ActivityMatchAgeMethodTest extends RollbackTestAbstractClass {
     private static final int CAPACITY = 30;
     private Activity activity;
 
-    @Before
+    @Override
     public void populate4Test() {
         ActivityProvider provider = new ActivityProvider("XtremX", "ExtremeAdventure");
         this.activity = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
@@ -39,11 +35,6 @@ public class ActivityMatchAgeMethodTest extends RollbackTestAbstractClass {
 
     public void greaterThanMaxAge() {
         Assert.assertFalse(this.activity.matchAge(MAX_AGE + 1));
-    }
-
-    @After
-    public void tearDown() {
-        FenixFramework.getDomainRoot().getProviderSet().clear();
     }
 
 }

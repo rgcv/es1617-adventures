@@ -5,11 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.joda.time.LocalDate;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.dataobjects.ActivityReservationData;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
@@ -22,7 +19,7 @@ public class ActivityProviderActivityReservationDataMethodTest extends RollbackT
     private ActivityOffer offer;
     private Booking booking;
 
-    @Before
+    @Override
     public void populate4Test() {
         this.provider = new ActivityProvider(CODE, NAME);
         Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
@@ -72,10 +69,4 @@ public class ActivityProviderActivityReservationDataMethodTest extends RollbackT
     public void notExistsReference() {
         ActivityProvider.getActivityReservationData("XPTO");
     }
-
-    @After
-    public void tearDown() {
-        FenixFramework.getDomainRoot().getProviderSet().clear();
-    }
-
 }

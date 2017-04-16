@@ -4,18 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.joda.time.LocalDate;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityProviderCancelReservationMethodTest extends RollbackTestAbstractClass{
     private ActivityProvider provider;
     private ActivityOffer offer;
 
-    @Before
+    @Override
     public void populate4Test() {
         this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
         Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
@@ -41,10 +38,4 @@ public class ActivityProviderCancelReservationMethodTest extends RollbackTestAbs
 
         ActivityProvider.cancelReservation("XPTO");
     }
-
-    @After
-    public void tearDown() {
-        FenixFramework.getDomainRoot().getProviderSet().clear();
-    }
-
 }

@@ -1,12 +1,9 @@
 package pt.ulisboa.tecnico.softeng.activity.domain;
 
 import org.joda.time.LocalDate;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityOfferMatchDateMethodTest extends RollbackTestAbstractClass{
@@ -15,7 +12,7 @@ public class ActivityOfferMatchDateMethodTest extends RollbackTestAbstractClass{
 
     private ActivityOffer offer;
 
-    @Before
+    @Override
     public void populate4Test() {
         ActivityProvider provider = new ActivityProvider("XtremX", "ExtremeAdventure");
         Activity activity = new Activity(provider, "Bush Walking", 18, 80, 3);
@@ -57,10 +54,4 @@ public class ActivityOfferMatchDateMethodTest extends RollbackTestAbstractClass{
     public void endMinusOne() {
         Assert.assertFalse(this.offer.matchDate(this.begin, this.end.minusDays(1)));
     }
-
-    @After
-    public void tearDown() {
-        FenixFramework.getDomainRoot().getProviderSet().clear();
-    }
-
 }

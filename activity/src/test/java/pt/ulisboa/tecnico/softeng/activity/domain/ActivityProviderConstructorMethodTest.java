@@ -2,7 +2,6 @@ package pt.ulisboa.tecnico.softeng.activity.domain;
 
 import static org.junit.Assert.fail;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -79,10 +78,4 @@ public class ActivityProviderConstructorMethodTest extends RollbackTestAbstractC
             Assert.assertEquals(1, FenixFramework.getDomainRoot().getProviderSet().size());
         }
     }
-
-    @After
-    public void tearDown() {
-        FenixFramework.getDomainRoot().getProviderSet().clear();
-    }
-
 }
