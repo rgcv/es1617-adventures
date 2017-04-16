@@ -2,14 +2,16 @@ package pt.ulisboa.tecnico.softeng.activity.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Test;
+
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -19,15 +21,16 @@ public class ActivityPersistenceTest {
 
     private static final String PROVIDER_CODE = "APR001";
     private static final String PROVIDER_NAME = "Best Provider";
-    
-    private static final int  ACTIVITY_MIN_AGE = 20;
-    private static final int  ACTIVITY_MAX_AGE = 42;
-    private static final int ACTIVITY_CAPACITY = 23;
-    private static final String  ACTIVITY_NAME = "Dank activity name";
-    
+
+    private static final int MIN_AGE = 20;
+    private static final int MAX_AGE = 42;
+    private static final int CAPACITY = 23;
+
+    private static final String ACTIVITY_NAME = "Dank activity name";
+
     private final LocalDate begin = new LocalDate(2016, 12, 19);
     private final LocalDate end = new LocalDate(2016, 12, 21);
-    
+
 
     @Test
     public void success() {
@@ -37,62 +40,70 @@ public class ActivityPersistenceTest {
 
     @Atomic(mode = TxMode.WRITE)
     private void atomicProcess() {
-        ActivityProvider ap = 
-        		new ActivityProvider(PROVIDER_CODE, PROVIDER_NAME);
-        
-        Activity act = new Activity(ap, ACTIVITY_NAME, ACTIVITY_MIN_AGE, 
-        								ACTIVITY_MAX_AGE, ACTIVITY_CAPACITY);
-        
-        new ActivityOffer(act, begin, end);
-    }	
+        ActivityProvider provider = new ActivityProvider(PROVIDER_CODE, PROVIDER_NAME);
+        Activity activity = new Activity(provider, ACTIVITY_NAME, MIN_AGE, MAX_AGE, CAPACITY);
+        ActivityOffer offer = new ActivityOffer(activity, this.begin, this.end);
+        new Booking(provider, offer);
+    }
 
     @Atomic(mode = TxMode.READ)
     private void atomicAssert() {
-    	
-    	/* Test ActivityProvider */
-    	
-        Set<ActivityProvider> providers =
-                FenixFramework.getDomainRoot().getProviderSet();
-        assertEquals(1, providers.size());
 
+        assertNotNull(FenixFramework.getDomainRoot().getProviderSet());
+        assertEquals(1, FenixFramework.getDomainRoot().getProviderSet().size());
+
+
+    	/* Test ActivityProvider */
+
+        Set<ActivityProvider> providers = FenixFramework.getDomainRoot().getProviderSet();
         ActivityProvider provider = new ArrayList<>(providers).get(0);
 
         assertEquals(PROVIDER_CODE, provider.getCode());
         assertEquals(PROVIDER_NAME, provider.getName());
-        
+
         assertNotNull(provider.getActivitySet());
-        
+        assertEquals(1, provider.getActivitySet().size());
+
+
         /* Test Activity */
-        
-        List<Activity> activities = 
-        		new ArrayList<>(provider.getActivitySet());
-        
-        assertEquals(1, activities.size());
-        
+
+        List<Activity> activities = new ArrayList<>(provider.getActivitySet());
         Activity activity = activities.get(0);
-        
+
         assertNotNull(activity.getCode());
         assertEquals(ACTIVITY_NAME, activity.getName());
-        assertEquals(ACTIVITY_MIN_AGE, activity.getMinAge());
-        assertEquals(ACTIVITY_MAX_AGE, activity.getMaxAge());
-        assertEquals(ACTIVITY_CAPACITY, activity.getCapacity());
-        
+        assertEquals(MIN_AGE, activity.getMinAge());
+        assertEquals(MAX_AGE, activity.getMaxAge());
+        assertEquals(CAPACITY, activity.getCapacity());
+
         assertNotNull(activity.getOfferSet());
-        
+        assertEquals(1, activity.getOfferSet().size());
+
+
         /* Test Activity Offer */
-        
-        List<ActivityOffer> offers = 
-        		new ArrayList<>(activity.getOfferSet());
-       
-        assertEquals(1, offers.size());
-        
+
+        List<ActivityOffer> offers = new ArrayList<>(activity.getOfferSet());
         ActivityOffer offer = offers.get(0);
-        
-        assertEquals(begin, offer.getBegin());
-        assertEquals(end, offer.getEnd());
-        assertEquals(ACTIVITY_CAPACITY, offer.getCapacity());
-        
-        
+
+        assertEquals(this.begin, offer.getBegin());
+        assertEquals(this.end, offer.getEnd());
+        assertEquals(CAPACITY, offer.getCapacity());
+
+        assertNotNull(offer.getBookingSet());
+        assertEquals(1, offer.getBookingSet().size());
+
+
+        /* Test Booking */
+
+        List<Booking> bookings = new ArrayList<>(offer.getBookingSet());
+        Booking booking = bookings.get(0);
+
+        assertEquals(offer, booking.getOffer());
+
+        assertNotNull(booking.getReference());
+        assertNull(booking.getCancellation());
+        assertNull(booking.getCancellationDate());
+
     }
 
     @After
