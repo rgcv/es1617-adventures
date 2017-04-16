@@ -60,6 +60,8 @@ public class ActivityPersistenceTest {
         assertEquals(PROVIDER_CODE, provider.getCode());
         assertEquals(PROVIDER_NAME, provider.getName());
         
+        assertNotNull(provider.getActivitySet());
+        
         /* Test Activity */
         
         List<Activity> activities = 
@@ -74,6 +76,8 @@ public class ActivityPersistenceTest {
         assertEquals(ACTIVITY_MIN_AGE, activity.getMinAge());
         assertEquals(ACTIVITY_MAX_AGE, activity.getMaxAge());
         assertEquals(ACTIVITY_CAPACITY, activity.getCapacity());
+        
+        assertNotNull(activity.getOfferSet());
         
         /* Test Activity Offer */
         
