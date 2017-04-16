@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Test;
 
@@ -24,6 +25,9 @@ public class ActivityPersistenceTest {
     private static final int ACTIVITY_CAPACITY = 23;
     private static final String  ACTIVITY_NAME = "Dank activity name";
     
+    private final LocalDate begin = new LocalDate(2016, 12, 19);
+    private final LocalDate end = new LocalDate(2016, 12, 21);
+    
 
     @Test
     public void success() {
@@ -33,9 +37,14 @@ public class ActivityPersistenceTest {
 
     @Atomic(mode = TxMode.WRITE)
     private void atomicProcess() {
-        ActivityProvider ap = new ActivityProvider(PROVIDER_CODE, PROVIDER_NAME);
-        new Activity(ap,ACTIVITY_NAME, ACTIVITY_MIN_AGE, ACTIVITY_MAX_AGE, ACTIVITY_CAPACITY);
-    }
+        ActivityProvider ap = 
+        		new ActivityProvider(PROVIDER_CODE, PROVIDER_NAME);
+        
+        Activity act = new Activity(ap, ACTIVITY_NAME, ACTIVITY_MIN_AGE, 
+        								ACTIVITY_MAX_AGE, ACTIVITY_CAPACITY);
+        
+        new ActivityOffer(act, begin, end);
+    }	
 
     @Atomic(mode = TxMode.READ)
     private void atomicAssert() {
@@ -65,6 +74,19 @@ public class ActivityPersistenceTest {
         assertEquals(ACTIVITY_MIN_AGE, activity.getMinAge());
         assertEquals(ACTIVITY_MAX_AGE, activity.getMaxAge());
         assertEquals(ACTIVITY_CAPACITY, activity.getCapacity());
+        
+        /* Test Activity Offer */
+        
+        List<ActivityOffer> offers = 
+        		new ArrayList<>(activity.getOfferSet());
+       
+        assertEquals(1, offers.size());
+        
+        ActivityOffer offer = offers.get(0);
+        
+        assertEquals(begin, offer.getBegin());
+        assertEquals(end, offer.getEnd());
+        assertEquals(ACTIVITY_CAPACITY, offer.getCapacity());
         
         
     }
