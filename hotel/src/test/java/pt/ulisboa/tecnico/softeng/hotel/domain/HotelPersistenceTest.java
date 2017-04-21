@@ -21,8 +21,8 @@ public class HotelPersistenceTest {
 	private static final String ROOM_NUMBER = "01";
 	private static final String HOTEL_CODE = "XPTO123";
 	private static final String HOTEL_NAME = "Lisboa";
-	private static final LocalDate ARRIVAL_DATE = new LocalDate(2016, 12, 21);
-	private static final LocalDate DEPARTURE_DATE = new LocalDate(2016, 12, 19);
+	private static final LocalDate ARRIVAL_DATE = new LocalDate(2016, 12, 19);
+	private static final LocalDate DEPARTURE_DATE = new LocalDate(2016, 12, 21);
 
 	@Test
 	public void success() {
@@ -33,8 +33,8 @@ public class HotelPersistenceTest {
 	@Atomic(mode = TxMode.WRITE)
 	private void atomicProcess() {
 		Hotel hotel = new Hotel(HOTEL_CODE, HOTEL_NAME);
-		new Room(hotel, ROOM_NUMBER, Type.DOUBLE);
-		new Booking(hotel, DEPARTURE_DATE, ARRIVAL_DATE);
+		Room room = new Room(hotel, ROOM_NUMBER, Type.DOUBLE);
+		room.reserve(Type.DOUBLE, ARRIVAL_DATE, DEPARTURE_DATE);
 	}
 
 	@Atomic(mode = TxMode.READ)

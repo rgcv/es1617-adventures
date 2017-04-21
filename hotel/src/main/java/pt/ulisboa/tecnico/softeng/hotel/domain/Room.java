@@ -29,9 +29,6 @@ public class Room extends Room_Base {
         if (!number.matches("\\d*")) {
             throw new HotelException();
         }
-        if (hotel.hasRoom(number)) {
-        	throw new HotelException();
-        }
     }
 
 
