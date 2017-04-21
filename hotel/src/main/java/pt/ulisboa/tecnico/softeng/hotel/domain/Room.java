@@ -6,11 +6,10 @@ import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class Room extends Room_Base {
+	
     public static enum Type {
         SINGLE, DOUBLE
     }
-
-
 
     public Room(Hotel hotel, String number, Type type) {
         checkArguments(hotel, number, type);
@@ -19,7 +18,7 @@ public class Room extends Room_Base {
         setNumber(number);
         setType(type);
 
-        getHotel().addRoom(this);
+        hotel.addRoom(this);
     }
 
     private void checkArguments(Hotel hotel, String number, Type type) {
@@ -60,7 +59,7 @@ public class Room extends Room_Base {
         }
 
         Booking booking = new Booking(getHotel(), arrival, departure);
-        getBookingSet().add(booking);
+        super.addBooking(booking);
 
         return booking;
     }

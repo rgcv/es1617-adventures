@@ -15,9 +15,7 @@ public class Booking extends Booking_Base {
         setReference(hotel.getCode() + Integer.toString(++Booking.counter));
         setArrival(arrival);
         setDeparture(departure);
-        
-        getRoom().addBooking(this);
-        
+                
     }
     private void checkArguments(Hotel hotel, LocalDate arrival, LocalDate departure) {
         if (hotel == null || arrival == null || departure == null) {

@@ -77,7 +77,7 @@ public class Hotel extends Hotel_Base{
             throw new HotelException();
         }
 
-        getRoomSet().add(room);
+        super.addRoom(room);
     }
 
     int getNumberOfRooms() {
@@ -87,7 +87,7 @@ public class Hotel extends Hotel_Base{
     public boolean hasRoom(String number) {
         for (Room room : getRoomSet()) {
             if (room.getNumber().equals(number)) {
-                return true;
+                //return true;
             }
         }
         return false;
