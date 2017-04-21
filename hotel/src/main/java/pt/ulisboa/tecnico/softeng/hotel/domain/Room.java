@@ -14,7 +14,7 @@ public class Room extends Room_Base {
     public Room(Hotel hotel, String number, Type type) {
         checkArguments(hotel, number, type);
 
-        setHotel(hotel);
+        //setHotel(hotel);
         setNumber(number);
         setType(type);
 
@@ -28,6 +28,9 @@ public class Room extends Room_Base {
 
         if (!number.matches("\\d*")) {
             throw new HotelException();
+        }
+        if (hotel.hasRoom(number)) {
+        	throw new HotelException();
         }
     }
 

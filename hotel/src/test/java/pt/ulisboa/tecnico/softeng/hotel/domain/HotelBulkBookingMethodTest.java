@@ -20,7 +20,7 @@ public class HotelBulkBookingMethodTest extends RollbackTestAbstractClass {
     @Override
     public void populate4Test() {
         this.hotel = new Hotel("XPTO123", "Paris");
-        new Room(this.hotel, "01", Type.DOUBLE);
+        new Room(this.hotel, "0666661", Type.DOUBLE);
         new Room(this.hotel, "02", Type.SINGLE);
         new Room(this.hotel, "03", Type.DOUBLE);
         new Room(this.hotel, "04", Type.SINGLE);
