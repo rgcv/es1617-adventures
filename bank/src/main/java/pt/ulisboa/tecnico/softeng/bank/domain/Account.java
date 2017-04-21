@@ -50,14 +50,13 @@ public class Account extends Account_Base{
     }
 
     public void delete() {
-        setBank(null);
-        setClient(null);
-
         Set<Operation> operations = getOperationSet();
         for(Operation operation : operations) {
             operation.delete();
         }
-
+        setBank(null);        
+    	setClient(null);
+    	
         deleteDomainObject();
     }
 }

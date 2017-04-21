@@ -34,7 +34,7 @@ relation DomainRootHasBankApplication {
     }
 }
 
-relation BankHasAccount {
+relation BankHasAccounts {
     Bank playsRole bank {
         multiplicity 1..1;
     }
@@ -44,7 +44,7 @@ relation BankHasAccount {
     }
 }
 
-relation AccountHasOperation {
+relation AccountHasOperations {
 	Account playsRole account {
         multiplicity 1..1;
     }
@@ -54,7 +54,7 @@ relation AccountHasOperation {
     }
 }
 
-relation BankHasClient {
+relation BankHasClients {
 	Bank playsRole bank {
 		multiplicity 1..1;
 	}
@@ -64,7 +64,7 @@ relation BankHasClient {
 	}
 }
 
-relation BankHasOperation {
+relation BankHasOperations {
 	Bank playsRole bank {
 		multiplicity 1..1;
 	}
@@ -74,7 +74,7 @@ relation BankHasOperation {
 	}
 }
 
-relation ClientHasAccount {
+relation ClientHasAccounts {
     Client playsRole client {
         multiplicity 1..1;
     }

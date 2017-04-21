@@ -41,8 +41,9 @@ public class Operation extends Operation_Base {
     }
 
     public void delete() {
+    	setBank(null);    	
         setAccount(null);
-
+        
         deleteDomainObject();
     }
 }
