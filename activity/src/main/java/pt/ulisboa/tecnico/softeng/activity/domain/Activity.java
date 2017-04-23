@@ -28,13 +28,7 @@ public class Activity extends Activity_Base {
     }
     
     public void delete() {
-    	
-    	Set<ActivityProvider> providers = FenixFramework.getDomainRoot().getProviderSet();
-    	
-    	for(ActivityProvider provider : providers) {
-    		if(provider.getActivitySet().contains(this))
-    			provider.removeActivity(this);
-    	}
+    	setProvider(null);
     	
     	for (ActivityOffer offer : getOfferSet()) {
     		offer.delete();
