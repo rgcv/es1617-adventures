@@ -34,6 +34,8 @@ public class HotelPersistenceTest {
 	private void atomicProcess() {
 		Hotel hotel = new Hotel(HOTEL_CODE, HOTEL_NAME);
 		Room room = new Room(hotel, ROOM_NUMBER, Type.DOUBLE);
+		// Room.reserve creates a Booking for that room, instead of a new
+		// Booking which does not have a Room association
 		room.reserve(Type.DOUBLE, ARRIVAL_DATE, DEPARTURE_DATE);
 	}
 

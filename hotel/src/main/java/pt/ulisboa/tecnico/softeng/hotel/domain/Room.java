@@ -1,88 +1,81 @@
 package pt.ulisboa.tecnico.softeng.hotel.domain;
 
-
 import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class Room extends Room_Base {
-	
-    public static enum Type {
-        SINGLE, DOUBLE
-    }
 
-    public Room(Hotel hotel, String number, Type type) {
-        checkArguments(hotel, number, type);
+	public static enum Type {
+		SINGLE, DOUBLE
+	}
 
-        //setHotel(hotel);
-        setNumber(number);
-        setType(type);
+	public Room(Hotel hotel, String number, Type type) {
+		checkArguments(hotel, number, type);
 
-        hotel.addRoom(this);
-    }
+		setNumber(number);
+		setType(type);
+		hotel.addRoom(this);     //Substitute for setHotel, since we check for duplicate rooms
 
-    private void checkArguments(Hotel hotel, String number, Type type) {
-        if (hotel == null || number == null || number.trim().length() == 0 || type == null) {
-            throw new HotelException();
-        }
+	}
 
-        if (!number.matches("\\d*")) {
-            throw new HotelException();
-        }
-    }
+	private void checkArguments(Hotel hotel, String number, Type type) {
+		if (hotel == null || number == null || number.trim().length() == 0 || type == null) {
+			throw new HotelException();
+		}
 
+		if (!number.matches("\\d*")) {
+			throw new HotelException();
+		}
+	}
 
+	boolean isFree(Type type, LocalDate arrival, LocalDate departure) {
+		if (!type.equals(getType())) {
+			return false;
+		}
 
-    boolean isFree(Type type, LocalDate arrival, LocalDate departure) {
-        if (!type.equals(getType())) {
-            return false;
-        }
+		for (Booking booking : getBookingSet()) {
+			if (booking.conflict(arrival, departure)) {
+				return false;
+			}
+		}
 
-        for (Booking booking : getBookingSet()) {
-            if (booking.conflict(arrival, departure)) {
-                return false;
-            }
-        }
+		return true;
+	}
 
-        return true;
-    }
-    
+	public Booking reserve(Type type, LocalDate arrival, LocalDate departure) {
+		if (type == null || arrival == null || departure == null) {
+			throw new HotelException();
+		}
 
+		if (!isFree(type, arrival, departure)) {
+			throw new HotelException();
+		}
 
-    public Booking reserve(Type type, LocalDate arrival, LocalDate departure) {
-        if (type == null || arrival == null || departure == null) {
-            throw new HotelException();
-        }
+		Booking booking = new Booking(getHotel(), arrival, departure);
+		super.addBooking(booking);
 
-        if (!isFree(type, arrival, departure)) {
-            throw new HotelException();
-        }
+		return booking;
+	}
 
-        Booking booking = new Booking(getHotel(), arrival, departure);
-        super.addBooking(booking);
+	public void delete() {
+		setHotel(null);
 
-        return booking;
-    }
+		for (Booking booking : getBookingSet()) {
+			booking.delete();
+		}
 
-    
-    public void delete() {
-        setHotel(null);
+		deleteDomainObject();
+	}
 
-        for (Booking booking : getBookingSet()) {
-            booking.delete();
-        }
-
-        deleteDomainObject();
-    }
-
-    public Booking getBooking(String reference) {
-        for (Booking booking : getBookingSet()) {
-            if (booking.getReference().equals(reference)
-                    || (booking.isCancelled() && booking.getCancellation().equals(reference))) {
-                return booking;
-            }
-        }
-        return null;
-    }
+	public Booking getBooking(String reference) {
+		for (Booking booking : getBookingSet()) {
+			if (booking.getReference().equals(reference)
+					|| (booking.isCancelled() && booking.getCancellation().equals(reference))) {
+				return booking;
+			}
+		}
+		return null;
+	}
 
 }
