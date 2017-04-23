@@ -35,6 +35,14 @@ relation DomainRootHasActivityProviders {
     }
 }
 
+relation ActivityProviderHasActivities {
+	ActivityProvider playsRole provider {
+		multiplicity 1..1;
+	}
+	Activity playsRole activity {
+		multiplicity 0..*;
+	}
+}
 
 relation ActivityHasActivityOffers {
 	Activity playsRole activity {
@@ -50,15 +58,6 @@ relation ActivityOfferHasBookings {
 		multiplicity 1..1;
 	}
 	Booking playsRole booking {
-		multiplicity 0..*;
-	}
-}
-
-relation ActivityProviderHasActivities {
-	ActivityProvider playsRole provider {
-		multiplicity 1..1;
-	}
-	Activity playsRole activity {
 		multiplicity 0..*;
 	}
 }
