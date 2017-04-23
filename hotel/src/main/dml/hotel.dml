@@ -21,7 +21,7 @@ class Booking {
     LocalDate cancellationDate;
 }
 
-relation DomainRoothasHotel {
+relation DomainRoothasHotels {
     .pt.ist.fenixframework.DomainRoot playsRole root {
         multiplicity 1..1;
     }
@@ -30,7 +30,7 @@ relation DomainRoothasHotel {
     }
 }
 
-relation HotelHasRoom {
+relation HotelHasRooms {
     Hotel playsRole hotel {
         multiplicity 1..1;
     }
@@ -40,7 +40,7 @@ relation HotelHasRoom {
 }
 
 
-relation RoomHasBooking {
+relation RoomHasBookings {
     Room playsRole room {
         multiplicity 1..1;
     }
