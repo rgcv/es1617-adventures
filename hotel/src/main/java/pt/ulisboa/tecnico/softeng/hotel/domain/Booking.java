@@ -8,6 +8,8 @@ public class Booking {
 	private static int counter = 0;
 
 	private final String reference;
+	private String cancel;
+	private LocalDate cancelDate;
 	private final LocalDate arrival;
 	private final LocalDate departure;
 
@@ -60,6 +62,18 @@ public class Booking {
 		}
 
 		return false;
+	}
+
+	public String getCancellation() {
+		return this.cancel;
+	}
+
+	public LocalDate getCancellationDate() {
+		return this.cancelDate;
+	}
+
+	public boolean isCancelled() {
+		return this.cancel != null;
 	}
 
 }

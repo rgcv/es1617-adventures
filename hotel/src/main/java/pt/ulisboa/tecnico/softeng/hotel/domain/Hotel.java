@@ -107,11 +107,16 @@ public class Hotel {
 			for(Room room : hotel.rooms ){
 				for(Booking booking : room.getBookings()){
 					if(booking.getReference().equals(roomConfirmation)){
-						room.getBookings().remove(booking);
+						// FIXME YOU'RE NOT SUPPOSED TO REMOVE THE BOOKING... JUST SET IT'S CANCELLATION REFERENCE AND DATE
+						// FIXME ADDITIONALLY YOU NEED TO FIX THE METHODS THAT CHECK FOR REFERENCES TO COMPARE WITH CANCELLATION REFERENCE
+						//       AND METHODS THAT COUNT THE AMOUNT OF BOOKINGS, ETC.
+						room.getBookings().remove(booking); // FIXME DELETE THIS
+						// FIXME SETTING THE CANCELLATION REFERENCE AND DATE SHOULD BE DONE IN A METHOD cancel IN Booking
 						roomCancellation = booking.getReference() + "Cancelled";
-						RoomBookingData rbd = new RoomBookingData();
-						rbd.setCancellation(roomCancellation);
-						rbd.setCancellationDate(new LocalDate());
+						// FIXME SET THE CANCELLATION DATE
+						RoomBookingData rbd = new RoomBookingData(); // FIXME DELETE THIS
+						rbd.setCancellation(roomCancellation); // FIXME DELETE THIS
+						rbd.setCancellationDate(new LocalDate()); //FIXME DELETE THIS
 						return roomCancellation;
 					}
 				}
@@ -125,26 +130,21 @@ public class Hotel {
 
 		for (Hotel hotel : Hotel.hotels) {
 			for (Room room : hotel.getRooms()) {
+				// FIXME CREATE A METHOD getBooking in ROOM
 				for (Booking booking : room.getBookings()) {
 					if (booking.getReference().equals(reference)) {
 						RoomBookingData rbd = new RoomBookingData();
+						// FIXME THIS SHOULD BE IN CONSTRUCTOR OF RoomBookingData
 						rbd.setReference(reference);
 						rbd.setHotelName(hotel.getName());
 						rbd.setHotelCode(hotel.getCode());
 						rbd.setRoomNumber(room.getNumber());
-						switch (room.getType()) {
-						case SINGLE:
-							rbd.setRoomType("Single");
-							break;
-						case DOUBLE:
-							rbd.setRoomType("Double");
-							break;
-						}
+						rbd.setRoomType(room.getType().name());
 						rbd.setArrival(booking.getArrival());
 						rbd.setDeparture(booking.getDeparture());
 						
-						rbd.setCancellation(null); // Not sure
-						rbd.setCancellationDate(null); // Not sure
+						rbd.setCancellation(booking.getCancellation());
+						rbd.setCancellationDate(booking.getCancellationDate());
 						return rbd;
 					}
 				}
@@ -161,6 +161,7 @@ public class Hotel {
 		if (departure.isBefore(arrival.plusDays(1)))
 			throw new HotelException();
 
+		// FIXME THIS FOR SHOULD BE IN A DIFFERENT METHOD (IN ORDER TO AVOID MEGAMOTHS)
 		Set<Room> rooms = new HashSet<>();
 		for (Hotel hotel : Hotel.hotels) {
 			for (Room room : hotel.rooms) {

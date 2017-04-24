@@ -34,7 +34,9 @@ public class ReserveActivityStateProcessMethodTest {
         this.adventure = new Adventure(this.broker, this.begin, this.end, AGE, IBAN, AMOUNT);
         this.adventure.setState(Adventure.State.RESERVE_ACTIVITY);
     }
-    
+
+    // TODO reserveNoBookRoom
+
     @Test
     public void reserveActivityDifferentDates(@Mocked final ActivityInterface activityInterface) {
     	new StrictExpectations() {
@@ -98,6 +100,9 @@ public class ReserveActivityStateProcessMethodTest {
     	
     	Assert.assertEquals(State.UNDO, this.adventure.getState());
     }
-    
+
+	// TODO maxMinusOneRemoteAccessException
+	// TODO twoRemoteAccessExceptionOneSuccess
+	// TODO oneRemoteAccessExceptionOneActivityException
     
 }

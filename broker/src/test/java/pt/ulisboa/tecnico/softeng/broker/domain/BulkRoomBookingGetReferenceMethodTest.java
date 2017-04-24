@@ -63,6 +63,8 @@ public class BulkRoomBookingGetReferenceMethodTest {
 		Assert.assertEquals(departureDate, data.getDeparture());
 		
 	}
+
+	// TODO successSingle
 	
 	@Test
 	public void emptyBooking() {
@@ -118,6 +120,10 @@ public class BulkRoomBookingGetReferenceMethodTest {
 		
 		Assert.assertEquals(0, booking.getRemoteErrors());
 	}
+
+	// TODO remoteExceptionValueIsResetByHotelException
+	// TODO remoteExceptionValueIsResetBySuccess
+	// TODO maxMinusOneRemoteException
 	
 	@After
 	public void tearDown() {

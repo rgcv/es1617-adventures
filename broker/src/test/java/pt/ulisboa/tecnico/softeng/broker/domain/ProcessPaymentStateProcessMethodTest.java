@@ -97,7 +97,10 @@ public class ProcessPaymentStateProcessMethodTest {
 		
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
-	
+
+	// TODO maxMinusOneRemoteAccessException
+	// TODO twoRemoteAccessExceptionOneSuccess
+	// TODO oneRemoteAccessExceptionOneBankException
 	
 	
 	

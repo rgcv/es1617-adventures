@@ -134,45 +134,52 @@ public class UndoStateProcessMethodTest {
 
 	@Test
 	public void CancelledPaymentException(@Mocked final BankInterface bankInterface) {
+    	// FIXME EXPECTATIONS?
 		this.adventure.setPaymentCancellation(PAYMENT_CANCELLATION);
 		this.adventure.process();
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
-	
+
 	@Test
 	public void CancelledRoomException(@Mocked final HotelInterface hotelInterface) {
+    	// FIXME EXPECTATIONS?
 		this.adventure.setRoomCancellation(ROOM_CANCELLATION);
 		this.adventure.process();
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
-	
+
 	@Test
 	public void CancelledActivityException(@Mocked final ActivityInterface activityInterface) {
+    	// FIXME EXPECTATIONS?
 		this.adventure.setActivityCancellation(ACTIVITY_CANCELLATION);
 		this.adventure.process();
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
-	
+
 	@Test
 	public void NotConfirmedCancellPaymentException(@Mocked final BankInterface bankInterface) {
+    	// FIXME EXPECTATIONS?
 		this.adventure.process();
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
-	
+
 	@Test
 	public void NotConfirmedCancellActivityException(@Mocked final ActivityInterface activityInterface) {
+    	// FIXME EXPECTATIONS?
 		this.adventure.process();
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
-	
+
 	@Test
 	public void NotConfirmedCancellRoomException(@Mocked final HotelInterface hotelInterfacec) {
+    	// FIXME EXPECTATIONS?
 		this.adventure.process();
 		Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
 	}
 	@Test
 	public void CancellRoomActivityPaymentException(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface hotelInterface) {
+    	// FIXME EXPECTATIONS?
     	this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
     	this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
     	this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);

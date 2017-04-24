@@ -95,7 +95,8 @@ public class ActivityProvider {
 				for (ActivityOffer offer : activity.getAllOffers()) {
 					b = offer.findBooking(activityConfirmation);
 					if (b == null) break;
-					
+
+					// FIXME PLEASE SEE MY COMMENT ON Hotel.cancel
 					offer.getBookings().remove(b);
 					activityCancellation = b.getReference() + "Cancelled";
 					
@@ -119,7 +120,8 @@ public class ActivityProvider {
 				ActivityOffer offer = activity.findOffer(reference);
 				
 				if(offer == null) { throw new ActivityException(); }
-				
+
+				//FIXME PLEASE SEE MY COMMENT ON Hotel.getOperationData
 				ActivityReservationData data = new ActivityReservationData();
 				data.setReference(reference); 
 				data.setCode(activity.getCode());

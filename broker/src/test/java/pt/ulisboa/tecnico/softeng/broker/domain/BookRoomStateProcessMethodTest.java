@@ -94,4 +94,8 @@ public class BookRoomStateProcessMethodTest {
 		
 		Assert.assertEquals(Adventure.State.UNDO, this.adventure.getState());
 	}
+
+	// TODO maxMinusOneRemoteAccessException
+	// TODO fiveRemoteAccessExceptionOneSuccess
+	// TODO oneRemoteAccessExceptionOneHotelException
 }

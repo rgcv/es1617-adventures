@@ -41,7 +41,7 @@ public class ActivityOffer {
 		return this.end;
 	}
 
-	int getNumberOfBookings() {
+	public int getNumberOfBookings() {
 		return this.bookings.size();
 	}
 

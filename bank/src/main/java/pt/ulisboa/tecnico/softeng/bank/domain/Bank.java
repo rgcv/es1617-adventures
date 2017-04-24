@@ -107,48 +107,46 @@ public class Bank {
 		
 		if (reference == null || reference.trim().equals("")) throw new BankException();
 		
-		Operation opW = null;
+		Operation operation = null;
 		for (Bank bank : banks){
-			opW = bank.getOperation(reference);
-			if (!opW.equals(null)){
-				break;
+			operation = bank.getOperation(reference);
+			if (operation != null){
+				break; // TODO DELETE THIS
+				// TODO INVOKE operation.revert (IMPLEMENT revert that reverts the Operation)
 			}
 		}
+
+		// TODO throw exception
+		// TODO DELETE EVERYTHING BELLOW THIS
+
+		//FIXME WHY CAN'T YOU CANCEL A DEPOSIT?
+		//FIXME operation.equals(null) ?! I THINK YOU MEANT operation == null... PLEASE CHECK THE DIFFERENCE BETWEEN == and equals
+		if (operation.getType() == Operation.Type.DEPOSIT || operation.equals(null))
+			throw new BankException();
 		
-		if (opW.getType() == Operation.Type.DEPOSIT || opW.equals(null)) throw new BankException();
-		
-		Account acc = opW.getAccount();
-		int result = opW.getValue();
+		Account acc = operation.getAccount();
+		int result = operation.getValue();
 		
 		return acc.deposit(result);
 	}
 
 	public static BankOperationData getOperationData(String reference) {
 		if (reference == null || reference.trim().equals("")) throw new BankException();
-		Operation op = null;
 		for (Bank bank : Bank.banks) {
-			if (bank.getOperation(reference) != null) {
-				op = bank.getOperation(reference);
-				break;
+			Operation operation = bank.getOperation(reference);
+			if (operation != null) {
+				BankOperationData bod = new BankOperationData();
+				// FIXME THIS SHOULD BE IN THE CONSTRUCTOR
+				bod.setReference(reference);
+				bod.setType(operation.getType().name());
+				bod.setIban(operation.getAccount().getIBAN());
+				bod.setValue(operation.getValue());
+				bod.setTime(operation.getTime());
+
+				return bod;
 			}
 		}
-		if (op == null) throw new BankException();
-		
-		BankOperationData bod = new BankOperationData();
-		bod.setReference(reference);
-		switch(op.getType()) {
-		case DEPOSIT:
-			bod.setType("Deposit");
-			break;
-		case WITHDRAW:
-			bod.setType("Withdraw");
-			break;
-		}
-		bod.setIban(op.getAccount().getIBAN());
-		bod.setValue(op.getValue());
-		bod.setTime(op.getTime());
-		
-		return bod;
+		throw new BankException();
 	}
 
 }

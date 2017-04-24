@@ -80,6 +80,8 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		}
 	}
 
+	// TODO successTwice
+
 	@Test
 	public void failureNegativeRooms() {
 		final BulkRoomBooking booking = new BulkRoomBooking(-1, arrival, departure);
@@ -137,6 +139,7 @@ public class BulkRoomBookingProcessBookingMethodTest {
 
 	@Test
 	public void failureCancelled() {
+		// FIXME EXPECTATIONS?
 		final BulkRoomBooking booking = new BulkRoomBooking(numberOfRooms, arrival, departure);
 		booking.setStatus(CANCELLED);
 		
@@ -202,24 +205,26 @@ public class BulkRoomBookingProcessBookingMethodTest {
 	@Test
 	public void failureTooManyHotelExceptions() {
 		final BulkRoomBooking booking = new BulkRoomBooking(badNumberOfRooms, arrival, departure);
-		
+
+		// THIS IS NOT HOW YOU SHOULD DO IT... USE THE EXPECTATIONS
 		for(int i = 0; i < BulkRoomBooking.MAX_HOTEL_EXCEPTIONS - 1; i++) {
 			booking.addHotelException();
 		}
-		
+
 		new StrictExpectations(hotel, booking) {
-			{	
+			{
 				booking.processBooking();
 			}
 		};
 
 		assertProcessBookingFailed(booking, CANCELLED, HOTEL_EXCEPTION);
 	}
-	
+
 	@Test
 	public void failureTooManyRemoteAccessExceptions() {
 		final BulkRoomBooking booking = new BulkRoomBooking(numberOfRooms, arrival, departure);
-		
+
+		// THIS IS NOT HOW YOU SHOULD DO IT... USE THE EXPECTATIONS
 		for(int i = 0; i < BulkRoomBooking.MAX_REMOTE_ERRORS - 1; i++) {
 			booking.addRemoteError();
 		}
@@ -273,4 +278,11 @@ public class BulkRoomBookingProcessBookingMethodTest {
 		
 		Assert.assertTrue(booking.getReferences().isEmpty());
 	}
+
+	// TODO maxMinusOneHotelException
+	// TODO hotelExceptionValueIsResetBySuccess
+	// TODO hotelExceptionValueIsResetByRemoteException
+	// TODO maxMinusOneRemoteException
+	// TODO remoteExceptionValueIsResetBySuccess
+	// TODO remoteExceptionValueIsResetByHotelException
 }
