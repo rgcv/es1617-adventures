@@ -5,47 +5,47 @@ import org.joda.time.DateTime;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
 public class Operation extends Operation_Base {
-	public static enum Type {
-		DEPOSIT, WITHDRAW
-	};
+    public static enum Type {
+        DEPOSIT, WITHDRAW
+    };
 
-	public Operation(Type type, Account account, int value) {
-		checkArguments(type, account, value);
+    public Operation(Type type, Account account, int value) {
+        checkArguments(type, account, value);
 
-		setReference(account.getBank().getCode() + Integer.toString(account.getBank().getCounter()));
-		setType(type);
-		setValue(value);
-		setTime(DateTime.now());
+        setReference(account.getBank().getCode() + Integer.toString(account.getBank().getCounter()));
+        setType(type);
+        setValue(value);
+        setTime(DateTime.now());
 
-		setAccount(account);
+        setAccount(account);
 
-		setBank(account.getBank());
-	}
+        setBank(account.getBank());
+    }
 
-	public void delete() {
-		setBank(null);
-		setAccount(null);
+    public void delete() {
+        setBank(null);
+        setAccount(null);
 
-		deleteDomainObject();
-	}
+        deleteDomainObject();
+    }
 
-	private void checkArguments(Type type, Account account, int value) {
-		if (type == null || account == null || value <= 0) {
-			throw new BankException();
-		}
-	}
+    private void checkArguments(Type type, Account account, int value) {
+        if (type == null || account == null || value <= 0) {
+            throw new BankException();
+        }
+    }
 
-	public String revert() {
-		switch (getType()) {
-		case DEPOSIT:
-			return getAccount().withdraw(getValue());
-		case WITHDRAW:
-			return getAccount().deposit(getValue());
-		default:
-			throw new BankException();
+    public String revert() {
+        switch (getType()) {
+        case DEPOSIT:
+            return getAccount().withdraw(getValue());
+        case WITHDRAW:
+            return getAccount().deposit(getValue());
+        default:
+            throw new BankException();
 
-		}
+        }
 
-	}
+    }
 
 }

@@ -15,34 +15,34 @@ import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 import pt.ulisboa.tecnico.softeng.activity.services.local.ActivityInterface;
 
 public class ActivityInterfaceCancelReservationMethodTest extends RollbackTestAbstractClass {
-	private ActivityProvider provider;
-	private ActivityOffer offer;
+    private ActivityProvider provider;
+    private ActivityOffer offer;
 
-	@Override
-	public void populate4Test() {
-		this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
-		Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
+    @Override
+    public void populate4Test() {
+        this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
+        Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
 
-		LocalDate begin = new LocalDate(2016, 12, 19);
-		LocalDate end = new LocalDate(2016, 12, 21);
-		this.offer = new ActivityOffer(activity, begin, end);
-	}
+        LocalDate begin = new LocalDate(2016, 12, 19);
+        LocalDate end = new LocalDate(2016, 12, 21);
+        this.offer = new ActivityOffer(activity, begin, end);
+    }
 
-	@Test
-	public void success() {
-		Booking booking = new Booking(this.offer);
+    @Test
+    public void success() {
+        Booking booking = new Booking(this.offer);
 
-		String cancel = ActivityInterface.cancelReservation(booking.getReference());
+        String cancel = ActivityInterface.cancelReservation(booking.getReference());
 
-		assertTrue(booking.isCancelled());
-		assertEquals(cancel, booking.getCancel());
-	}
+        assertTrue(booking.isCancelled());
+        assertEquals(cancel, booking.getCancel());
+    }
 
-	@Test(expected = ActivityException.class)
-	public void doesNotExist() {
-		new Booking(this.offer);
+    @Test(expected = ActivityException.class)
+    public void doesNotExist() {
+        new Booking(this.offer);
 
-		ActivityInterface.cancelReservation("XPTO");
-	}
+        ActivityInterface.cancelReservation("XPTO");
+    }
 
 }

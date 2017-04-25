@@ -5,60 +5,60 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class ActivityOfferHasVacancyMethodTest extends RollbackTestAbstractClass {
-	private ActivityProvider provider;
-	private ActivityOffer offer;
+    private ActivityProvider provider;
+    private ActivityOffer offer;
 
-	@Override
-	public void populate4Test() {
-		this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
-		Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
+    @Override
+    public void populate4Test() {
+        this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
+        Activity activity = new Activity(this.provider, "Bush Walking", 18, 80, 3);
 
-		LocalDate begin = new LocalDate(2016, 12, 19);
-		LocalDate end = new LocalDate(2016, 12, 21);
+        LocalDate begin = new LocalDate(2016, 12, 19);
+        LocalDate end = new LocalDate(2016, 12, 21);
 
-		this.offer = new ActivityOffer(activity, begin, end);
-	}
+        this.offer = new ActivityOffer(activity, begin, end);
+    }
 
-	@Test
-	public void success() {
-		new Booking(this.offer);
-		Assert.assertTrue(this.offer.hasVacancy());
-	}
+    @Test
+    public void success() {
+        new Booking(this.offer);
+        Assert.assertTrue(this.offer.hasVacancy());
+    }
 
-	@Test
-	public void bookingIsFull() {
-		new Booking(this.offer);
-		new Booking(this.offer);
-		new Booking(this.offer);
-		Assert.assertFalse(this.offer.hasVacancy());
-	}
+    @Test
+    public void bookingIsFull() {
+        new Booking(this.offer);
+        new Booking(this.offer);
+        new Booking(this.offer);
+        Assert.assertFalse(this.offer.hasVacancy());
+    }
 
-	@Test
-	public void bookingIsFullMinusOne() {
-		new Booking(this.offer);
-		new Booking(this.offer);
-		Assert.assertTrue(this.offer.hasVacancy());
-	}
+    @Test
+    public void bookingIsFullMinusOne() {
+        new Booking(this.offer);
+        new Booking(this.offer);
+        Assert.assertTrue(this.offer.hasVacancy());
+    }
 
-	@Test
-	public void hasCancelledBookings() {
-		new Booking(this.offer);
-		new Booking(this.offer);
-		Booking booking = new Booking(this.offer);
-		booking.cancel();
+    @Test
+    public void hasCancelledBookings() {
+        new Booking(this.offer);
+        new Booking(this.offer);
+        Booking booking = new Booking(this.offer);
+        booking.cancel();
 
-		Assert.assertTrue(this.offer.hasVacancy());
-	}
+        Assert.assertTrue(this.offer.hasVacancy());
+    }
 
-	@Test
-	public void hasCancelledBookingsButFull() {
-		new Booking(this.offer);
-		new Booking(this.offer);
-		Booking booking = new Booking(this.offer);
-		booking.cancel();
-		new Booking(this.offer);
+    @Test
+    public void hasCancelledBookingsButFull() {
+        new Booking(this.offer);
+        new Booking(this.offer);
+        Booking booking = new Booking(this.offer);
+        booking.cancel();
+        new Booking(this.offer);
 
-		Assert.assertFalse(this.offer.hasVacancy());
-	}
+        Assert.assertFalse(this.offer.hasVacancy());
+    }
 
 }

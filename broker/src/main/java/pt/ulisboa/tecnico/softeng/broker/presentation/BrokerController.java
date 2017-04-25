@@ -15,29 +15,29 @@ import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData;
 @Controller
 @RequestMapping(value = "/brokers")
 public class BrokerController {
-	private static Logger logger = LoggerFactory.getLogger(BrokerController.class);
+    private static Logger logger = LoggerFactory.getLogger(BrokerController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String brokerForm(Model model) {
-		logger.info("brokerForm");
-		model.addAttribute("broker", new BrokerData());
-		model.addAttribute("brokers", BrokerInterface.getBrokers());
-		return "brokers";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String brokerForm(Model model) {
+        logger.info("brokerForm");
+        model.addAttribute("broker", new BrokerData());
+        model.addAttribute("brokers", BrokerInterface.getBrokers());
+        return "brokers";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String brokerSubmit(Model model, @ModelAttribute BrokerData brokerData) {
-		logger.info("brokerSubmit name:{}, code:{}", brokerData.getName(), brokerData.getCode());
+    @RequestMapping(method = RequestMethod.POST)
+    public String brokerSubmit(Model model, @ModelAttribute BrokerData brokerData) {
+        logger.info("brokerSubmit name:{}, code:{}", brokerData.getName(), brokerData.getCode());
 
-		try {
-			BrokerInterface.createBroker(brokerData);
-		} catch (BrokerException be) {
-			model.addAttribute("error", "Error: it was not possible to create the broker");
-			model.addAttribute("broker", brokerData);
-			model.addAttribute("brokers", BrokerInterface.getBrokers());
-			return "brokers";
-		}
+        try {
+            BrokerInterface.createBroker(brokerData);
+        } catch (BrokerException be) {
+            model.addAttribute("error", "Error: it was not possible to create the broker");
+            model.addAttribute("broker", brokerData);
+            model.addAttribute("brokers", BrokerInterface.getBrokers());
+            return "brokers";
+        }
 
-		return "redirect:/brokers";
-	}
+        return "redirect:/brokers";
+    }
 }

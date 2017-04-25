@@ -5,75 +5,75 @@ import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class Room extends Room_Base {
-	public static enum Type {
-		SINGLE, DOUBLE
-	}
+    public static enum Type {
+        SINGLE, DOUBLE
+    }
 
-	public Room(Hotel hotel, String number, Type type) {
-		checkArguments(hotel, number, type);
+    public Room(Hotel hotel, String number, Type type) {
+        checkArguments(hotel, number, type);
 
-		setNumber(number);
-		setType(type);
+        setNumber(number);
+        setType(type);
 
-		hotel.addRoom(this);
-	}
+        hotel.addRoom(this);
+    }
 
-	public void delete() {
-		setHotel(null);
+    public void delete() {
+        setHotel(null);
 
-		for (Booking booking : getBookingSet()) {
-			booking.delete();
-		}
+        for (Booking booking : getBookingSet()) {
+            booking.delete();
+        }
 
-		deleteDomainObject();
-	}
+        deleteDomainObject();
+    }
 
-	private void checkArguments(Hotel hotel, String number, Type type) {
-		if (hotel == null || number == null || number.trim().length() == 0 || type == null) {
-			throw new HotelException();
-		}
+    private void checkArguments(Hotel hotel, String number, Type type) {
+        if (hotel == null || number == null || number.trim().length() == 0 || type == null) {
+            throw new HotelException();
+        }
 
-		if (!number.matches("\\d*")) {
-			throw new HotelException();
-		}
-	}
+        if (!number.matches("\\d*")) {
+            throw new HotelException();
+        }
+    }
 
-	boolean isFree(Type type, LocalDate arrival, LocalDate departure) {
-		if (!type.equals(getType())) {
-			return false;
-		}
+    boolean isFree(Type type, LocalDate arrival, LocalDate departure) {
+        if (!type.equals(getType())) {
+            return false;
+        }
 
-		for (Booking booking : getBookingSet()) {
-			if (booking.conflict(arrival, departure)) {
-				return false;
-			}
-		}
+        for (Booking booking : getBookingSet()) {
+            if (booking.conflict(arrival, departure)) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public Booking reserve(Type type, LocalDate arrival, LocalDate departure) {
-		if (type == null || arrival == null || departure == null) {
-			throw new HotelException();
-		}
+    public Booking reserve(Type type, LocalDate arrival, LocalDate departure) {
+        if (type == null || arrival == null || departure == null) {
+            throw new HotelException();
+        }
 
-		if (!isFree(type, arrival, departure)) {
-			throw new HotelException();
-		}
+        if (!isFree(type, arrival, departure)) {
+            throw new HotelException();
+        }
 
-		Booking booking = new Booking(this, arrival, departure);
+        Booking booking = new Booking(this, arrival, departure);
 
-		return booking;
-	}
+        return booking;
+    }
 
-	public Booking getBooking(String reference) {
-		for (Booking booking : getBookingSet()) {
-			if (booking.getReference().equals(reference)
-					|| (booking.isCancelled() && booking.getCancellation().equals(reference))) {
-				return booking;
-			}
-		}
-		return null;
-	}
+    public Booking getBooking(String reference) {
+        for (Booking booking : getBookingSet()) {
+            if (booking.getReference().equals(reference)
+                    || (booking.isCancelled() && booking.getCancellation().equals(reference))) {
+                return booking;
+            }
+        }
+        return null;
+    }
 
 }

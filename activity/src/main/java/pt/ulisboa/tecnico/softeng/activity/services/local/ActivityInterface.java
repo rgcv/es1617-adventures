@@ -16,50 +16,50 @@ import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityRe
 
 public class ActivityInterface {
 
-	@Atomic(mode = TxMode.WRITE)
-	public static String reserveActivity(LocalDate begin, LocalDate end, int age) {
-		List<ActivityOffer> offers;
-		for (ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
-			offers = provider.findOffer(begin, end, age);
-			if (!offers.isEmpty()) {
-				return new Booking(offers.get(0)).getReference();
-			}
-		}
-		throw new ActivityException();
-	}
+    @Atomic(mode = TxMode.WRITE)
+    public static String reserveActivity(LocalDate begin, LocalDate end, int age) {
+        List<ActivityOffer> offers;
+        for (ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
+            offers = provider.findOffer(begin, end, age);
+            if (!offers.isEmpty()) {
+                return new Booking(offers.get(0)).getReference();
+            }
+        }
+        throw new ActivityException();
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static String cancelReservation(String reference) {
-		Booking booking = getBookingByReference(reference);
-		if (booking != null) {
-			return booking.cancel();
-		}
-		throw new ActivityException();
-	}
+    @Atomic(mode = TxMode.WRITE)
+    public static String cancelReservation(String reference) {
+        Booking booking = getBookingByReference(reference);
+        if (booking != null) {
+            return booking.cancel();
+        }
+        throw new ActivityException();
+    }
 
-	@Atomic(mode = TxMode.READ)
-	public static ActivityReservationData getActivityReservationData(String reference) {
-		for (ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
-			for (Activity activity : provider.getActivitySet()) {
-				for (ActivityOffer offer : activity.getActivityOfferSet()) {
-					Booking booking = offer.getBooking(reference);
-					if (booking != null) {
-						return new ActivityReservationData(provider, offer, booking);
-					}
-				}
-			}
-		}
-		throw new ActivityException();
-	}
+    @Atomic(mode = TxMode.READ)
+    public static ActivityReservationData getActivityReservationData(String reference) {
+        for (ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
+            for (Activity activity : provider.getActivitySet()) {
+                for (ActivityOffer offer : activity.getActivityOfferSet()) {
+                    Booking booking = offer.getBooking(reference);
+                    if (booking != null) {
+                        return new ActivityReservationData(provider, offer, booking);
+                    }
+                }
+            }
+        }
+        throw new ActivityException();
+    }
 
-	private static Booking getBookingByReference(String reference) {
-		for (ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
-			Booking booking = provider.getBooking(reference);
-			if (booking != null) {
-				return booking;
-			}
-		}
-		return null;
-	}
+    private static Booking getBookingByReference(String reference) {
+        for (ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
+            Booking booking = provider.getBooking(reference);
+            if (booking != null) {
+                return booking;
+            }
+        }
+        return null;
+    }
 
 }
