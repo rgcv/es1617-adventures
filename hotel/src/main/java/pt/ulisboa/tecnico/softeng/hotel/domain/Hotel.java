@@ -6,6 +6,7 @@ import java.util.Set;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
+
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class Hotel extends Hotel_Base {
@@ -31,20 +32,25 @@ public class Hotel extends Hotel_Base {
     }
 
     private void checkArguments(String code, String name) {
-        if (code == null || name == null || code.trim().length() == 0 || name.trim().length() == 0) {
-            throw new HotelException();
+        if (code == null || code.trim().length() == 0) {
+            throw new HotelException("Invalid or empty hotel code");
         }
 
         if (code.length() != Hotel.CODE_SIZE) {
-            throw new HotelException();
+            throw new HotelException("Code's size must be " + Hotel.CODE_SIZE);
+        }
+
+        if (name == null || name.trim().length() == 0) {
+            throw new HotelException("Invalid or empty hotel name");
         }
 
         for (Hotel hotel : FenixFramework.getDomainRoot().getHotelSet()) {
             if (hotel.getCode().equals(code)) {
-                throw new HotelException();
+                throw new HotelException("Hotel with code '" + code + "' already exists");
             }
         }
     }
+
 
     @Override
     public int getCounter() {
