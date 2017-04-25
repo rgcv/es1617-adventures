@@ -7,6 +7,10 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
 
 public class HotelData {
+    public static enum CopyDepth {
+        SHALLOW, ROOMS
+    }
+
     private String code;
     private String name;
     private List<Room> rooms = new ArrayList<>();
@@ -49,9 +53,5 @@ public class HotelData {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
-    }
-
-    public static enum CopyDepth {
-        SHALLOW, ROOMS
     }
 }
