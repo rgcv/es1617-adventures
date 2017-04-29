@@ -32,16 +32,16 @@ public class ActivityProvider extends ActivityProvider_Base {
 
     private void checkArguments(String code, String name) {
         if (code == null || name == null || code.trim().equals("") || name.trim().equals("")) {
-            throw new ActivityException();
+            throw new ActivityException("Invalid or empty activity provider name or code.");
         }
 
         if (code.length() != ActivityProvider.CODE_SIZE) {
-            throw new ActivityException();
+            throw new ActivityException("Code's size must be " + CODE_SIZE);
         }
 
         for (ActivityProvider activityProvider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
             if (activityProvider.getCode().equals(code) || activityProvider.getName().equals(name)) {
-                throw new ActivityException();
+                throw new ActivityException("Activity provider with code '" + code + "' already exists");
             }
         }
     }
