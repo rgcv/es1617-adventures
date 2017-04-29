@@ -34,16 +34,17 @@ public class Activity extends Activity_Base {
     }
 
     private void checkArguments(ActivityProvider provider, String name, int minAge, int maxAge, int capacity) {
+    	
         if (provider == null || name == null || name.trim().equals("")) {
-            throw new ActivityException();
+            throw new ActivityException("Invalid or empty activity provider or activity name.");
         }
 
         if (minAge < MIN_AGE || maxAge >= MAX_AGE || minAge > maxAge) {
-            throw new ActivityException();
+            throw new ActivityException("Age must be between '" + MIN_AGE + "' and '" + MAX_AGE + "' ");
         }
 
         if (capacity < 1) {
-            throw new ActivityException();
+            throw new ActivityException("Activity's capacity must be equal or higher than 1.");
         }
 
     }
