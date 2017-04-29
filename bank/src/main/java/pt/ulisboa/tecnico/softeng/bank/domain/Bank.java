@@ -34,17 +34,21 @@ public class Bank extends Bank_Base {
     }
 
     private void checkArguments(String name, String code) {
-        if (name == null || code == null || name.trim().equals("") || code.trim().equals("")) {
-            throw new BankException();
+        if (code == null || code.trim().equals("")) {
+            throw new BankException("Invalid or empty bank code");
         }
 
-        if (code.length() != Bank.CODE_SIZE) {
-            throw new BankException();
+        if (code.trim().length() != Bank.CODE_SIZE) {
+            throw new BankException("Wrong code size. Code size must be: " + Bank.CODE_SIZE);
+        }
+        
+        if (name == null || name.trim().equals("")) {
+        	throw new BankException("Invalid or empty bank name");
         }
 
         for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
             if (bank.getCode().equals(code)) {
-                throw new BankException();
+                throw new BankException("Bank with code '" + code + "' already exists");
             }
         }
     }
