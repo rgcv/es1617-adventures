@@ -18,8 +18,8 @@ public class BankData {
 	// private int counter;
 
 	private List<Account> accounts = new ArrayList<>();
-	private List<Client> clients = new ArrayList<>();
-	private List<Operation> operations = new ArrayList<>();
+	private List<ClientData> clients = new ArrayList<>();
+	private List<BankOperationData> operations = new ArrayList<>();
 
 	public BankData() {
 	}
@@ -31,7 +31,15 @@ public class BankData {
 
 		switch (depth) {
 		case OPERATIONS:
+			for(Operation operation : bank.getOperationSet()){
+				this.operations.add(new BankOperationData(operation));
+			}
+			break;
 		case CLIENTS:
+			for(Client client : bank.getClientSet()){
+				this.clients.add(new ClientData(client, ClientData.CopyDepth.SHALLOW));
+			}
+			break;
 		case ACCOUNTS:
 		case SHALLOW:
 		default:
@@ -69,19 +77,19 @@ public class BankData {
 		this.accounts = accounts;
 	}
 
-	public List<Client> getClients() {
+	public List<ClientData> getClients() {
 		return clients;
 	}
 
-	public void setClients(List<Client> clients) {
+	public void setClients(List<ClientData> clients) {
 		this.clients = clients;
 	}
 
-	public List<Operation> getOperations() {
+	public List<BankOperationData> getOperations() {
 		return operations;
 	}
 
-	public void setOperations(List<Operation> operations) {
+	public void setOperations(List<BankOperationData> operations) {
 		this.operations = operations;
 	}
 }

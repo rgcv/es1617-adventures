@@ -37,14 +37,10 @@
                     <td th:text="${bank.name}">Name</td>
                     <td th:text="${bank.code}">Code</td>
                     <td>
-                        <!-- TODO: URL for a bank's list of clients -->
-                        <!-- th:href="@{/banks/{code}/clients(code=${bank.code})}" -->
-                        <a href="#">Link</a>
+                        <a th:href="@{/banks/{code}/clients(code=${bank.code})}">Link</a>
                     </td>
                     <td>
-                        <!-- TODO: URL for a bank's list of operations -->
-                        <!-- th:href="@{/banks/{code}/operations(code=${bank.code})}" -->
-                        <a href="#">Link</a>
+                        <a th:href="@{/banks/{code}/operations(code=${bank.code})}">Link</a>
                     </td>
                 </tr>
             </tbody>
