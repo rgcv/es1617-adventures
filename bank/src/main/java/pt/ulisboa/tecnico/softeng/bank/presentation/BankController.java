@@ -27,7 +27,7 @@ public class BankController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String brokerSubmit(Model model, @ModelAttribute BankData bankData) {
+	public String bankSubmit(Model model, @ModelAttribute BankData bankData) {
 		logger.info("bankSubmit name:{}, code:{}", bankData.getName(), bankData.getCode());
 
 		try {
