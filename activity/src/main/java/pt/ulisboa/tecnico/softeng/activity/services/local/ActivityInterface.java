@@ -33,14 +33,37 @@ public class ActivityInterface {
 		new ActivityProvider(activityProviderData.getCode(), activityProviderData.getName());
 	}
 
+	private static ActivityProvider getActivityProviderByCode(String code) {
+		for(final ActivityProvider activityProvider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
+			if(activityProvider.getCode().equals(code)) {
+				return activityProvider;
+			}
+		}
+
+		return null;
+	}
+
+	@Atomic(mode = TxMode.READ)
+	public static ActivityProviderData getActivityProviderDataByCode(String activityProviderCode, CopyDepth depth) {
+		final ActivityProvider activityProvider = getActivityProviderByCode(activityProviderCode);
+
+		if(activityProvider != null) {
+			return new ActivityProviderData(activityProvider, depth);
+		}
+		else {
+			return null;
+		}
+	}
+
 	@Atomic(mode = TxMode.READ)
 	public static List<ActivityProviderData> getActivityProviders() {
-		final List<ActivityProviderData> brokers = new ArrayList<>();
+		final List<ActivityProviderData> activityProviders = new ArrayList<>();
 
-		for(final ActivityProvider broker : FenixFramework.getDomainRoot().getActivityProviderSet()) {
-			brokers.add(new ActivityProviderData(broker, CopyDepth.SHALLOW));
+		for(final ActivityProvider activityProvider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
+			activityProviders.add(new ActivityProviderData(activityProvider, CopyDepth.SHALLOW));
 		}
-		return brokers;
+
+		return activityProviders;
 	}
 
 	@Atomic(mode = TxMode.READ)
