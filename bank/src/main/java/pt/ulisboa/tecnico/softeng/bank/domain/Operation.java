@@ -16,7 +16,7 @@ public class Operation extends Operation_Base {
         setType(type);
         setValue(value);
         setTime(DateTime.now());
-
+        
         setAccount(account);
 
         setBank(account.getBank());
@@ -30,8 +30,16 @@ public class Operation extends Operation_Base {
     }
 
     private void checkArguments(Type type, Account account, int value) {
-        if (type == null || account == null || value <= 0) {
-            throw new BankException();
+        if (type == null) {
+            throw new BankException("Invalid type");
+        }
+        
+        if (account == null) {
+            throw new BankException("Invalid account");
+        }
+        
+        if (value <= 0) {
+            throw new BankException("Invalid value");
         }
     }
 

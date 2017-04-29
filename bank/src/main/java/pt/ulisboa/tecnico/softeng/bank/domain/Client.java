@@ -24,8 +24,12 @@ public class Client extends Client_Base {
     }
 
     private void checkArguments(Bank bank, String name) {
-        if (bank == null || name == null || name.trim().equals("")) {
-            throw new BankException();
+        if (bank == null ) {
+            throw new BankException("Bank must exist");
+        }
+        
+        if (name == null || name.trim().equals("")) {
+            throw new BankException("Invalid or empty Client name");
         }
     }
 
