@@ -13,11 +13,18 @@ import pt.ulisboa.tecnico.softeng.activity.domain.ActivityOffer;
 import pt.ulisboa.tecnico.softeng.activity.domain.ActivityProvider;
 import pt.ulisboa.tecnico.softeng.activity.domain.Booking;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
+import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData.CopyDepth;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityReservationData;
 
 public class ActivityInterface {
+	
+    @Atomic(mode = TxMode.WRITE)
+    public static void createActivity(String activityProviderCode, ActivityData activityData) {
+        new Activity(getActivityProviderByCode(activityProviderCode), activityData.getName(), activityData.getMinAge(),
+        		 activityData.getMaxAge(), activityData.getCapacity());
+    }
 
 	@Atomic(mode = TxMode.WRITE)
 	public static String cancelReservation(String reference) {
