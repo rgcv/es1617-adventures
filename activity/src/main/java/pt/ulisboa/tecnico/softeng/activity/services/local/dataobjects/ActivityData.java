@@ -1,27 +1,41 @@
 package pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects;
 
-import java.util.ArrayList;
-import java.util.List;
+/*import java.util.ArrayList;
+import java.util.List;*/
 
 import pt.ulisboa.tecnico.softeng.activity.domain.Activity;
-import pt.ulisboa.tecnico.softeng.activity.domain.ActivityOffer;
+//import pt.ulisboa.tecnico.softeng.activity.domain.ActivityOffer;
 
 public class ActivityData {
+	public static enum CopyDepth {
+		SHALLOW, ACTIVITYOFFER
+	}
 
 	private String name;
 	private int min_age;
 	private int max_age;
 	private int capacity;
-	private List<ActivityOffer> act_offer = new ArrayList<>();
+	//private List<ActivityOffer> activityOffer = new ArrayList<>();
 
 	public ActivityData() {}
 
-	public ActivityData(Activity activity) {
+	public ActivityData(Activity activity, CopyDepth depth) {
 		name = activity.getName();
 		min_age = activity.getMinAge();
 		max_age = activity.getMaxAge();
 		capacity = activity.getCapacity();
-	}
+
+		switch(depth) {
+			case ACTIVITYOFFER:
+				/*for(final ActivityOffer activityOffer : activity.getActivityOfferSet()) {
+					activityOffer.add(new ActivityOfferData(activityOffer));
+			}
+			break;*/
+			case SHALLOW:
+			default:
+				break;
+		}
+}
 
 	public String getName() {
 		return name;
@@ -55,11 +69,11 @@ public class ActivityData {
 		this.capacity = capacity;
 	}
 	
-    public List<ActivityOffer> getOffers() {
-        return act_offer;
+    /*public List<ActivityOffer> getOffers() {
+        return activityOffer;
     }
 
-    public void setRooms(List<ActivityOffer> act_offer) {
-        this.act_offer = act_offer;
-    }
+    public void setRooms(List<ActivityOffer> activityOffer) {
+        this.activityOffer = activityOffer;
+    }*/
 }
