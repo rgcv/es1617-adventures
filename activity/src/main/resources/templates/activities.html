@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Activities</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+    th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>
+            Welcome to Activitys' Manager
+        </h2>
+        <br/>
+        <h3>Create Activity</h3>
+        <p class="text-danger" th:text="${error}">Error</p>
+        <form class="form-inline" th:action="@{/activityProviders/{code}/activities(code=${activityProvider.code})}" th:object="${activity}" method="post">		
+            <label>Name: </label> <input class="form-control" type="text" th:field="*{name}" />
+            <label>MinAge: </label> <input class="form-control" type="text" th:field="*{minAge}" />
+            <label>MaxAge: </label> <input class="form-control" type="text" th:field="*{maxAge}" />
+			<label>Capacity: </label> <input class="form-control" type="text" th:field="*{capacity}" />
+            <input class="btn btn-primary" type="submit" value="Submit" />
+        </form>
+        <br/>
+        <h3>List of Activities per Activity Provider</h3>
+        <table class="table table-striped">
+        	<thead>
+                <tr>
+                    <th>Name</th>
+                    <th>MinAge</th>
+                    <th>MaxAge</th>
+					<th>Capacity</th>
+                </tr>
+         	</thead>
+            <tbody>
+                <tr th:each="activity: ${activityProvider.activities}">	
+                    <td th:text="${activity.name}">Name</td>
+                    <td th:text="${activity.minAge}">MinAge</td>
+					<td th:text="${activity.maxAge}">MaxAge</td>
+					<td th:text="${activity.capacity}">Capacity</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
