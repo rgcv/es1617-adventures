@@ -13,8 +13,7 @@ public class ActivityProviderData {
 
 	private String name;
 	private String code;
-	//TODO: Wait on class ActivityData 
-	//private List<ActivityData> activities = new ArrayList<>();
+	private List<ActivityData> activities = new ArrayList<>();
 
 	public ActivityProviderData() {}
 
@@ -24,11 +23,9 @@ public class ActivityProviderData {
 
 		switch(depth) {
 			case ACTIVITIES:
-				//TODO: Wait on class ActivityData 
-				/*for(final Activity activity : activityProvider.getActivitySet()) {
-					activities.add(new ActivityData(activity));
+				for(final Activity activity : activityProvider.getActivitySet()) {
+					this.activities.add(new ActivityData(activity, ActivityData.CopyDepth.SHALLOW));
 				}
-				break;*/
 			case SHALLOW:
 				break;
 			default:
@@ -37,29 +34,27 @@ public class ActivityProviderData {
 
 	}
 
-	//TODO: Wait on class ActivityData 
-	/*public List<ActivityData> getAdventures() {
-		return activities;
-	}*/
-
-	public String getCode() {
-		return code;
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	//TODO: Wait on class ActivityData 
-	/*public void setActivities(List<ActivityData> activities) {
-		this.activities = activities;
-	}*/
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public String getCode() {
+		return code;
+	}
+	
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public List<ActivityData> getActivities() {
+		return this.activities;
+	}
+
+	public void setActivities(List<ActivityData> activities) {
+		this.activities = activities;
 	}
 }
