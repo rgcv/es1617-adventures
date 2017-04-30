@@ -73,7 +73,7 @@ public class ActivityData {
         return activityOffer;
     }
 
-    public void setRooms(List<ActivityOffer> activityOffer) {
+    public void setOffers(List<ActivityOffer> activityOffer) {
         this.activityOffer = activityOffer;
     }*/
 }
