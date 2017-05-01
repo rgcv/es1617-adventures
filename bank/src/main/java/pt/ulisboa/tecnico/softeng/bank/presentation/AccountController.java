@@ -78,7 +78,7 @@ public class AccountController {
 		try {
 			BankInterface.createAccount(bankCode, accountData);
 		} catch (BankException be) {
-			String errorMessage = "Couldn't create client: " + be.getMessage();
+			String errorMessage = "Couldn't create account: " + be.getMessage();
 
 			logger.error(errorMessage);
 			model.addAttribute("error", errorMessage);
@@ -88,7 +88,7 @@ public class AccountController {
 			return "accounts";
 		}
 		if(clientID.isPresent())
-			return "redirect:/banks/" + bankCode + "/accounts/client/" + clientID;
+			return "redirect:/banks/" + bankCode + "/accounts/client/" + clientID.get();
 			
 		else
 			return "redirect:/banks/" + bankCode + "/accounts";
