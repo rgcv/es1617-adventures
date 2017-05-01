@@ -32,6 +32,7 @@
                     <th>MinAge</th>
                     <th>MaxAge</th>
 					<th>Capacity</th>
+					<th>Activity Offers</th>					
                 </tr>
          	</thead>
             <tbody>
@@ -40,6 +41,7 @@
                     <td th:text="${activity.minAge}">MinAge</td>
 					<td th:text="${activity.maxAge}">MaxAge</td>
 					<td th:text="${activity.capacity}">Capacity</td>
+					<td><a th:href="@{/activityProviders/{code}/activities(code=${activityProvider.code})}">Link</a></td>
                 </tr>
             </tbody>
         </table>
