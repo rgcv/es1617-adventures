@@ -6,10 +6,12 @@ import java.util.List;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
+import pt.ulisboa.tecnico.softeng.bank.domain.Account;
 import pt.ulisboa.tecnico.softeng.bank.domain.Bank;
 import pt.ulisboa.tecnico.softeng.bank.domain.Client;
 import pt.ulisboa.tecnico.softeng.bank.domain.Operation;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
+import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.AccountData;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankData;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankData.CopyDepth;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankOperationData;
@@ -32,6 +34,17 @@ public class BankInterface {
 			return null;
 		}
 	}
+	
+	@Atomic(mode = TxMode.READ)
+	public static ClientData getClientDataById(String bankCode, String clientID, ClientData.CopyDepth depth){
+		Bank bank = getBankByCode(bankCode);
+		if(bank == null) return null;
+		Client client = getClientbyId(bank, clientID);
+		if(client != null){
+			return new ClientData(client, depth);
+		}
+		return null;
+	}
 
 	@Atomic(mode = TxMode.READ)
 	public static List<BankData> getBanks() {
@@ -45,6 +58,12 @@ public class BankInterface {
 	@Atomic(mode = TxMode.WRITE)
 	public static void createClient(String bankCode, ClientData clientData) {
 		new Client(getBankByCode(bankCode), clientData.getName());
+	}
+	
+	@Atomic(mode = TxMode.WRITE)
+	public static void createAccount(String bankCode, AccountData accountData) {
+		Bank bank = getBankByCode(bankCode);
+		new Account(bank, getClientbyId(bank,accountData.getClientID()));
 	}
 
 
@@ -90,6 +109,17 @@ public class BankInterface {
 		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
 			if (bank.getCode().equals(code)) {
 				return bank;
+			}
+		}
+		return null;
+	}
+	
+	private static Client getClientbyId(Bank bank, String ID) {
+		if(bank != null){
+			for (Client client : bank.getClientSet()) {
+				if(client.getID().equals(ID)) {
+					return client;
+				}
 			}
 		}
 		return null;
