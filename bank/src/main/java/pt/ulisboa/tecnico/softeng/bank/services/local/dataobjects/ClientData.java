@@ -14,7 +14,7 @@ public class ClientData {
     private String name;
     private String id;
     
-    private List<Account> accounts = new ArrayList<>();
+    private List<AccountData> accounts = new ArrayList<>();
 
     public ClientData() {
     }
@@ -25,6 +25,10 @@ public class ClientData {
     	
     	switch (depth){
 	    	case ACCOUNTS:
+	    		for(Account account : client.getAccountSet()) {
+					this.accounts.add(new AccountData(account));
+				}
+				break;
 	    	case SHALLOW:	
 	    	default:
 	    		break;	    	
@@ -48,11 +52,11 @@ public class ClientData {
 		this.id = id;
 	}
 
-	public List<Account> getAccounts() {
+	public List<AccountData> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(List<Account> accounts) {
+	public void setAccounts(List<AccountData> accounts) {
 		this.accounts = accounts;
 	}
 }

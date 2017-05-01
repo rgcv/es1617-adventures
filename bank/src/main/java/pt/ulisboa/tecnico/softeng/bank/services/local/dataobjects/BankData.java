@@ -17,7 +17,7 @@ public class BankData {
 	private String code;
 	// private int counter;
 
-	private List<Account> accounts = new ArrayList<>();
+	private List<AccountData> accounts = new ArrayList<>();
 	private List<ClientData> clients = new ArrayList<>();
 	private List<BankOperationData> operations = new ArrayList<>();
 
@@ -41,6 +41,10 @@ public class BankData {
 			}
 			break;
 		case ACCOUNTS:
+			for(Account account : bank.getAccountSet()) {
+				this.accounts.add(new AccountData(account));
+			}
+			break;
 		case SHALLOW:
 		default:
 			break;
@@ -69,11 +73,11 @@ public class BankData {
 	 * public void setCounter(int counter) { this.counter = counter; }
 	 */
 
-	public List<Account> getAccounts() {
+	public List<AccountData> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(List<Account> accounts) {
+	public void setAccounts(List<AccountData> accounts) {
 		this.accounts = accounts;
 	}
 
