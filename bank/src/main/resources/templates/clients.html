@@ -36,9 +36,8 @@
                     <td th:text="${client.name}">Name</td>
                     <td th:text="${client.id}">Id</td>
                     <td>
-                        <!-- TODO: URL for a bank's list of clients -->
-                        <!-- sry pedrinho não sei qual url é que é" -->
-                        <a href="#">Link</a>
+                        <a 
+                        th:href="@{/banks/{code}/accounts/client/{clientId}(code=${bank.code},clientId=${client.id})}">Link</a>
                     </td>
                 </tr>
             </tbody>

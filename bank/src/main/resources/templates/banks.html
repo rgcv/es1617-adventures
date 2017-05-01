@@ -30,6 +30,7 @@
                     <th>Code</th>
                     <th>Clients</th>
                     <th>Operations</th>
+                    <th>Accounts</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +42,9 @@
                     </td>
                     <td>
                         <a th:href="@{/banks/{code}/operations(code=${bank.code})}">Link</a>
+                    </td>
+                    <td>
+                    	<a th:href="@{/banks/{code}/accounts(code=${bank.code})}">Link</a>
                     </td>
                 </tr>
             </tbody>
