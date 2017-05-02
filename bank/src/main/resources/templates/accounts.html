@@ -28,12 +28,31 @@
                 <tr>
                     <th>IBAN</th>
                     <th>Balance</th>
+                    <th>ClientID</th>
+                    <th>Withdrawal/Deposit</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="account: ${bank.accounts}">
-                    <td th:text="${account.IBAN}">Name</td>
-                    <td th:text="${account.balance}">Id</td>
+               	    <td th:text="${account.IBAN}">Name</td>
+                    <td th:text="${account.balance}">Balance</td>
+                    <td><a th:text="${account.clientID}" 
+                    	   th:href="@{/banks/{code}/accounts/client/{clientId}(code=${bank.code},clientId=${account.clientID})}">
+                    	   Id
+                    	</a>
+                   	</td>
+                    <td>
+                    	<form class="form-inline" 
+                    		  th:action="@{/banks/{code}/accounts/{IBAN}/do(code=${bank.code}, IBAN=${account.IBAN})}" 
+                    		  th:object="${operation}" 
+                    		  method="post">
+                    		<label>Value: </label>
+                    		<input class="form-control" type="number" min="0" th:field="*{value}" />
+                    		<input class="btn btn-primary" type="submit" value="Withdrawal" name="operationType"/>
+                    		<input class="btn btn-primary" type="submit" value="Deposit"  name="operationType"/>
+                    	
+                    	</form>
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -63,10 +63,19 @@ public class BankInterface {
 	@Atomic(mode = TxMode.WRITE)
 	public static void createAccount(String bankCode, AccountData accountData) {
 		Bank bank = getBankByCode(bankCode);
-		if(bank == null) throw new BankException("Bank does not exist");
-		Client client = getClientbyId(bank,accountData.getClientID());
-		if(client == null) throw new BankException("Client does not exist");
-		new Account(bank, client);
+		
+		if(bank != null){
+			Client client = getClientbyId(bank,accountData.getClientID());
+			
+			if(client != null) 
+				new Account(bank, client);
+			else 
+				throw new BankException("Client does not exist");
+		}
+		else {
+			throw new BankException("Bank does not exist");
+		}
+		
 	}
 
 
@@ -78,6 +87,24 @@ public class BankInterface {
 			}
 		}
 		throw new BankException();
+	}
+	
+	@Atomic(mode = TxMode.WRITE)
+	public static String processPayment(String IBAN, int amount, Operation.Type type) {
+		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
+			if (bank.getAccount(IBAN) != null) {
+				if(type.equals(Operation.Type.DEPOSIT)) {
+					return bank.getAccount(IBAN).deposit(amount);
+				}
+				else if(type.equals(Operation.Type.WITHDRAW)) {
+					return bank.getAccount(IBAN).withdraw(amount);
+				}
+				else {
+					throw new BankException("Operation not permited");
+				}
+			}
+		}
+		throw new BankException("Account doesn't exist");
 	}
 
 	@Atomic(mode = TxMode.WRITE)
