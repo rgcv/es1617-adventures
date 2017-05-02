@@ -40,7 +40,7 @@ public class HotelController {
 
             logger.error(errorMessage);
             model.addAttribute("error", errorMessage);
-            model.addAttribute("hotel", new HotelData());
+            model.addAttribute("hotel", hotelData);
             model.addAttribute("hotels", HotelInterface.getHotels());
 
             return "hotels";
