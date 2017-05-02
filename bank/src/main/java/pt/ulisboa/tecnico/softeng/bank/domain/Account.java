@@ -27,18 +27,18 @@ public class Account extends Account_Base {
 
     private void checkArguments(Bank bank, Client client) {
         if (bank == null || client == null) {
-            throw new BankException();
+            throw new BankException("Bank does not exist");
         }
 
         if (!bank.getClientSet().contains(client)) {
-            throw new BankException();
+            throw new BankException("Client does not exist");
         }
 
     }
 
     public String deposit(int amount) {
         if (amount <= 0) {
-            throw new BankException();
+            throw new BankException("Amount must be positive");
         }
 
         setBalance(getBalance() + amount);
@@ -48,8 +48,11 @@ public class Account extends Account_Base {
     }
 
     public String withdraw(int amount) {
-        if (amount <= 0 || amount > getBalance()) {
-            throw new BankException();
+        if (amount <= 0){
+        	throw new BankException("Amount must be positive");
+        }
+        else if(amount > getBalance()){
+            throw new BankException("Not enough moneeeeyz in the account");
         }
 
         setBalance(getBalance() - amount);
