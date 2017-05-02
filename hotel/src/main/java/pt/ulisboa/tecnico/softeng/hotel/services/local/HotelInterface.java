@@ -18,6 +18,7 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.HotelData;
 import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.HotelData.CopyDepth;
 import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.RoomBookingData;
+import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.RoomData;
 
 public class HotelInterface {
 
@@ -33,6 +34,20 @@ public class HotelInterface {
             hotels.add(new HotelData(hotel, CopyDepth.SHALLOW));
         }
         return hotels;
+    }
+    
+    @Atomic(mode = TxMode.READ)
+    public static HotelData getHotelDataByCode(String hotelCode, CopyDepth depth) {
+    	for (HotelData hotel : getHotels()) {
+    		if (hotel.getCode().equals(hotelCode))
+    			return hotel;
+    	}
+    	return null;
+    }
+    
+    @Atomic(mode = TxMode.WRITE)
+    public static void createRoom(RoomData roomData) {
+    	new Room(roomData.getHotel(), roomData.getNumber(), roomData.getType());
     }
 
     @Atomic(mode = TxMode.WRITE)

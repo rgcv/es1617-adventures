@@ -29,12 +29,16 @@ public class Room extends Room_Base {
     }
 
     private void checkArguments(Hotel hotel, String number, Type type) {
-        if (hotel == null || number == null || number.trim().length() == 0 || type == null) {
-            throw new HotelException();
+        if (hotel == null) {
+            throw new HotelException("Invalid Hotel");
         }
 
-        if (!number.matches("\\d*")) {
-            throw new HotelException();
+        if (!number.matches("\\d*") || number == null || number.trim().length() == 0) {
+            throw new HotelException("Invalid Number");
+        }
+        
+        if (type == null) {
+        	throw new HotelException("Invalid Type");
         }
     }
 

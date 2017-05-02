@@ -43,9 +43,7 @@
                     <td th:text="${hotel.code}">Code</td>
                     <td th:text="${hotel.name}">Name</td>
                     <td>
-                        <!-- TODO: URL for a hotel's list of rooms -->
-                        <!-- th:href="@{/hotels/{code}/rooms(code=${hotel.code})}" -->
-                        <a href="#">Link</a>
+                        <a th:href="@{/hotels/{code}/rooms(code=${hotel.code})}">Link</a>
                     </td>
                 </tr>
                 </tbody>

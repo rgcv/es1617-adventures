@@ -3,7 +3,6 @@ package pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ulisboa.tecnico.softeng.hotel.domain.Booking;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
 
@@ -11,7 +10,8 @@ public class RoomData {
 	private Hotel hotel;
 	private String number;
 	private Room.Type type;
-	private List<Booking> bookings = new ArrayList<>();
+	
+	private List<RoomBookingData> bookings = new ArrayList<>();
 	
 	public RoomData() {
 	}
@@ -20,7 +20,6 @@ public class RoomData {
 		this.hotel = room.getHotel();
 		this.number = room.getNumber();
 		this.type = room.getType();
-		
 	}
 	
 	public Hotel getHotel() {
@@ -47,11 +46,11 @@ public class RoomData {
 		this.type = type;
 	}
 	
-	public List<Booking> getBookings() {
+	public List<RoomBookingData> getBookings() {
 		return bookings;
 	}
 	
-	public void setBookings(List<Booking> bookings) {
+	public void setBookings(List<RoomBookingData> bookings) {
 		this.bookings = bookings;
 	}
 }
