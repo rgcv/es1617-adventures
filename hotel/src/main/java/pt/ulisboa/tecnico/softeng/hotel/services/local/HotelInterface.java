@@ -47,7 +47,12 @@ public class HotelInterface {
     
     @Atomic(mode = TxMode.WRITE)
     public static void createRoom(RoomData roomData) {
-    	new Room(roomData.getHotel(), roomData.getNumber(), roomData.getType());
+    	for (Hotel hotel : FenixFramework.getDomainRoot().getHotelSet()) {
+    		if (hotel.getCode().equals(roomData.getHotel())) {
+    			new Room(hotel, roomData.getNumber(), roomData.getType());
+    		}
+    	}
+    	throw new HotelException();
     }
 
     @Atomic(mode = TxMode.WRITE)

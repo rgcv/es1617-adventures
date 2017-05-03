@@ -3,11 +3,11 @@ package pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
+import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.HotelData.CopyDepth;
 
 public class RoomData {
-	private Hotel hotel;
+	private HotelData hotel;
 	private String number;
 	private Room.Type type;
 	
@@ -17,16 +17,16 @@ public class RoomData {
 	}
 	
 	public RoomData(Room room) {
-		this.hotel = room.getHotel();
+		this.hotel = new HotelData(room.getHotel(), CopyDepth.SHALLOW);
 		this.number = room.getNumber();
 		this.type = room.getType();
 	}
 	
-	public Hotel getHotel() {
+	public HotelData getHotel() {
 		return hotel;
 	}
 	
-	public void setHotel(Hotel hotel) {
+	public void setHotel(HotelData hotel) {
 		this.hotel = hotel;
 	}
 
