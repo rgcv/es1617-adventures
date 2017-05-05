@@ -15,15 +15,18 @@ public class ActivityData {
 	private int min_age;
 	private int max_age;
 	private int capacity;
+	private String code;
 	//private List<ActivityOffer> activityOffer = new ArrayList<>();
 
 	public ActivityData() {}
 
 	public ActivityData(Activity activity, CopyDepth depth) {
+				
 		name = activity.getName();
 		min_age = activity.getMinAge();
 		max_age = activity.getMaxAge();
 		capacity = activity.getCapacity();
+		code = activity.getActivityProvider().getCode() + Integer.toString(activity.getActivityProvider().getCounter());
 
 		switch(depth) {
 			case ACTIVITYOFFER:
@@ -67,6 +70,10 @@ public class ActivityData {
 	
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+	
+	public String getCode(){
+		return code;
 	}
 	
     /*public List<ActivityOffer> getOffers() {
