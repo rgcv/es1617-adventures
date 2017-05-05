@@ -26,7 +26,7 @@ public class ActivityData {
 		min_age = activity.getMinAge();
 		max_age = activity.getMaxAge();
 		capacity = activity.getCapacity();
-		code = activity.getActivityProvider().getCode() + Integer.toString(activity.getActivityProvider().getCounter());
+		code = activity.getCode();
 
 		switch(depth) {
 			case ACTIVITYOFFER:
