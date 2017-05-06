@@ -18,7 +18,7 @@ public class ActivityProviderController {
 	private static Logger logger = LoggerFactory.getLogger(ActivityProviderController.class);
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String brokerSubmit(Model model, @ModelAttribute ActivityProviderData activityProviderData) {
+	public String activityProviderSubmit(Model model, @ModelAttribute ActivityProviderData activityProviderData) {
 		logger.info("activityProviderSubmit name:{}, code:{}", activityProviderData.getName(), activityProviderData.getCode());
 
 		try {
@@ -30,18 +30,18 @@ public class ActivityProviderController {
 			model.addAttribute("error", errorMessage);
 			model.addAttribute("activityProvider", activityProviderData);
 			model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
-			return "activityProviders";
+			return "/activityProviders";
 		}
 
 		return "redirect:/activityProviders";
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String showAdventures(Model model) {
-		logger.info("activityProviderForm");
+	public String showActivityProviders(Model model) {
+		logger.info("showActivityProviders");
 
 		model.addAttribute("activityProvider", new ActivityProviderData());
 		model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
-		return "activityProviders";
+		return "/activityProviders";
 	}
 }

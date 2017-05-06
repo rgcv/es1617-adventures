@@ -26,12 +26,16 @@ public class ActivityOffer extends ActivityOffer_Base {
     }
 
     private void checkArguments(Activity activity, LocalDate begin, LocalDate end) {
-        if (activity == null || begin == null || end == null) {
-            throw new ActivityException();
+    	if (activity == null) {
+    		throw new ActivityException("Invalid referenced activity.");
+    	}
+    	
+        if (begin == null || end == null) {
+            throw new ActivityException("Invalid activity offer begin or end date.");
         }
 
         if (end.isBefore(begin)) {
-            throw new ActivityException();
+            throw new ActivityException("End date occurs before begin date.");
         }
     }
 

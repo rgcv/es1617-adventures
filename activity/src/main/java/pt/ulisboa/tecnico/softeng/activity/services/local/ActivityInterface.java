@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.activity.services.local;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.joda.time.LocalDate;
 
@@ -14,6 +15,7 @@ import pt.ulisboa.tecnico.softeng.activity.domain.ActivityProvider;
 import pt.ulisboa.tecnico.softeng.activity.domain.Booking;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityData;
+import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityOfferData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData.CopyDepth;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityReservationData;
@@ -36,6 +38,11 @@ public class ActivityInterface {
 	}
 
 	@Atomic(mode = TxMode.WRITE)
+	public static void createActivityOffer(String activityProviderCode, String activityCode, ActivityOfferData activityOfferData) {
+		new ActivityOffer(getActivityByCode(activityProviderCode, activityCode), activityOfferData.getBegin(), activityOfferData.getEnd());
+	}
+
+	@Atomic(mode = TxMode.WRITE)
 	public static void createActivityProvider(ActivityProviderData activityProviderData) {
 		new ActivityProvider(activityProviderData.getCode(), activityProviderData.getName());
 	}
@@ -51,15 +58,14 @@ public class ActivityInterface {
 	}
 
 	@Atomic(mode = TxMode.READ)
-	public static ActivityProviderData getActivityProviderDataByCode(String activityProviderCode, CopyDepth depth) {
+	public static ActivityProviderData getActivityProviderDataByCode(String activityProviderCode, ActivityProviderData.CopyDepth depth) {
 		final ActivityProvider activityProvider = getActivityProviderByCode(activityProviderCode);
 
 		if(activityProvider != null) {
 			return new ActivityProviderData(activityProvider, depth);
 		}
-		else {
-			return null;
-		}
+		
+		return null;
 	}
 
 	@Atomic(mode = TxMode.READ)
@@ -110,4 +116,31 @@ public class ActivityInterface {
 		throw new ActivityException();
 	}
 
+	@Atomic(mode = TxMode.READ)
+	public static ActivityData getActivityDataByCode(String activityProviderCode, String activityCode, ActivityData.CopyDepth depth) {
+		Activity activity = getActivityByCode(activityProviderCode, activityCode);
+		
+		if(activity != null) {
+			return new ActivityData(activity, depth);
+		}
+		
+		return null;
+	}
+	
+	@Atomic(mode = TxMode.READ)
+	public static Activity getActivityByCode(String activityProviderCode, String activityCode) {
+		ActivityProvider activityProvider = getActivityProviderByCode(activityProviderCode);
+		
+		if(activityProvider != null) {
+			Set<Activity> activities = activityProvider.getActivitySet();
+
+			for(Activity activity : activities) {
+				if(activity.getCode().equals(activityCode)) {
+					return activity;
+				}
+			}
+		}
+		
+		return null;
+	}
 }

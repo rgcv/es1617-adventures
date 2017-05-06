@@ -36,12 +36,12 @@
                 </tr>
          	</thead>
             <tbody>
-                <tr th:each="activity: ${activityProvider.activities}">	
+                <tr th:each="activity: ${activityProvider.activities}">
                     <td th:text="${activity.name}">Name</td>
                     <td th:text="${activity.minAge}">MinAge</td>
 					<td th:text="${activity.maxAge}">MaxAge</td>
 					<td th:text="${activity.capacity}">Capacity</td>
-					<td><a th:href="@{/activityProviders/{code}/activities(code=${activityProvider.code})}">Link</a></td>
+					<td><a th:href="@{/activityProviders/{activityProviderCode}/activities/{activityCode}/activityOffers(activityProviderCode=${activityProvider.code}, activityCode=${activity.code})}">Link</a></td>
                 </tr>
             </tbody>
         </table>

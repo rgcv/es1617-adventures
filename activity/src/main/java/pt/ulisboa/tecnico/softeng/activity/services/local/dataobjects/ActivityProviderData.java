@@ -27,7 +27,6 @@ public class ActivityProviderData {
 					this.activities.add(new ActivityData(activity, ActivityData.CopyDepth.SHALLOW));
 				}
 			case SHALLOW:
-				break;
 			default:
 				break;
 		}
