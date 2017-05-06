@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Bookings</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet"
+              th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+        <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>
+                Welcome to Booking's Manager
+            </h2>
+            <br/>
+            <h3>Create Booking</h3>
+            <p class="text-danger" th:text="${error}">Error </p>
+            <form class="form-inline" th:action="@{/hotels/{code}/rooms/{number}/bookings(code=${room.hotelCode}, number=${room.number})}" th:object="${booking}"
+                  method="post">
+                <label>Arrival Date: </label>
+                <input class="form-control" type="date" th:field="*{arrival}" />
+
+                <label>Departure Date: </label>
+                <input class="form-control" type="date" th:field="*{departure}" />
+
+                <input class="btn btn-primary" type="submit" value="Submit"/>
+            </form>
+            <br/>
+            <h3>List of Bookings</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+					<th>Reference</th>
+                    <th>Arrival Date</th>
+                    <th>Departure Date</th>
+                </tr>
+                </thead>
+				<tbody>
+				<tr th:each="booking : ${room.bookings}">
+					<td th:text="${booking.reference}"> Reference </td>
+					<td th:text="${booking.arrival}"> Arrival Date </td>
+					<td th:text="${booking.departure}"> Departure Date </td>
+				</tr>
+				</tbody>
+            </table>
+        </div>
+    </body>
+</html>
