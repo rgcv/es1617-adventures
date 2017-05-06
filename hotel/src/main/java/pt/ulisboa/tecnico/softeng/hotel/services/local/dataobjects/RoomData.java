@@ -9,7 +9,8 @@ public class RoomData {
 	public static enum CopyDepth {
 		SHALLOW, BOOKINGS
 	}
-
+	
+	private String hotelCode;
 	private String number;
 	private Room.Type type;
 	
@@ -19,6 +20,7 @@ public class RoomData {
 	}
 	
 	public RoomData(Room room, CopyDepth depth) {
+		this.hotelCode = room.getHotel().getCode();
 		this.number = room.getNumber();
 		this.type = room.getType();
 		
@@ -29,6 +31,14 @@ public class RoomData {
 			default:
 				break;
 		}
+	}
+	
+	public String getHotelCode() {
+		return hotelCode;
+	}
+	
+	public void setHotelCode(String code) {
+		hotelCode = code;
 	}
 
 	public String getNumber() {

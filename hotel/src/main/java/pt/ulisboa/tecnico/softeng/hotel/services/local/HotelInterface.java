@@ -92,6 +92,40 @@ public class HotelInterface {
         }
         throw new HotelException();
     }
+    
+    @Atomic(mode = TxMode.READ)
+    public static List<RoomBookingData> getBookingDataByRoom(String hotelCode, String number) {
+    	List<RoomBookingData> bookings = new ArrayList<>();
+    	for(Hotel hotel : FenixFramework.getDomainRoot().getHotelSet()) {
+    		if(hotel.getCode().equals(hotelCode)) {
+    			for(Room room : hotel.getRoomSet()) {
+    				if(room.getNumber().equals(number)) {
+    					for(Booking booking : room.getBookingSet()) {
+    						bookings.add(new RoomBookingData(room, booking));
+    					}
+    					return bookings;
+    				}
+    			}
+    			throw new HotelException("Invalid room number");
+    		}
+    	}
+    	throw new HotelException("Invalid Hotel code");
+    }
+    
+    @Atomic(mode = TxMode.READ)
+    public static RoomData getHotelRoomByNumber(String hotelCode, String number) {
+    	for(Hotel hotel : FenixFramework.getDomainRoot().getHotelSet()) {
+    		if(hotel.getCode().equals(hotelCode)) {
+    			for(Room room : hotel.getRoomSet()) {
+    				if(room.getNumber().equals(number)) {
+    					return new RoomData(room, RoomData.CopyDepth.SHALLOW);
+    				}
+    			}
+    			throw new HotelException("Invalid room number");
+    		}
+    	}
+    	throw new HotelException("Invalid Hotel code");
+    }
 
     @Atomic(mode = TxMode.WRITE)
     public static Set<String> bulkBooking(int number, LocalDate arrival, LocalDate departure) {
