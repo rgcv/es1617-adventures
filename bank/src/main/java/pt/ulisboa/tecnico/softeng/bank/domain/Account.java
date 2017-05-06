@@ -43,8 +43,7 @@ public class Account extends Account_Base {
 
         setBalance(getBalance() + amount);
 
-        Operation operation = new Operation(Operation.Type.DEPOSIT, this, amount);
-        return operation.getReference();
+        return new Operation(Operation.Type.DEPOSIT, this, amount).getReference();
     }
 
     public String withdraw(int amount) {
@@ -52,7 +51,7 @@ public class Account extends Account_Base {
         	throw new BankException("Amount must be positive");
         }
         else if(amount > getBalance()){
-            throw new BankException("Not enough moneeeeyz in the account");
+            throw new BankException("Not enough moneyy in the account");
         }
 
         setBalance(getBalance() - amount);

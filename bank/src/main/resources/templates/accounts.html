@@ -7,6 +7,7 @@
     th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
 <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
 </head>
 <body>
     <div class="container">
@@ -23,18 +24,19 @@
         </form>
         <br/>
         <h3>List of Accounts</h3>
-        <table class="table table-striped">
+        <table id="accounts" class="table table-striped">
             <thead>
                 <tr>
                     <th>IBAN</th>
                     <th>Balance</th>
                     <th>ClientID</th>
                     <th>Withdrawal/Deposit</th>
+                    <th>Transfer money</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="account: ${bank.accounts}">
-               	    <td th:text="${account.IBAN}">Name</td>
+               	    <td class="accountName" th:text="${account.IBAN}">Name</td>
                     <td th:text="${account.balance}">Balance</td>
                     <td><a th:text="${account.clientID}" 
                     	   th:href="@{/banks/{code}/accounts/client/{clientId}(code=${bank.code},clientId=${account.clientID})}">
@@ -44,12 +46,23 @@
                     <td>
                     	<form class="form-inline" 
                     		  th:action="@{/banks/{code}/accounts/{IBAN}/do(code=${bank.code}, IBAN=${account.IBAN})}" 
-                    		  th:object="${operation}" 
                     		  method="post">
                     		<label>Value: </label>
-                    		<input class="form-control" type="number" min="0" th:field="*{value}" />
+                    		<input style="width:25%" class="form-control" type="number" min="0" value="0" name="value"/>
                     		<input class="btn btn-primary" type="submit" value="Withdrawal" name="operationType"/>
                     		<input class="btn btn-primary" type="submit" value="Deposit"  name="operationType"/>
+                    	
+                    	</form>
+                    </td>
+                    <td>
+                    	<form class="form-inline" 
+                    		  th:action="@{/banks/{code}/accounts/{fromIBAN}/transfer(code=${bank.code}, fromIBAN=${account.IBAN})}" 
+                    		  method="post">
+                    		<label>Value: </label>
+                    		<input style="width:20%" class="form-control" type="number" min="0" value="0" name="value"/>
+                    		<label>To IBAN: </label>
+                    		<input class="form-control" type="text" name="toIBAN" />
+                    		<input class="btn btn-primary" type="submit" value="Transfer"  name="transfer"/>
                     	
                     	</form>
                     </td>
@@ -57,5 +70,24 @@
             </tbody>
         </table>
     </div>
+    <script type="text/javascript">
+	$("input[name=toIBAN]").focusout(function() {
+		var l = $(this);
+		setTimeout(function() {
+		if(document.activeClickElement)
+	       if(document.activeClickElement.hasClass("accountName"))  {
+	     		l.val(document.activeClickElement.text());
+	     	}
+	    },500);
+
+	});
+	
+	$("body").click(function(e) {
+		if($(e.target).hasClass("accountName"))
+			document.activeClickElement = $(e.target) ;
+		else if(!$(e.target).is('input'))
+			document.activeClickElement =null;
+	});
+</script>
 </body>
 </html>

@@ -41,7 +41,6 @@ public class AccountController {
 		} else {
 			model.addAttribute("account", new AccountData());
 			model.addAttribute("bank", bankData);
-			model.addAttribute("operation", new BankOperationData());
 			return "accounts";
 		}
 	}
@@ -67,12 +66,10 @@ public class AccountController {
 		}
 		else {
 			model.addAttribute("account", new AccountData());
-			model.addAttribute("operation", new BankOperationData());
 			model.addAttribute("client", clientData);
 			model.addAttribute("bank", bankData);
 			return "accountsByClient";
 		}
-		
 		
 	}
 
@@ -89,30 +86,29 @@ public class AccountController {
 			model.addAttribute("error", errorMessage);
 			model.addAttribute("account", accountData);
 			model.addAttribute("bank", BankInterface.getBankDataByCode(bankCode, CopyDepth.ACCOUNTS));
-			model.addAttribute("operation", new BankOperationData());
-			if(clientID.isPresent()) 
-				return "accountsById";
-			else {
-				return "accounts";
-			}
-		}
-		if(clientID.isPresent())
-			return "redirect:/banks/" + bankCode + "/accounts/client/" + clientID.get();
 			
-		else
-			return "redirect:/banks/" + bankCode + "/accounts";
+			return (clientID.isPresent() ? "accountsById" : "accounts");
+		}
+		
+		return "redirect:/banks/" + bankCode + "/accounts" + 
+			(clientID.isPresent() ? "/client/" + clientID.get() : "");
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value={"/{IBAN}/do", "/clients/client/{clientID}/{IBAN}/do"})
-	public String DoOperation(Model model, @PathVariable String bankCode,@PathVariable Optional<String> clientID, @PathVariable String IBAN, @RequestParam(value="operationType", required=true) String operation, @ModelAttribute BankOperationData operationData, @ModelAttribute AccountData accountData) {
-		logger.info("doOperation bankCode:{}, accountIBAN:{}, type:{}, value:{}", bankCode, IBAN, operationData.getType(), operationData.getValue());
+	public String DoOperation(Model model, @PathVariable String bankCode,
+			@PathVariable Optional<String> clientID, @PathVariable String IBAN, 
+			@RequestParam(value="value", required=true) Double value,
+			@RequestParam(value="operationType", required=true) String operation, 
+			@ModelAttribute AccountData accountData) {
+		
+		logger.info("doOperation bankCode:{}, accountIBAN:{}, type:{}, value:{}", bankCode, IBAN, operation, value);
 		
 		String operationType = operation;
 		
 		BankData bankData = BankInterface.getBankDataByCode(bankCode, CopyDepth.ACCOUNTS);
 		
 		if(bankData == null) {
-			model.addAttribute("error", "Error: it does not exist a bank with the code " + bankCode);
+			model.addAttribute("error", "It does not exist a bank with the code " + bankCode);
 			model.addAttribute("bank", new BankData());
 			model.addAttribute("banks", BankInterface.getBanks());
 			return "banks";
@@ -124,15 +120,16 @@ public class AccountController {
 			model.addAttribute("error", errorMessage);
 			model.addAttribute("account", accountData);
 			model.addAttribute("bank", bankData);
-			model.addAttribute("operation", new BankOperationData());
 			return "accounts";
 		}
 		else {
 			try {
-				BankInterface.processPayment(IBAN, operationData.getValue(), 
+				BankInterface.processPayment(bankCode, IBAN, value, 
 						(operationType.equals("Withdrawal") ?
 								Operation.Type.WITHDRAW : Operation.Type.DEPOSIT));
+				
 			} catch(BankException be) {
+				
 				String errorMessage = "Couldn't execute " + operationType + " : " + be.getMessage();
 				logger.error(errorMessage);
 				model.addAttribute("error", errorMessage);
@@ -144,9 +141,8 @@ public class AccountController {
 				if(clientID.isPresent()) {
 					ClientData clientData = BankInterface.getClientDataById(bankCode, clientID.get(), ClientData.CopyDepth.ACCOUNTS);
 					if(clientData == null){
-						model.addAttribute("error", "Error: it does not exist a client with the ID " + clientID);
+						model.addAttribute("error", "It does not exist a client with the ID " + clientID);
 						model.addAttribute("client", new ClientData());
-						
 						return "clients";
 					}
 					else {
@@ -160,13 +156,43 @@ public class AccountController {
 				}
 				
 			}
-			if(clientID.isPresent())
-				return "redirect:/banks/" + bankCode + "/accounts/client/" + clientID.get();
-				
-			else
-				return "redirect:/banks/" + bankCode + "/accounts";
-			
+			return "redirect:/banks/" + bankCode + "/accounts" + 
+				(clientID.isPresent() ? "/client/" + clientID.get() : "");		
 		}
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/{fromIBAN}/transfer") 
+		public String TransferMoney(Model model, @PathVariable String bankCode, @PathVariable String fromIBAN, 
+				@ModelAttribute AccountData accountData,
+				@RequestParam(value="toIBAN", required=true) String toIBAN,
+				@RequestParam(value="value", required=true) Double value) {
+		
+		logger.info("transfer bankCode:{}, fromIBAN:{}, toIBAN:{}, value:{}", bankCode, fromIBAN, toIBAN, value);
+		
+		BankData bankData = BankInterface.getBankDataByCode(bankCode, CopyDepth.ACCOUNTS);
+		
+		if(bankData == null) {
+			model.addAttribute("error", "Error: it does not exist a bank with the code " + bankCode);
+			model.addAttribute("bank", new BankData());
+			model.addAttribute("banks", BankInterface.getBanks());
+			return "banks";
+		}
+		else {
+			try {
+				BankInterface.transferMoney(bankCode, fromIBAN, toIBAN, value);
+			} catch (BankException be) {
+				String errorMessage = "Couln't transfer money from " + fromIBAN + " to " + toIBAN + ": " + be.getMessage();
+				logger.error(errorMessage);
+				model.addAttribute("error", errorMessage);
+				model.addAttribute("account", accountData);
+				model.addAttribute("operation", new BankOperationData());
+				model.addAttribute("bank", bankData);
+				return "accounts";
+			}
+		}
+		
+		return "redirect:/banks/" + bankCode + "/accounts";
+	}
+
 	
 }

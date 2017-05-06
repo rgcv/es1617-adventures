@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.bank.services.local;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -96,21 +97,53 @@ public class BankInterface {
 	}
 	
 	@Atomic(mode = TxMode.WRITE)
-	public static String processPayment(String IBAN, int amount, Operation.Type type) {
-		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
-			if (bank.getAccount(IBAN) != null) {
-				if(type.equals(Operation.Type.DEPOSIT)) {
-					return bank.getAccount(IBAN).deposit(amount);
-				}
-				else if(type.equals(Operation.Type.WITHDRAW)) {
-					return bank.getAccount(IBAN).withdraw(amount);
-				}
-				else {
-					throw new BankException("Operation not permited");
-				}
+	public static String processPayment(String bankCode, String IBAN, Double amount, Operation.Type type) {
+		
+		Bank bank = getBankByCode(bankCode);
+		if (bank == null) {
+			throw new BankException("Bank does not exist");
+		}
+		else if (amount == null) {
+			throw new BankException("Empty amount");
+		}
+		else if (bank.getAccount(IBAN) != null) {
+			if(type.equals(Operation.Type.DEPOSIT)) {
+				return bank.getAccount(IBAN).deposit(amount.intValue());
+			}
+			else if(type.equals(Operation.Type.WITHDRAW)) {
+				return bank.getAccount(IBAN).withdraw(amount.intValue());
+			}
+			else {
+				throw new BankException("Operation not permited");
 			}
 		}
 		throw new BankException("Account doesn't exist");
+	}
+	@Atomic(mode = TxMode.WRITE)
+	public static String transferMoney(String bankCode, String senderIBAN, String receiverIBAN, Double amount) {
+		Bank bank = getBankByCode(bankCode);
+		Account senderAccount = null;
+		Account receiverAccount = null;
+		if (bank == null) {
+			throw new BankException("Bank does not exist");
+		}
+		else if (amount == null) {
+			throw new BankException("Empty amount");
+		}
+		else if (senderIBAN == null || senderIBAN.equals("")) {
+			throw new BankException("Sender IBAN is null");
+		}
+		else if (receiverIBAN == null || receiverIBAN.equals("")) {
+			throw new BankException("Receiver IBAN is null");
+		}
+		else if ((senderAccount = bank.getAccount(senderIBAN)) != null 
+				&& (receiverAccount = bank.getAccount(receiverIBAN)) != null) {
+			senderAccount.withdraw(amount.intValue());
+			return receiverAccount.deposit(amount.intValue());
+		}
+		else {
+			throw new BankException("Account doesn't exist (" + (senderAccount == null ? senderIBAN : receiverIBAN) +")");
+		}
 	}
 
 	@Atomic(mode = TxMode.WRITE)
