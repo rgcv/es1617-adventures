@@ -4,30 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
-import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.HotelData.CopyDepth;
 
 public class RoomData {
-	private HotelData hotel;
+	public static enum CopyDepth {
+		SHALLOW, BOOKINGS
+	}
+
 	private String number;
-	private Room.Type type;
+	private String type;
 	
 	private List<RoomBookingData> bookings = new ArrayList<>();
 	
 	public RoomData() {
 	}
 	
-	public RoomData(Room room) {
-		this.hotel = new HotelData(room.getHotel(), CopyDepth.SHALLOW);
+	public RoomData(Room room, CopyDepth depth) {
 		this.number = room.getNumber();
-		this.type = room.getType();
-	}
-	
-	public HotelData getHotel() {
-		return hotel;
-	}
-	
-	public void setHotel(HotelData hotel) {
-		this.hotel = hotel;
+		this.type = room.getType().name();
+		
+		switch (depth) {
+			case BOOKINGS:
+				//TODO: Add RoomBookingData objects to bookings
+			case SHALLOW:
+			default:
+				break;
+		}
 	}
 
 	public String getNumber() {
@@ -38,11 +39,11 @@ public class RoomData {
 		this.number = number;
 	}
 
-	public Room.Type getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(Room.Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	

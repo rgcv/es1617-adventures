@@ -38,17 +38,17 @@ public class RoomController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/room/{roomNumber}")
+	@RequestMapping(method = RequestMethod.POST)
 	public String submitRoom(Model model, @PathVariable String hotelCode, @ModelAttribute RoomData roomData) {
-		logger.debug("submitRoom: hotel '{}'; number '{}'; type '{}'.", 
-						roomData.getHotel(), roomData.getNumber(), roomData.getType());
+		logger.debug("submitRoom: hotelCode '{}'; number '{}'; type '{}'.", 
+						hotelCode, roomData.getNumber(), roomData.getType());
 		
 		try {
 			logger.info("Creating room...");
-			HotelInterface.createRoom(roomData);
+			HotelInterface.createRoom(roomData, hotelCode);
 			logger.info("Room successfully created!");
 		} catch (HotelException he){
-			String errorMessage = "Couldn't create room :(";
+			String errorMessage = "Couldn't create room: " + he.getMessage();
 			
 			logger.error(errorMessage);
 			model.addAttribute("error", errorMessage);

@@ -13,7 +13,7 @@ public class HotelData {
 
     private String code;
     private String name;
-    private List<Room> rooms = new ArrayList<>();
+    private List<RoomData> rooms = new ArrayList<>();
 
     public HotelData() {
     }
@@ -24,7 +24,10 @@ public class HotelData {
 
         switch (depth) {
             case ROOMS:
-                //TODO: Add RoomData objects to rooms
+                for (Room room : hotel.getRoomSet()) {
+                	rooms.add(new RoomData(room, RoomData.CopyDepth.SHALLOW));
+                }
+                break;
             case SHALLOW:
             default:
                 break;
@@ -47,11 +50,11 @@ public class HotelData {
         this.name = name;
     }
 
-    public List<Room> getRooms() {
+    public List<RoomData> getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<Room> rooms) {
+    public void setRooms(List<RoomData> rooms) {
         this.rooms = rooms;
     }
 }
