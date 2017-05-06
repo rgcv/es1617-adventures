@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ulisboa.tecnico.softeng.hotel.domain.Booking;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
 
 public class RoomData {
@@ -26,7 +27,9 @@ public class RoomData {
 		
 		switch (depth) {
 			case BOOKINGS:
-				//TODO: Add RoomBookingData objects to bookings
+				for(Booking booking : room.getBookingSet()) {
+					bookings.add(new RoomBookingData(room, booking));
+				}
 			case SHALLOW:
 			default:
 				break;
