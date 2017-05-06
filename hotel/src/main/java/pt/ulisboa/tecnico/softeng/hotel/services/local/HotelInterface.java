@@ -38,11 +38,13 @@ public class HotelInterface {
     
     @Atomic(mode = TxMode.READ)
     public static HotelData getHotelDataByCode(String hotelCode, CopyDepth depth) {
-    	for (HotelData hotel : getHotels()) {
-    		if (hotel.getCode().equals(hotelCode))
-    			return hotel;
+    	Hotel hotel = getHotelByCode(hotelCode);
+    	
+    	if (hotel != null) {
+    		return new HotelData(hotel, depth);
+    	} else {
+    		return null;
     	}
-    	return null;
     }
     
     @Atomic(mode = TxMode.WRITE)
@@ -50,16 +52,9 @@ public class HotelInterface {
     	Hotel hotel = getHotelByCode(hotelCode);
     	
     	if (hotel != null) {
-    			switch (roomData.getType().toUpperCase()) {
-    				case "SINGLE": 
-    					new Room(hotel, roomData.getNumber(), Room.Type.SINGLE);
-    				case "DOUBLE":
-    					new Room(hotel, roomData.getNumber(), Room.Type.DOUBLE);
-    				default: 
-    					break;
-    			}
+    				new Room(hotel, roomData.getNumber(), roomData.getType());
     	} else {
-    		throw new HotelException("createRoom: Unexisting hotel for room " + roomData.getNumber());
+    		throw new HotelException("createRoom: Hotel with code " + hotelCode + " doesnt exist");
     	}
     }
 
@@ -128,7 +123,7 @@ public class HotelInterface {
         return availableRooms;
     }
     
-    public static Hotel getHotelByCode(String code) {
+    private static Hotel getHotelByCode(String code) {
     	for (Hotel hotel : FenixFramework.getDomainRoot().getHotelSet()) {
     		if (hotel.getCode().equals(code)) {
     			return hotel;

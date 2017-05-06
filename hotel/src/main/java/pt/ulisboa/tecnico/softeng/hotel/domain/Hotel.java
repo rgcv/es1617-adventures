@@ -85,7 +85,7 @@ public class Hotel extends Hotel_Base {
     @Override
     public void addRoom(Room room) {
         if (hasRoom(room.getNumber())) {
-            throw new HotelException();
+            throw new HotelException("addRoom: room already exists");
         }
 
         super.addRoom(room);

@@ -11,7 +11,7 @@ public class RoomData {
 	}
 
 	private String number;
-	private String type;
+	private Room.Type type;
 	
 	private List<RoomBookingData> bookings = new ArrayList<>();
 	
@@ -20,7 +20,7 @@ public class RoomData {
 	
 	public RoomData(Room room, CopyDepth depth) {
 		this.number = room.getNumber();
-		this.type = room.getType().name();
+		this.type = room.getType();
 		
 		switch (depth) {
 			case BOOKINGS:
@@ -39,11 +39,11 @@ public class RoomData {
 		this.number = number;
 	}
 
-	public String getType() {
+	public Room.Type getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Room.Type type) {
 		this.type = type;
 	}
 	

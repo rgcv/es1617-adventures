@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 import pt.ulisboa.tecnico.softeng.hotel.services.local.HotelInterface;
 import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.HotelData;
-import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.HotelData.CopyDepth;
 import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.RoomData;
 
 @Controller
@@ -24,7 +23,7 @@ public class RoomController {
 	public String roomForm(Model model, @PathVariable String hotelCode) {
 		logger.debug("roomForm");
 		
-		HotelData hotelData = HotelInterface.getHotelDataByCode(hotelCode, CopyDepth.ROOMS);
+		HotelData hotelData = HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.ROOMS);
 		
 		if (hotelData == null) {
 			model.addAttribute("error", "Error: Hotel with code " + hotelCode + " does not exist");
@@ -53,7 +52,7 @@ public class RoomController {
 			logger.error(errorMessage);
 			model.addAttribute("error", errorMessage);
 			model.addAttribute("room", roomData);
-			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(hotelCode, CopyDepth.ROOMS));
+			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.ROOMS));
 			
 			return "rooms";
 		}

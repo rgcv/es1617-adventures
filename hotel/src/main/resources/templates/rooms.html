@@ -22,7 +22,11 @@
             	<input class="form-control" type="text" th:field="*{number}" />
             
             	<label>Type: </label> 
-            	<input class="form-control" type="text" th:field="*{type}" />
+            	<select class="form-control" name="room-type" id="room-type" th:field="*{{type}}">
+            		<option th:each="type: ${T(pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type).values()}"
+            				th:value="${{type}}"
+            				th:text="${type.name()}">TYPE</option>
+            	</select> 
             
             	<input class="btn btn-primary" type="submit" value="Submit" />
         	</form>
@@ -41,7 +45,7 @@
                     	<td th:text="${room.number}">Number</td>
                     	<td th:text="${room.type}">Type</td>
                     	<td>
-                        	<!-- TODO: Bookings per Room -->
+                        	<a th:href="@{/hotels/{code}/rooms/{number}/bookings(code=${hotel.code}, number=${room.number})}">Link</a>
                     	</td>
                 	</tr>
             	</tbody>

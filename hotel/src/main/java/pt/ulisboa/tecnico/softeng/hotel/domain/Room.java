@@ -33,7 +33,7 @@ public class Room extends Room_Base {
             throw new HotelException("Invalid Hotel");
         }
 
-        if (!number.matches("\\d*") || number == null || number.trim().length() == 0) {
+        if (number == null || number.trim().length() == 0 || !number.matches("\\d*")) {
             throw new HotelException("Invalid Number");
         }
         
