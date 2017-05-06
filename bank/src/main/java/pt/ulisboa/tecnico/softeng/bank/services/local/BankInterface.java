@@ -57,7 +57,13 @@ public class BankInterface {
 
 	@Atomic(mode = TxMode.WRITE)
 	public static void createClient(String bankCode, ClientData clientData) {
-		new Client(getBankByCode(bankCode), clientData.getName());
+		Bank bank = getBankByCode(bankCode);
+		if(bank != null) {
+			new Client(bank, clientData.getName());
+		}
+		else {
+			throw new BankException("Bank does not exist");
+		} 
 	}
 	
 	@Atomic(mode = TxMode.WRITE)

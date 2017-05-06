@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects;
 
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import pt.ulisboa.tecnico.softeng.bank.domain.Operation;
 
@@ -9,6 +10,7 @@ public class BankOperationData {
     private String type;
     private String iban;
     private int value;
+    @DateTimeFormat(pattern = "yyyy-MM-ddThh:mm")
     private DateTime time;
 
     public BankOperationData() {
@@ -55,7 +57,7 @@ public class BankOperationData {
     }
 
     public DateTime getTime() {
-        return this.time;
+    	return this.time;
     }
 
     public void setTime(DateTime time) {
