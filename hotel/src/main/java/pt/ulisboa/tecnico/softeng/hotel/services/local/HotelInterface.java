@@ -68,6 +68,21 @@ public class HotelInterface {
         }
         throw new HotelException();
     }
+    
+    @Atomic
+    public static void addBooking(RoomBookingData bookingData) {
+    	for(Hotel hotel : FenixFramework.getDomainRoot().getHotelSet()) {
+    		if(hotel.getCode().equals(bookingData.getHotelCode())) {
+    			for(Room room : hotel.getRoomSet()) {
+    				if(room.getNumber().equals(bookingData.getRoomNumber()))
+    					room.reserve(room.getType(), bookingData.getArrival(), bookingData.getDeparture());
+    				return;
+    			}
+    			throw new HotelException("Invalid Room number " + bookingData.getRoomNumber());
+    		}
+    	}
+    	throw new HotelException("Invalid Hotel code");
+    }
 
     @Atomic(mode = TxMode.WRITE)
     public static String cancelBooking(String reference) {
