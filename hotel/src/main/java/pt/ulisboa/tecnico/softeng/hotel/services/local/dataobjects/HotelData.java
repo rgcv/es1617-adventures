@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
@@ -24,9 +25,9 @@ public class HotelData {
 
         switch (depth) {
             case ROOMS:
-                for (Room room : hotel.getRoomSet()) {
-                	rooms.add(new RoomData(room, RoomData.CopyDepth.SHALLOW));
-                }
+                this.rooms = hotel.getRoomSet().stream()
+                    .map(room -> new RoomData(room, RoomData.CopyDepth.SHALLOW))
+                        .collect(Collectors.toList());
                 break;
             case SHALLOW:
             default:
