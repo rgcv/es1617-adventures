@@ -11,8 +11,9 @@
     <body>
         <div class="container">
             <h2>
-                Welcome to Booking's Manager
+                Welcome to <span th:text="${room.hotelName}">Name</span>'s Room number <span th:text="${room.number}">Name</span> Booking Manager
             </h2>
+			<a class="btn btn-default pull-right" th:href="@{/hotels/{code}/rooms(code=${room.hotelCode})}">Rooms</a>
             <br/>
             <h3>Create Booking</h3>
             <p class="text-danger" th:text="${error}">Error </p>
@@ -34,6 +35,7 @@
 					<th>Reference</th>
                     <th>Arrival Date</th>
                     <th>Departure Date</th>
+					<th>Cancelled</th>
                 </tr>
                 </thead>
 				<tbody>
@@ -41,6 +43,7 @@
 					<td th:text="${booking.reference}"> Reference </td>
 					<td th:text="${booking.arrival}"> Arrival Date </td>
 					<td th:text="${booking.departure}"> Departure Date </td>
+					<td th:text="${booking.cancellation}"> Canceled </td>
 				</tr>
 				</tbody>
             </table>

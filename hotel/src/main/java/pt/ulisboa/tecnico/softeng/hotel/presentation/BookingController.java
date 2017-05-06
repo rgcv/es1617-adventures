@@ -24,7 +24,7 @@ public class BookingController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String bookingForm(Model model, @PathVariable String hotelCode, @PathVariable String roomNumber) {
-    		logger.info("Bookings of Hotel with code " + hotelCode + " and Room number " + roomNumber);
+    		//logger.info("Bookings of Hotel with code " + hotelCode + " and Room number " + roomNumber);
         	
     		RoomData room = HotelInterface.getHotelRoomByNumber(hotelCode, roomNumber);
     		
@@ -34,6 +34,12 @@ public class BookingController {
     			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.ROOMS));
     			return "rooms";
     		} else {
+    			for(RoomBookingData bookingData : room.getBookings()) {
+    				if(bookingData.getCancellation() == null)
+    					bookingData.setCancellation("No");
+    				else
+    					bookingData.setCancellation("Yes");
+    			}
     			model.addAttribute("booking", new RoomBookingData());
     			model.addAttribute("room", room);
     			return "bookings";
@@ -45,15 +51,14 @@ public class BookingController {
     public String bookingPost(Model model, @PathVariable String hotelCode, @PathVariable String roomNumber, @ModelAttribute RoomBookingData booking) {
     	try {
     		
-    		logger.info("Creating Booking with Arrival " + booking.getArrival() + " and Departure " + booking.getDeparture());
-    		logger.info("Hotel Code: " + hotelCode + " and Room Number: " + roomNumber);
+    		//logger.info("Creating Booking with Arrival " + booking.getArrival() + " and Departure " + booking.getDeparture());
     		
     		booking.setHotelCode(hotelCode);
     		booking.setRoomNumber(roomNumber);
 
     		HotelInterface.addBooking(booking);
     		
-    		logger.info("Succeeded in creating Booking");
+    		//logger.info("Succeeded in creating Booking");
     		
     	} catch (HotelException he) {
     		logger.error("Received hotel exception " + he.getMessage());
