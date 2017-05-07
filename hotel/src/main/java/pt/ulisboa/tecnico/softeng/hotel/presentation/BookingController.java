@@ -34,12 +34,6 @@ public class BookingController {
     			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.ROOMS));
     			return "rooms";
     		} else {
-    			for(RoomBookingData bookingData : room.getBookings()) {
-    				if(bookingData.getCancellation() == null)
-    					bookingData.setCancellation("No");
-    				else
-    					bookingData.setCancellation("Yes");
-    			}
     			model.addAttribute("booking", new RoomBookingData());
     			model.addAttribute("room", room);
     			return "bookings";
