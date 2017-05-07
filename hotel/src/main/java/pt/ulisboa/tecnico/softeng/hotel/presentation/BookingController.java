@@ -34,12 +34,6 @@ public class BookingController {
     			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.ROOMS));
     			return "rooms";
     		} else {
-    			for(RoomBookingData bookingData : room.getBookings()) {
-    				if(bookingData.getCancellation() == null)
-    					bookingData.setCancellation("No");
-    				else
-    					bookingData.setCancellation("Yes");
-    			}
     			model.addAttribute("booking", new RoomBookingData());
     			model.addAttribute("room", room);
     			return "bookings";
@@ -72,5 +66,23 @@ public class BookingController {
     	
     	return "redirect:/hotels/" + hotelCode + "/rooms/" + roomNumber + "/bookings";
     }
+    
+    @RequestMapping(value="/{bookingReference}/cancel")
+    public String bookingCancel(Model model, @PathVariable String bookingReference, @PathVariable String hotelCode, @PathVariable String roomNumber, @ModelAttribute RoomBookingData booking) {
+    	try {
+    		HotelInterface.cancelBooking(bookingReference);
+    	} catch(HotelException he) {
+    		logger.error("Received hotel exception " + he.getMessage());
+    		
+    		model.addAttribute("error", "Error: couldn't create the booking");
+    		model.addAttribute("booking", booking);
+    		model.addAttribute("room", HotelInterface.getHotelRoomByNumber(hotelCode, roomNumber));
+    		
+    		return "bookings";
+    	}
+    	
+    	return "redirect:/hotels/" + hotelCode + "/rooms/" + roomNumber + "/bookings";
+    }
+    
     
 }
