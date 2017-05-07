@@ -48,9 +48,6 @@ public class ActivityInterface {
 		new ActivityProvider(activityProviderData.getCode(), activityProviderData.getName());
 	}
 
-
-	
-	
 	private static ActivityProvider getActivityProviderByCode(String code) {
 		for(final ActivityProvider activityProvider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
 			if(activityProvider.getCode().equals(code)) {
