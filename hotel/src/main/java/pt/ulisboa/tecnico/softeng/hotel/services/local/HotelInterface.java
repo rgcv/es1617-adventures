@@ -92,7 +92,7 @@ public class HotelInterface {
                 return booking.cancel();
             }
         }
-        throw new HotelException();
+        throw new HotelException("Invalid Booking reference");
     }
 
     @Atomic(mode = TxMode.READ)

@@ -37,6 +37,7 @@
                     <th>Departure Date</th>
 					<th>Cancelled</th>
 					<th>Cancelation Date</th>
+					<th>Cancel</th>
                 </tr>
                 </thead>
 				<tbody>
@@ -46,6 +47,9 @@
 					<td th:text="${booking.departure}"> Departure Date </td>
 					<td th:text="${booking.cancellation}"> Canceled </td>
 					<td th:text="${booking.cancellationDate}"> Cancellation Date </td>
+					<td>
+                        	<a th:href="@{/hotels/{code}/rooms/{number}/bookings/{reference}/cancel(code=${booking.hotelCode}, number=${booking.roomNumber}, reference=${booking.reference})}">Cancel</a>
+                    	</td>
 				</tr>
 				</tbody>
             </table>
