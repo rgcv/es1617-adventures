@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>ActivityReservations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+    th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>
+            Welcome to Activitys Reservations' Manager
+        </h2>
+
+		<h3>Activity Offers</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Begin</th>
+					<th>End</th>
+					<th>Reservations</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="activityOffer: ${activity.activityOffers}">
+					<td th:text="${activityOffer.begin}">begin</td>
+					<td th:text="${activityOffer.end}">end</td>
+					<td><a th:href="@{/activityProviders/{activityProviderCode}/activities/{activityCode}/activityOffers/{begin}/{end}(activityProviderCode=§{activityProvider.code}, activityCode=§{activity.code}, begin=§{activityOffer.begin}, end=§{activityOffer.end})}">Link</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
