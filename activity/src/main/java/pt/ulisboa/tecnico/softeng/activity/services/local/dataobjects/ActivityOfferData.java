@@ -1,9 +1,14 @@
 package pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import pt.ulisboa.tecnico.softeng.activity.domain.ActivityOffer;
+import pt.ulisboa.tecnico.softeng.activity.domain.Booking;
+import pt.ulisboa.tecnico.softeng.activity.services.local.ActivityInterface;
 
 public class ActivityOfferData {
 	public static enum CopyDepth {
@@ -15,7 +20,7 @@ public class ActivityOfferData {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate end;
 	
-	//List<ActivityReservationData> reservations;
+	List<ActivityReservationData> reservations = new ArrayList<>();
 
 	public ActivityOfferData() {}
 
@@ -25,10 +30,10 @@ public class ActivityOfferData {
 		
 		switch(depth) {
 			case ACTIVITY_RESERVATIONS:
-				/*for(Booking booking : activityOffer.getBookingSet()) {
+				for(Booking booking : activityOffer.getBookingSet()) {
 		            reservations.add(ActivityInterface.getActivityReservationData(booking.getReference()));
 		        }
-				break;*/
+				break;
 			case SHALLOW:
 			default:
 				break;
@@ -51,11 +56,11 @@ public class ActivityOfferData {
 		this.end = end;
 	}
 	
-	/*public List<ActivityReservationData> getReservations() {
+	public List<ActivityReservationData> getReservations() {
 		return reservations;
-	}
+	}	
 	
 	public void setReservations(List<ActivityReservationData> reservations) {
 		this.reservations = reservations;
-	}*/
+	}
 }

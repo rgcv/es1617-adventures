@@ -7,7 +7,7 @@ import pt.ulisboa.tecnico.softeng.activity.domain.ActivityOffer;
 
 public class ActivityData {
 	public static enum CopyDepth {
-		SHALLOW, ACTIVITYOFFER
+		SHALLOW, ACTIVITYOFFER, RESERVATIONS;
 	}
 
 	private String name;
@@ -32,7 +32,7 @@ public class ActivityData {
 				for(final ActivityOffer activityOffer : activity.getActivityOfferSet()) { 
 					activityOffers.add(new ActivityOfferData(activityOffer, ActivityOfferData.CopyDepth.SHALLOW)); 
 				} 
-				break; 
+				break;
 			case SHALLOW:
 			default:
 				break;

@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects;
 
 import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import pt.ulisboa.tecnico.softeng.activity.domain.ActivityOffer;
 import pt.ulisboa.tecnico.softeng.activity.domain.ActivityProvider;
@@ -11,8 +12,11 @@ public class ActivityReservationData {
     private String cancellation;
     private String name;
     private String code;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate begin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate end;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate cancellationDate;
 
     public ActivityReservationData() {
