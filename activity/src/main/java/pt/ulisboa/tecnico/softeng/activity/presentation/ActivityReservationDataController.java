@@ -1,29 +1,28 @@
 package pt.ulisboa.tecnico.softeng.activity.presentation;
 
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.activity.services.local.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityOfferData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData;
-import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityReservationData;
 
 
 
 @Controller
-@RequestMapping(value = "/activityProviders")
+@RequestMapping(value = "/activityReservations/{activityProviderCode}/activities/{activityCode}/activityOffers/{begin}/{end}")
 public class ActivityReservationDataController {
 
 
@@ -41,18 +40,17 @@ public class ActivityReservationDataController {
 			final LocalDate beginDate = DateTimeFormat.forPattern("yyyy-MM-dd").parseLocalDate(begin);
 			final LocalDate endDate = DateTimeFormat.forPattern("yyyy-MM-dd").parseLocalDate(end);
 			
-			List<ActivityReservationData> activityReservations = new ArrayList<>();
 			final List<ActivityOfferData> activityOffers = 
 					ActivityInterface.getActivityOfferDatasByCodeAndDate(activityProviderCode,
-							activityCode, begin, end, ActivityOfferData.CopyDepth.ACTIVITY_RESERVATIONS);
+							activityCode, beginDate, endDate, ActivityOfferData.CopyDepth.ACTIVITY_RESERVATIONS);
 			final ActivityData activityData = ActivityInterface.getActivityDataByCode(activityProviderCode, activityCode, ActivityData.CopyDepth.ACTIVITYOFFER);
 			final ActivityProviderData activityProviderData = 
 					ActivityInterface.getActivityProviderDataByCode(activityProviderCode, ActivityProviderData.CopyDepth.SHALLOW);
 			if(activityProviderData == null) {
 				model.addAttribute("error", "Error: An activity provider with code " + activityProviderCode + " does not exist!");
 				model.addAttribute("activityProvider", new ActivityProviderData());
-				model.addAttribute("activityProvider", ActivityInterface.getActivityProviders());
-				return "redirect:/activityProviders/";
+				model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
+				return "redirect:/activityProviders";
 			}
 			else if(activityData == null) {
 				model.addAttribute("error", "Error: An activity with code " + activityCode + " does not exist!");
@@ -65,7 +63,8 @@ public class ActivityReservationDataController {
 				model.addAttribute("activityOffer", new ActivityOfferData());
 				model.addAttribute("activity", activityData);
 				model.addAttribute("activityProvider", activityProviderData);
-				return "redirect:/activityProviders/" + activityProviderCode + "/activities" + activityCode + "/activityOffers";			}
+				return "redirect:/activityProviders/" + activityProviderCode + "/activities" + activityCode + "/activityOffers";			
+			}
 			else {
 				model.addAttribute("activityProvider", activityProviderData);
 				model.addAttribute("activity", activityData);

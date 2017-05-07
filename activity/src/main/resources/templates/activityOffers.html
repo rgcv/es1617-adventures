@@ -39,8 +39,7 @@
 				<tr th:each="activityOffer: ${activity.activityOffers}">
 					<td th:text="${activityOffer.begin}">begin</td>
 					<td th:text="${activityOffer.end}">end</td>
-					<td><a th:href="@{/activityProviders/{activityProviderCode}/activities/{activityCode}/activity(activityProviderCode=${activityProvider.code}, activityCode=${activity.code})}">Link</a></td>
-				</tr>
+					<td><a th:href="@{/activityProviders/{activityProviderCode}/activities/{activityCode}/activity(activityProviderCode=${activityProvider.code}, activityCode=${activity.code})}">Link</a></td>				</tr>
 			</tbody>
 		</table>
 	</div>

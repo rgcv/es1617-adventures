@@ -11,24 +11,27 @@
 <body>
     <div class="container">
         <h2>
-            Welcome to Activitys Reservations' Manager
+            Reservations for <span th:text="§{activityProvider.name}">Name</span> provider's (<span th:text="§{activityProvider.code}">Code</span>) activities' offers	
         </h2>
-
-		<h3>Activity Offers</h3>
+		<a class="btn btn-default pull-right" th:href="@{/activityProviders/{activityProviderCode}/activities/[activityCode}/activityOffers(activityProviderCode=§{activityProvider.code}, activityCode=§{activity.code})}">Activity Offers</a>
+		
+		<h3>From <span th:text="§{begin}">Begin</span> and <span th:text="§{end}"></span></h3>
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Begin</th>
-					<th>End</th>
-					<th>Reservations</th>
+					<th>Reference</th>
+					<th>Cancellation</th>
+					<th>Cancellation Date</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="activityOffer: ${activity.activityOffers}">
-					<td th:text="${activityOffer.begin}">begin</td>
-					<td th:text="${activityOffer.end}">end</td>
-					<td><a th:href="@{/activityProviders/{activityProviderCode}/activities/{activityCode}/activityOffers/{begin}/{end}(activityProviderCode=§{activityProvider.code}, activityCode=§{activity.code}, begin=§{activityOffer.begin}, end=§{activityOffer.end})}">Link</a></td>
-				</tr>
+				<span th:each="activityOffer: §{activityOffers}">
+					<tr th:each="reservation: ${activityOffer.reservations}">
+						<td th:text="${reservation.reference}">Reference</td>
+						<td th:text="${reservation.cancellation}">Cancellation</td>
+						<td th:text="${reservation.cancellationDate}">Cancellation Date</td>
+					</tr>
+				</span>
 			</tbody>
 		</table>
 	</div>

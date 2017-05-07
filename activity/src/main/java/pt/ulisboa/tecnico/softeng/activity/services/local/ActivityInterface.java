@@ -116,23 +116,7 @@ public class ActivityInterface {
 		return activityProviders;
 	}
 
-	
-	@Atomic(mode = TxMode.READ)
-	public static List<ActivityReservationData> getActivityReservations(String reference) {
-		final List<ActivityReservationData> activityReservations = new ArrayList<>();
-		
-		for(final ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
-			for(final Activity activity : provider.getActivitySet()) {
-				for(final ActivityOffer offer : activity.getActivityOfferSet()) {
-					final Booking booking = offer.getBooking(reference);
-					if(booking != null) {
-						activityReservations.add(new ActivityReservationData(provider, offer, booking));
-					}
-				}
-			}
-		}
-		return activityReservations;
-	}
+
 	@Atomic(mode = TxMode.READ)
 	public static ActivityReservationData getActivityReservationData(String reference) {
 		for(final ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {

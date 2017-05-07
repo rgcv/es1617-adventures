@@ -39,6 +39,8 @@ public class ActivityProviderController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showActivityProviders(Model model) {
 		logger.info("showActivityProviders");
+		
+		
 
 		model.addAttribute("activityProvider", new ActivityProviderData());
 		model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
