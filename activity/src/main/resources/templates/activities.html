@@ -11,9 +11,10 @@
 <body>
     <div class="container">
         <h2>
-            Welcome to Activitys' Manager
+            Welcome to Activities' Manager
         </h2>
         <br/>
+        <a class="btn btn-default pull-right" th:href="@{/activityProviders}">Activity Providers</a>
         <h3>Create Activity</h3>
         <p class="text-danger" th:text="${error}">Error</p>
         <form class="form-inline" th:action="@{/activityProviders/{code}/activities(code=${activityProvider.code})}" th:object="${activity}" method="post">		

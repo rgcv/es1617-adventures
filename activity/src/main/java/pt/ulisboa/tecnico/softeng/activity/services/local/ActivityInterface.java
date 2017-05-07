@@ -70,7 +70,7 @@ public class ActivityInterface {
 	}
 	
 	@Atomic(mode = TxMode.READ)
-	public static List<ActivityOfferData> getActivityOfferDatasByCodeAndDate(
+	public static List<ActivityOfferData> getActivityOffersDataByCodeAndDates(
 			String providerCode, String activityCode, LocalDate begin, 
 			LocalDate end, ActivityOfferData.CopyDepth depth) {
 	List<ActivityOffer> offers = getActivityOffersByCodeAndDates(
@@ -87,7 +87,7 @@ public class ActivityInterface {
 }
 	
 	@Atomic(mode = TxMode.READ)
-	public static List<ActivityOffer> getActivityOffersByCodeAndDates(
+	private static List<ActivityOffer> getActivityOffersByCodeAndDates(
 			String providerCode, String activityCode, LocalDate begin, LocalDate end) {
 		Activity activity = getActivityByCode(providerCode, activityCode);
 		if(activity != null) {
@@ -103,7 +103,7 @@ public class ActivityInterface {
 	}
 		
 	@Atomic(mode = TxMode.READ)
-	public static List<ActivityProviderData> getActivityProviders() {
+	public static List<ActivityProviderData> getAllActivityProvidersData() {
 		final List<ActivityProviderData> activityProviders = new ArrayList<>();
 
 		for(final ActivityProvider activityProvider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
@@ -163,7 +163,7 @@ public class ActivityInterface {
 	}
 	
 	@Atomic(mode = TxMode.READ)
-	public static Activity getActivityByCode(String activityProviderCode, String activityCode) {
+	private static Activity getActivityByCode(String activityProviderCode, String activityCode) {
 		ActivityProvider activityProvider = getActivityProviderByCode(activityProviderCode);
 		
 		if(activityProvider != null) {

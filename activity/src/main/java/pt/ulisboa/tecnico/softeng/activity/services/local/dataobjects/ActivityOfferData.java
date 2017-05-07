@@ -20,7 +20,7 @@ public class ActivityOfferData {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate end;
 	
-	List<ActivityReservationData> reservations = new ArrayList<>();
+	List<ActivityReservationData> reservations = new ArrayList<ActivityReservationData>();
 
 	public ActivityOfferData() {}
 

@@ -50,14 +50,14 @@ public class ActivityOfferController {
 		if(activityProviderData == null) {
 			model.addAttribute("error", "Error: An activity provider with code " + activityProviderCode + " does not exist!");
 			model.addAttribute("activityProvider", new ActivityProviderData());
-			model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
-			return "redirect:/activityProviders/";
+			model.addAttribute("activityProviders", ActivityInterface.getAllActivityProvidersData());
+			return "activityProviders";
 		}
 		else if(activityData == null) {
 			model.addAttribute("error", "Error: An activity with code " + activityCode + " does not exist!");
 			model.addAttribute("activity", new ActivityData());
 			model.addAttribute("activityProvider", activityProviderData);
-			return "redirect:/activityProviders/" + activityProviderCode + "/activities";
+			return "activities";
 		}
 		else {
 			model.addAttribute("activityOffer", new ActivityOfferData());

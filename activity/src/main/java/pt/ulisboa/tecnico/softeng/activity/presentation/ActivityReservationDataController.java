@@ -34,12 +34,12 @@ public class ActivityReservationDataController {
 
 			final ActivityProviderData activityProviderData = ActivityInterface.getActivityProviderDataByCode(activityProviderCode, ActivityProviderData.CopyDepth.SHALLOW);
 			final ActivityData activityData = ActivityInterface.getActivityDataByCode(activityProviderCode, activityCode, ActivityData.CopyDepth.ACTIVITYOFFER);
-			final List<ActivityOfferData> activityOffers = ActivityInterface.getActivityOfferDatasByCodeAndDate(activityProviderCode, activityCode, beginDate, endDate, ActivityOfferData.CopyDepth.ACTIVITY_RESERVATIONS);
+			final List<ActivityOfferData> activityOffers = ActivityInterface.getActivityOffersDataByCodeAndDates(activityProviderCode, activityCode, beginDate, endDate, ActivityOfferData.CopyDepth.ACTIVITY_RESERVATIONS);
 
 			if(activityProviderData == null) {
 				model.addAttribute("error", "Error: An activity provider with code " + activityProviderCode + " does not exist!");
 				model.addAttribute("activityProvider", new ActivityProviderData());
-				model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
+				model.addAttribute("activityProviders", ActivityInterface.getAllActivityProvidersData());
 				return "redirect:/activityProviders";
 			}
 			else if(activityData == null) {

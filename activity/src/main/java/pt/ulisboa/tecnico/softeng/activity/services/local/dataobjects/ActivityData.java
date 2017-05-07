@@ -7,7 +7,7 @@ import pt.ulisboa.tecnico.softeng.activity.domain.ActivityOffer;
 
 public class ActivityData {
 	public static enum CopyDepth {
-		SHALLOW, ACTIVITYOFFER, RESERVATIONS;
+		SHALLOW, ACTIVITYOFFER;
 	}
 
 	private String name;
@@ -15,8 +15,8 @@ public class ActivityData {
 	private int max_age;
 	private int capacity;
 	private String code;
-	//private List<ActivityOffer> activityOffer = new ArrayList<>();
-	private List<ActivityOfferData> activityOffers = new ArrayList<>();
+
+	private List<ActivityOfferData> activityOffers = new ArrayList<ActivityOfferData>();
 
 	public ActivityData() {}
 

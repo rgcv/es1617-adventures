@@ -29,8 +29,8 @@ public class ActivityProviderController {
 			
 			model.addAttribute("error", errorMessage);
 			model.addAttribute("activityProvider", activityProviderData);
-			model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
-			return "/activityProviders";
+			model.addAttribute("activityProviders", ActivityInterface.getAllActivityProvidersData());
+			return "activityProviders";
 		}
 
 		return "redirect:/activityProviders";
@@ -40,10 +40,8 @@ public class ActivityProviderController {
 	public String showActivityProviders(Model model) {
 		logger.info("showActivityProviders");
 		
-		
-
 		model.addAttribute("activityProvider", new ActivityProviderData());
-		model.addAttribute("activityProviders", ActivityInterface.getActivityProviders());
+		model.addAttribute("activityProviders", ActivityInterface.getAllActivityProvidersData());
 		return "/activityProviders";
 	}
 }

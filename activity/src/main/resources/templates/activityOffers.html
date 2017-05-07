@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Broker's Manager Welcome</title>
+	<title>ActivityOffers</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
@@ -14,7 +14,7 @@
 		<h2>
 			Welcome to Activity <span th:text="${activity.name}">Name</span>'s Offers
 		</h2>
-		<a class="btn btn-default pull-right" th:href="@{/activityProviders}">Activity Providers</a>
+		<a class="btn btn-default pull-right" th:href="@{/activityProviders/{activityProviderCode}/activities(activityProviderCode=${activityProvider.code})}">Activities</a>
 		<br />
 		<h3>Create Activity Offer</h3>
 		<p class="text-danger" th:text="${error}">Error</p>

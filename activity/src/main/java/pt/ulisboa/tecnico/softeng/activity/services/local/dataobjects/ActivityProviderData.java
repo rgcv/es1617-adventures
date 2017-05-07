@@ -13,7 +13,7 @@ public class ActivityProviderData {
 
 	private String name;
 	private String code;
-	private List<ActivityData> activities = new ArrayList<>();
+	private List<ActivityData> activities = new ArrayList<ActivityData>();
 
 	public ActivityProviderData() {}
 
