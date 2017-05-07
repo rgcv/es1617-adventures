@@ -29,10 +29,20 @@ public class BookingController {
     		RoomData room = HotelInterface.getHotelRoomByNumber(hotelCode, roomNumber);
     		
     		if (room == null) {
-    			model.addAttribute("error", "Error: Room with number " + roomNumber + " does not exist on Hotel " + HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.SHALLOW).getName());
-    			model.addAttribute("room", new RoomData());
-    			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.ROOMS));
-    			return "rooms";
+    			HotelData hotel = HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.SHALLOW);
+    			if(hotel == null) {
+    				model.addAttribute("error", "Error: Hotel with code " + hotelCode + " does not exist");
+    				model.addAttribute("hotel", new HotelData());
+    	            model.addAttribute("hotels", HotelInterface.getHotels());
+
+    	            return "hotels";
+    			}
+    			else {
+    				model.addAttribute("error", "Error: Room with number " + roomNumber + " does not exist on Hotel " + hotel.getName());
+        			model.addAttribute("room", new RoomData());
+        			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(hotelCode, HotelData.CopyDepth.ROOMS));
+        			return "rooms";
+    			}	
     		} else {
     			model.addAttribute("booking", new RoomBookingData());
     			model.addAttribute("room", room);
@@ -74,7 +84,7 @@ public class BookingController {
     	} catch(HotelException he) {
     		logger.error("Received hotel exception " + he.getMessage());
     		
-    		model.addAttribute("error", "Error: couldn't create the booking");
+    		model.addAttribute("error", "Error: couldn't cancel the booking");
     		model.addAttribute("booking", booking);
     		model.addAttribute("room", HotelInterface.getHotelRoomByNumber(hotelCode, roomNumber));
     		

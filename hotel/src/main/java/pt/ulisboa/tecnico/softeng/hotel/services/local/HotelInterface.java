@@ -74,9 +74,10 @@ public class HotelInterface {
     	for(Hotel hotel : FenixFramework.getDomainRoot().getHotelSet()) {
     		if(hotel.getCode().equals(bookingData.getHotelCode())) {
     			for(Room room : hotel.getRoomSet()) {
-    				if(room.getNumber().equals(bookingData.getRoomNumber()))
+    				if(room.getNumber().equals(bookingData.getRoomNumber())) {
     					room.reserve(room.getType(), bookingData.getArrival(), bookingData.getDeparture());
-    				return;
+    					return;
+    				}
     			}
     			throw new HotelException("Invalid Room number " + bookingData.getRoomNumber());
     		}
@@ -117,10 +118,9 @@ public class HotelInterface {
     					return new RoomData(room, RoomData.CopyDepth.BOOKINGS);
     				}
     			}
-    			throw new HotelException("Invalid room number");
     		}
     	}
-    	throw new HotelException("Invalid Hotel code");
+    	return null;
     }
 
     @Atomic(mode = TxMode.WRITE)
