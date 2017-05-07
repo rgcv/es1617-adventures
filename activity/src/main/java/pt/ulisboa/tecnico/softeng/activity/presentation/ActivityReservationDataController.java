@@ -32,7 +32,7 @@ public class ActivityReservationDataController {
 			final LocalDate beginDate = DateTimeFormat.forPattern("yyyy-MM-dd").parseLocalDate(begin);
 			final LocalDate endDate = DateTimeFormat.forPattern("yyyy-MM-dd").parseLocalDate(end);
 
-			final ActivityProviderData activityProviderData = ActivityInterface.getActivityProviderDataByCode(activityProviderCode, ActivityProviderData.CopyDepth.SHALLOW);
+			final ActivityProviderData activityProviderData = ActivityInterface.getActivityProviderDataByCode(activityProviderCode, ActivityProviderData.CopyDepth.ACTIVITIES);
 			final ActivityData activityData = ActivityInterface.getActivityDataByCode(activityProviderCode, activityCode, ActivityData.CopyDepth.ACTIVITYOFFER);
 			final List<ActivityOfferData> activityOffers = ActivityInterface.getActivityOffersDataByCodeAndDates(activityProviderCode, activityCode, beginDate, endDate, ActivityOfferData.CopyDepth.ACTIVITY_RESERVATIONS);
 
@@ -40,20 +40,20 @@ public class ActivityReservationDataController {
 				model.addAttribute("error", "Error: An activity provider with code " + activityProviderCode + " does not exist!");
 				model.addAttribute("activityProvider", new ActivityProviderData());
 				model.addAttribute("activityProviders", ActivityInterface.getAllActivityProvidersData());
-				return "redirect:/activityProviders";
+				return "activityProviders";
 			}
 			else if(activityData == null) {
 				model.addAttribute("error", "Error: An activity with code " + activityCode + " does not exist!");
 				model.addAttribute("activity", new ActivityData());
 				model.addAttribute("activityProvider", activityProviderData);
-				return "redirect:/activityProviders/" + activityProviderCode + "/activities";
+				return "activities";
 			}
 			else if(activityOffers == null) {
-				model.addAttribute("error", "Error: Offer(s) between " + begin + "and" + end + " does not exist!");
+				model.addAttribute("error", "Error: Offer(s) between " + begin + "and" + end + " do not exist!");
 				model.addAttribute("activityOffer", new ActivityOfferData());
 				model.addAttribute("activity", activityData);
 				model.addAttribute("activityProvider", activityProviderData);
-				return "redirect:/activityProviders/" + activityProviderCode + "/activities" + activityCode + "/activityOffers";			
+				return "activityOffers";			
 			}
 			else {
 				model.addAttribute("activityProvider", activityProviderData);

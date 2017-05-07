@@ -44,7 +44,7 @@ public class ActivityOfferController {
 	public String showActivityOffers(Model model, @PathVariable("activityProviderCode") String activityProviderCode, @PathVariable("activityCode") String activityCode) {
 		logger.info("showActivityOffers activityProviderCode:{} activityCode:{}", activityProviderCode, activityCode);
 
-		final ActivityProviderData activityProviderData = ActivityInterface.getActivityProviderDataByCode(activityProviderCode, ActivityProviderData.CopyDepth.SHALLOW);
+		final ActivityProviderData activityProviderData = ActivityInterface.getActivityProviderDataByCode(activityProviderCode, ActivityProviderData.CopyDepth.ACTIVITIES);
 		final ActivityData activityData = ActivityInterface.getActivityDataByCode(activityProviderCode, activityCode, ActivityData.CopyDepth.ACTIVITYOFFER);
 
 		if(activityProviderData == null) {
