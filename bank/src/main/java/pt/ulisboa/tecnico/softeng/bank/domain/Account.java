@@ -51,7 +51,7 @@ public class Account extends Account_Base {
         	throw new BankException("Amount must be positive");
         }
         else if(amount > getBalance()){
-            throw new BankException("Not enough moneyy in the account");
+            throw new BankException("Not enough money in the account");
         }
 
         setBalance(getBalance() - amount);

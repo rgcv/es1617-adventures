@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <h2>
-            Welcome to Bank <span th:text="${bank.name}">Name</span>: Accounts of Client <span th:text="${client.id}">Id</span> [<span th:text="${client.name}">Name</span>]
+            Welcome to <span th:text="${bank.name}">Name</span> (<span th:text="${bank.code}">Code</span>) Bank's Client <span th:text="${client.name}">Name</span> (<span th:text="${client.id}">Id</span>) Accounts Manager
         </h2>
         <a class="btn btn-default pull-right" th:href="@{/banks/{code}/clients(code=${bank.code})}">Clients</a>
         <br/>
@@ -38,10 +38,9 @@
                     <td>
                     	<form class="form-inline" 
                     		  th:action="@{/banks/{code}/accounts/clients/client/{clientID}/{IBAN}/do(code=${bank.code},clientID=${client.id}, IBAN=${account.IBAN})}" 
-                    		  th:object="${operation}" 
                     		  method="post">
                     		<label>Value: </label>
-                    		<input class="form-control" type="number" min="0" th:field="*{value}" />
+                    		<input class="form-control" type="number" min="0" value="0" name="value"/>
                     		<input class="btn btn-primary" type="submit" value="Withdrawal" name="operationType"/>
                     		<input class="btn btn-primary" type="submit" value="Deposit"  name="operationType"/>
                     	

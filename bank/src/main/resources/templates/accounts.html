@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <h2>
-            Welcome to Bank <span th:text="${bank.name}">Name</span> Accounts
+            Welcome to <span th:text="${bank.name}">Name</span> Bank's (<span th:text="${bank.code}">Code</span>) Accounts Manager
         </h2>
         <a class="btn btn-default pull-right" th:href="@{/banks}">Banks</a>
         <br/>

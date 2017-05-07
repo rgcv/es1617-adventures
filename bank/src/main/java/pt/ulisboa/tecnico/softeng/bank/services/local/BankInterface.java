@@ -136,6 +136,9 @@ public class BankInterface {
 		else if (receiverIBAN == null || receiverIBAN.equals("")) {
 			throw new BankException("Receiver IBAN is null");
 		}
+		else if(senderIBAN.equals(receiverIBAN)) {
+			throw new BankException("IBANs can't be the same");
+		}
 		else if ((senderAccount = bank.getAccount(senderIBAN)) != null 
 				&& (receiverAccount = bank.getAccount(receiverIBAN)) != null) {
 			senderAccount.withdraw(amount.intValue());
