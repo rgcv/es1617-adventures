@@ -41,12 +41,16 @@ public class ActivityInterface {
 	public static void createActivityOffer(String activityProviderCode, String activityCode, ActivityOfferData activityOfferData) {
 		new ActivityOffer(getActivityByCode(activityProviderCode, activityCode), activityOfferData.getBegin(), activityOfferData.getEnd());
 	}
+	
 
 	@Atomic(mode = TxMode.WRITE)
 	public static void createActivityProvider(ActivityProviderData activityProviderData) {
 		new ActivityProvider(activityProviderData.getCode(), activityProviderData.getName());
 	}
 
+
+	
+	
 	private static ActivityProvider getActivityProviderByCode(String code) {
 		for(final ActivityProvider activityProvider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
 			if(activityProvider.getCode().equals(code)) {
@@ -67,7 +71,40 @@ public class ActivityInterface {
 		
 		return null;
 	}
-
+	
+	@Atomic(mode = TxMode.READ)
+	public static List<ActivityOfferData> getActivityOfferDatasByCodeAndDate(
+			String providerCode, String activityCode, LocalDate begin, 
+			LocalDate end, ActivityOfferData.CopyDepth depth) {
+	List<ActivityOffer> offers = getActivityOffersByCodeAndDates(
+			providerCode, activityCode, begin, end);
+	if(offers != null) {
+		List<ActivityOfferData> offerDatas = new ArrayList<>();
+		
+		for(ActivityOffer offer : offers) {
+			offerDatas.add(new ActivityOfferData(offer, depth));
+		}
+		return offerDatas;
+	}
+	return null;
+}
+	
+	@Atomic(mode = TxMode.READ)
+	public static List<ActivityOffer> getActivityOffersByCodeAndDates(
+			String providerCode, String activityCode, LocalDate begin, LocalDate end) {
+		Activity activity = getActivityByCode(providerCode, activityCode);
+		if(activity != null) {
+			List<ActivityOffer> offers = new ArrayList<>();
+			
+			for (ActivityOffer offer : activity.getActivityOfferSet()) {
+				if(offer.getBegin().equals(begin) && offer.getEnd().equals(end))
+					offers.add(offer);
+			}
+			return offers;
+		}
+		return null;
+	}
+		
 	@Atomic(mode = TxMode.READ)
 	public static List<ActivityProviderData> getActivityProviders() {
 		final List<ActivityProviderData> activityProviders = new ArrayList<>();
@@ -79,6 +116,23 @@ public class ActivityInterface {
 		return activityProviders;
 	}
 
+	
+	@Atomic(mode = TxMode.READ)
+	public static List<ActivityReservationData> getActivityReservations(String reference) {
+		final List<ActivityReservationData> activityReservations = new ArrayList<>();
+		
+		for(final ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
+			for(final Activity activity : provider.getActivitySet()) {
+				for(final ActivityOffer offer : activity.getActivityOfferSet()) {
+					final Booking booking = offer.getBooking(reference);
+					if(booking != null) {
+						activityReservations.add(new ActivityReservationData(provider, offer, booking));
+					}
+				}
+			}
+		}
+		return activityReservations;
+	}
 	@Atomic(mode = TxMode.READ)
 	public static ActivityReservationData getActivityReservationData(String reference) {
 		for(final ActivityProvider provider : FenixFramework.getDomainRoot().getActivityProviderSet()) {
