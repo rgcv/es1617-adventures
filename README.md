@@ -1,25 +1,27 @@
-# Adventure Builder
+ES 16'17 - Grupo 01
+===================
 
-To run tests execute: mvn clean install
+Elementos do Grupo
+------------------
 
-To launch a server execute in the module's top directory: mvn clean spring-boot:run
+| :hash: Number |     :memo: Name     |              :email: Email               |    :octocat: GitHub     |   :package: Grupo   |
+|--------------:|---------------------|------------------------------------------|-------------------------|---------------------|
+|     **80818** | Joana Arezes        |          <joanarezes@outlook.com>        | [JoanaArezes]           |     100*Reads*      |
+|     **80858** | Beatriz Grilo       |            <bmsgrilo@gmail.com>          | [BMSGrilo]              |     100*Writes*     |
+|     **81045** | Rui Ventura         |         <rventura.pt@outlook.com>        | [rgcv]                  |     100*Reads*      |
+|     **81057** | Francisca Cambra    |    <francisca.cambra@tecnico.ulisboa.pt> | [kika96kika]            |     100*Writes*     |
+|     **81183** | Alexandre Machado   |            <squill3x@hotmail.com>        | [Squill3x]              |     100*Reads*      |
+|     **81196** | Gonçalo Baptista    |        <gms_baptista@sapo.pt>            | [gmsbaptista]           |     30*Writes*      |
+|     **81268** | Viktor Vasylkovskyi | <viktor.vasylkovskyi@tecnico.ulisboa.pt> | [vitiavas]              |     30*Writes*      |
+|     **81338** | Pedro Cerejo        |        <pedro.cerejo@tecnico.ulisboa.pt> | [schimini]              |     30*Writes*      |
+|     **81670** | João Oliveira       |            <jafo1200@gmail.com>          | [joaoalexandreoliveira] |     100*Writes*     |
 
-To launch all servers execute in bin directory: startservers
-
-To stop all servers execute: bin/shutdownservers
-
-To run jmeter (nogui) execute in project's top directory: mvn -Pjmeter verify. Results are in target/jmeter/results/, open the .jtl file in jmeter, by associating the appropriate listeners to WorkBench and opening the results file in listener context
-
-
-|   Number   |          Name           |            Email        |   Name GitHUb  | Module(s) |
-| ---------- | ----------------------- | ----------------------- | ---------------| --------- |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
-|            |                         |                         |                |           |
- 
+[JoanaArezes]: https://github.com/JoanaArezes
+[BMSGrilo]: https://github.com/BMSGrilo
+[rgcv]: https://github.com/rgcv
+[kika96kika]: https://github.com/kika96kika
+[Squill3x]: https://github.com/Squill3x
+[gmsbaptista]: https://github.com/gmsbaptista
+[vitiavas]: https://github.com/vitiavas
+[schimini]: https://github.com/schimini
+[joaoalexandreoliveira]: https://github.com/joaoalexandreoliveira
