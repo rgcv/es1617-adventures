@@ -10,26 +10,26 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.WriteOnReadError;
 
 public abstract class RollbackTestAbstractClass {
-	@Before
-	public void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
-		try {
-			FenixFramework.getTransactionManager().begin(false);
-			populate4Test();
-		} catch (WriteOnReadError | NotSupportedException | SystemException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            FenixFramework.getTransactionManager().begin(false);
+            populate4Test();
+        } catch (WriteOnReadError | NotSupportedException | SystemException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@After
-	public void tearDown() {
-		try {
-			FenixFramework.getTransactionManager().rollback();
-		} catch (IllegalStateException | SecurityException | SystemException e) {
-			e.printStackTrace();
-		}
-	}
+    @After
+    public void tearDown() {
+        try {
+            FenixFramework.getTransactionManager().rollback();
+        } catch (IllegalStateException | SecurityException | SystemException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public abstract void populate4Test();
+    public abstract void populate4Test();
 
 }

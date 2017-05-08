@@ -17,42 +17,42 @@ import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityPr
 @Controller
 @RequestMapping(value = "/providers/{code}/activities")
 public class ActivityController {
-	private static Logger logger = LoggerFactory.getLogger(ActivityController.class);
+    private static Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String activityForm(Model model, @PathVariable String code) {
-		logger.info("activityForm providerCode:{}", code);
+    @RequestMapping(method = RequestMethod.GET)
+    public String activityForm(Model model, @PathVariable String code) {
+        logger.info("activityForm providerCode:{}", code);
 
-		ActivityProviderData providerData = ActivityInterface.getProviderDataByCode(code);
+        ActivityProviderData providerData = ActivityInterface.getProviderDataByCode(code);
 
-		if (providerData == null) {
-			model.addAttribute("error", "Error: it does not exist an activity provider with the code " + code);
-			model.addAttribute("provider", new ActivityProviderData());
-			model.addAttribute("providers", ActivityInterface.getProviders());
-			return "providers";
-		}
+        if (providerData == null) {
+            model.addAttribute("error", "Error: it does not exist an activity provider with the code " + code);
+            model.addAttribute("provider", new ActivityProviderData());
+            model.addAttribute("providers", ActivityInterface.getProviders());
+            return "providers";
+        }
 
-		model.addAttribute("activity", new ActivityData());
-		model.addAttribute("provider", providerData);
-		return "activities";
-	}
+        model.addAttribute("activity", new ActivityData());
+        model.addAttribute("provider", providerData);
+        return "activities";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String activitySubmit(Model model, @PathVariable String code, @ModelAttribute ActivityData activity) {
-		logger.info(
-				"activitySubmit providerCode:{}, activityName:{}, activityMinAge:{}, activityMaxAge:{}, activityCapacity:{}",
-				code, activity.getName(), activity.getMinAge(), activity.getMaxAge(), activity.getCapacity());
+    @RequestMapping(method = RequestMethod.POST)
+    public String activitySubmit(Model model, @PathVariable String code, @ModelAttribute ActivityData activity) {
+        logger.info(
+                "activitySubmit providerCode:{}, activityName:{}, activityMinAge:{}, activityMaxAge:{}, activityCapacity:{}",
+                code, activity.getName(), activity.getMinAge(), activity.getMaxAge(), activity.getCapacity());
 
-		try {
-			ActivityInterface.createActivity(code, activity);
-		} catch (ActivityException be) {
-			model.addAttribute("error", "Error: it was not possible to create the activity");
-			model.addAttribute("activity", activity);
-			model.addAttribute("provider", ActivityInterface.getProviderDataByCode(code));
-			return "activities";
-		}
+        try {
+            ActivityInterface.createActivity(code, activity);
+        } catch (ActivityException be) {
+            model.addAttribute("error", "Error: it was not possible to create the activity");
+            model.addAttribute("activity", activity);
+            model.addAttribute("provider", ActivityInterface.getProviderDataByCode(code));
+            return "activities";
+        }
 
-		return "redirect:/providers/" + code + "/activities";
-	}
+        return "redirect:/providers/" + code + "/activities";
+    }
 
 }

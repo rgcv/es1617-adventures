@@ -18,43 +18,43 @@ import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityPr
 @Controller
 @RequestMapping(value = "/providers/{codeProvider}/activities/{codeActivity}/offers")
 public class ActivityOfferController {
-	private static Logger logger = LoggerFactory.getLogger(ActivityOfferController.class);
+    private static Logger logger = LoggerFactory.getLogger(ActivityOfferController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String offerForm(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity) {
-		logger.info("offerForm codeProvider:{}, codeActivity:{}", codeProvider, codeActivity);
+    @RequestMapping(method = RequestMethod.GET)
+    public String offerForm(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity) {
+        logger.info("offerForm codeProvider:{}, codeActivity:{}", codeProvider, codeActivity);
 
-		ActivityData activityData = ActivityInterface.getActivityDataByCode(codeProvider, codeActivity);
+        ActivityData activityData = ActivityInterface.getActivityDataByCode(codeProvider, codeActivity);
 
-		if (activityData == null) {
-			model.addAttribute("error", "Error: it does not exist an activity with code " + codeActivity
-					+ " in provider with code " + codeProvider);
-			model.addAttribute("provider", new ActivityProviderData());
-			model.addAttribute("providers", ActivityInterface.getProviders());
-			return "providers";
-		} else {
-			model.addAttribute("offer", new ActivityOfferData());
-			model.addAttribute("activity", activityData);
-			return "offers";
-		}
-	}
+        if (activityData == null) {
+            model.addAttribute("error", "Error: it does not exist an activity with code " + codeActivity
+                    + " in provider with code " + codeProvider);
+            model.addAttribute("provider", new ActivityProviderData());
+            model.addAttribute("providers", ActivityInterface.getProviders());
+            return "providers";
+        } else {
+            model.addAttribute("offer", new ActivityOfferData());
+            model.addAttribute("activity", activityData);
+            return "offers";
+        }
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String offerSubmit(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity,
-			@ModelAttribute ActivityOfferData offer) {
-		logger.info("offerSubmit codeProvider:{}, codeActivity:{}, begin:{}, end:{}", codeProvider, codeActivity,
-				offer.getBegin(), offer.getEnd());
+    @RequestMapping(method = RequestMethod.POST)
+    public String offerSubmit(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity,
+            @ModelAttribute ActivityOfferData offer) {
+        logger.info("offerSubmit codeProvider:{}, codeActivity:{}, begin:{}, end:{}", codeProvider, codeActivity,
+                offer.getBegin(), offer.getEnd());
 
-		try {
-			ActivityInterface.createOffer(codeProvider, codeActivity, offer);
-		} catch (ActivityException e) {
-			model.addAttribute("error", "Error: it was not possible to create de offer");
-			model.addAttribute("offer", offer);
-			model.addAttribute("activity", ActivityInterface.getActivityDataByCode(codeProvider, codeActivity));
-			return "offers";
-		}
+        try {
+            ActivityInterface.createOffer(codeProvider, codeActivity, offer);
+        } catch (ActivityException e) {
+            model.addAttribute("error", "Error: it was not possible to create de offer");
+            model.addAttribute("offer", offer);
+            model.addAttribute("activity", ActivityInterface.getActivityDataByCode(codeProvider, codeActivity));
+            return "offers";
+        }
 
-		return "redirect:/providers/" + codeProvider + "/activities/" + codeActivity + "/offers";
-	}
+        return "redirect:/providers/" + codeProvider + "/activities/" + codeActivity + "/offers";
+    }
 
 }

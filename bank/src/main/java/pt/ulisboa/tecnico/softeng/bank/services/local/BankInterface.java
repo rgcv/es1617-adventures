@@ -18,164 +18,164 @@ import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.ClientData;
 
 public class BankInterface {
 
-	@Atomic(mode = TxMode.READ)
+    @Atomic(mode = TxMode.READ)
 
-	public static List<BankData> getBanks() {
-		return FenixFramework.getDomainRoot().getBankSet().stream()
-				.sorted((b1, b2) -> b1.getName().compareTo(b2.getName())).map(b -> new BankData(b))
-				.collect(Collectors.toList());
-	}
+    public static List<BankData> getBanks() {
+        return FenixFramework.getDomainRoot().getBankSet().stream()
+                .sorted((b1, b2) -> b1.getName().compareTo(b2.getName())).map(b -> new BankData(b))
+                .collect(Collectors.toList());
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void createBank(BankData bankData) {
-		new Bank(bankData.getName(), bankData.getCode());
-	}
+    @Atomic(mode = TxMode.WRITE)
+    public static void createBank(BankData bankData) {
+        new Bank(bankData.getName(), bankData.getCode());
+    }
 
-	@Atomic(mode = TxMode.READ)
-	public static BankData getBankDataByCode(String code) {
-		Bank bank = getBankByCode(code);
-		if (bank == null) {
-			return null;
-		}
+    @Atomic(mode = TxMode.READ)
+    public static BankData getBankDataByCode(String code) {
+        Bank bank = getBankByCode(code);
+        if (bank == null) {
+            return null;
+        }
 
-		return new BankData(bank);
-	}
+        return new BankData(bank);
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void createClient(String code, ClientData client) {
-		Bank bank = getBankByCode(code);
-		if (bank == null) {
-			throw new BankException();
-		}
+    @Atomic(mode = TxMode.WRITE)
+    public static void createClient(String code, ClientData client) {
+        Bank bank = getBankByCode(code);
+        if (bank == null) {
+            throw new BankException();
+        }
 
-		new Client(bank, client.getName());
-	}
+        new Client(bank, client.getName());
+    }
 
-	@Atomic(mode = TxMode.READ)
-	public static ClientData getClientDataById(String code, String id) {
-		Bank bank = getBankByCode(code);
-		if (bank == null) {
-			return null;
-		}
+    @Atomic(mode = TxMode.READ)
+    public static ClientData getClientDataById(String code, String id) {
+        Bank bank = getBankByCode(code);
+        if (bank == null) {
+            return null;
+        }
 
-		Client client = bank.getClientById(id);
-		if (client == null) {
-			return null;
-		}
+        Client client = bank.getClientById(id);
+        if (client == null) {
+            return null;
+        }
 
-		return new ClientData(client);
-	}
+        return new ClientData(client);
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void createAccount(String code, String id) {
-		Bank bank = getBankByCode(code);
-		if (bank == null) {
-			throw new BankException();
-		}
+    @Atomic(mode = TxMode.WRITE)
+    public static void createAccount(String code, String id) {
+        Bank bank = getBankByCode(code);
+        if (bank == null) {
+            throw new BankException();
+        }
 
-		Client client = bank.getClientById(id);
-		if (client == null) {
-			throw new BankException();
-		}
+        Client client = bank.getClientById(id);
+        if (client == null) {
+            throw new BankException();
+        }
 
-		new Account(bank, client);
-	}
+        new Account(bank, client);
+    }
 
-	@Atomic(mode = TxMode.READ)
-	public static AccountData getAccountData(String iban) {
-		Account account = getAccountByIban(iban);
-		if (account == null) {
-			throw new BankException();
-		}
+    @Atomic(mode = TxMode.READ)
+    public static AccountData getAccountData(String iban) {
+        Account account = getAccountByIban(iban);
+        if (account == null) {
+            throw new BankException();
+        }
 
-		return new AccountData(account);
-	}
+        return new AccountData(account);
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void deposit(String iban, Integer amount) {
-		Account account = getAccountByIban(iban);
-		if (account == null) {
-			throw new BankException();
-		}
+    @Atomic(mode = TxMode.WRITE)
+    public static void deposit(String iban, Integer amount) {
+        Account account = getAccountByIban(iban);
+        if (account == null) {
+            throw new BankException();
+        }
 
-		account.deposit(amount);
-	}
+        account.deposit(amount);
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void withdraw(String iban, Integer amount) {
-		Account account = getAccountByIban(iban);
-		if (account == null) {
-			throw new BankException();
-		}
+    @Atomic(mode = TxMode.WRITE)
+    public static void withdraw(String iban, Integer amount) {
+        Account account = getAccountByIban(iban);
+        if (account == null) {
+            throw new BankException();
+        }
 
-		account.withdraw(amount);
-	}
+        account.withdraw(amount);
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static String processPayment(String IBAN, int amount, String adventureId) {
-		Operation operation = getOperationByAdventureId(adventureId);
-		if (operation != null) {
-			return operation.getReference();
-		}
+    @Atomic(mode = TxMode.WRITE)
+    public static String processPayment(String IBAN, int amount, String adventureId) {
+        Operation operation = getOperationByAdventureId(adventureId);
+        if (operation != null) {
+            return operation.getReference();
+        }
 
-		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
-			Account account = bank.getAccount(IBAN);
-			if (account != null) {
-				Operation newOperation = account.withdraw(amount);
-				newOperation.setAdventureId(adventureId);
-				return newOperation.getReference();
-			}
-		}
-		throw new BankException();
-	}
+        for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
+            Account account = bank.getAccount(IBAN);
+            if (account != null) {
+                Operation newOperation = account.withdraw(amount);
+                newOperation.setAdventureId(adventureId);
+                return newOperation.getReference();
+            }
+        }
+        throw new BankException();
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static String cancelPayment(String paymentConfirmation) {
-		Operation operation = getOperationByReference(paymentConfirmation);
-		if (operation != null && operation.getCancellation() == null) {
-			return operation.revert();
-		}
-		throw new BankException();
-	}
+    @Atomic(mode = TxMode.WRITE)
+    public static String cancelPayment(String paymentConfirmation) {
+        Operation operation = getOperationByReference(paymentConfirmation);
+        if (operation != null && operation.getCancellation() == null) {
+            return operation.revert();
+        }
+        throw new BankException();
+    }
 
-	@Atomic(mode = TxMode.READ)
-	public static BankOperationData getOperationData(String reference) {
-		Operation operation = getOperationByReference(reference);
-		if (operation != null) {
-			return new BankOperationData(operation);
-		}
-		throw new BankException();
-	}
+    @Atomic(mode = TxMode.READ)
+    public static BankOperationData getOperationData(String reference) {
+        Operation operation = getOperationByReference(reference);
+        if (operation != null) {
+            return new BankOperationData(operation);
+        }
+        throw new BankException();
+    }
 
-	private static Operation getOperationByReference(String reference) {
-		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
-			Operation operation = bank.getOperation(reference);
-			if (operation != null) {
-				return operation;
-			}
-		}
-		return null;
-	}
+    private static Operation getOperationByReference(String reference) {
+        for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
+            Operation operation = bank.getOperation(reference);
+            if (operation != null) {
+                return operation;
+            }
+        }
+        return null;
+    }
 
-	private static Operation getOperationByAdventureId(String adventureId) {
-		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
-			Operation operation = bank.getOperationbyAdventureId(adventureId);
-			if (operation != null) {
-				return operation;
-			}
-		}
-		return null;
-	}
+    private static Operation getOperationByAdventureId(String adventureId) {
+        for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
+            Operation operation = bank.getOperationbyAdventureId(adventureId);
+            if (operation != null) {
+                return operation;
+            }
+        }
+        return null;
+    }
 
-	private static Bank getBankByCode(String code) {
-		return FenixFramework.getDomainRoot().getBankSet().stream().filter(b -> b.getCode().equals(code)).findFirst()
-				.orElse(null);
-	}
+    private static Bank getBankByCode(String code) {
+        return FenixFramework.getDomainRoot().getBankSet().stream().filter(b -> b.getCode().equals(code)).findFirst()
+                .orElse(null);
+    }
 
-	private static Account getAccountByIban(String iban) {
-		Account account = FenixFramework.getDomainRoot().getBankSet().stream().filter(b -> b.getAccount(iban) != null)
-				.map(b -> b.getAccount(iban)).findFirst().orElse(null);
-		return account;
-	}
+    private static Account getAccountByIban(String iban) {
+        Account account = FenixFramework.getDomainRoot().getBankSet().stream().filter(b -> b.getAccount(iban) != null)
+                .map(b -> b.getAccount(iban)).findFirst().orElse(null);
+        return account;
+    }
 
 }

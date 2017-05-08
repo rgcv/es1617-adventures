@@ -18,95 +18,95 @@ import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.ClientData;
 @Controller
 @RequestMapping(value = "/banks/{code}/clients/{id}/accounts")
 public class AccountController {
-	private static Logger logger = LoggerFactory.getLogger(AccountController.class);
+    private static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String accountForm(Model model, @PathVariable String code, @PathVariable String id) {
-		logger.info("accountForm bankCode:{}, id:{}", code, id);
+    @RequestMapping(method = RequestMethod.GET)
+    public String accountForm(Model model, @PathVariable String code, @PathVariable String id) {
+        logger.info("accountForm bankCode:{}, id:{}", code, id);
 
-		ClientData clientData = BankInterface.getClientDataById(code, id);
+        ClientData clientData = BankInterface.getClientDataById(code, id);
 
-		if (clientData == null) {
-			model.addAttribute("error",
-					"Error: it does not exist a client with id " + id + " in bank with code " + code);
-			model.addAttribute("bank", new BankData());
-			model.addAttribute("banks", BankInterface.getBanks());
-			return "banks";
-		} else {
-			model.addAttribute("client", clientData);
-			return "accounts";
-		}
-	}
+        if (clientData == null) {
+            model.addAttribute("error",
+                    "Error: it does not exist a client with id " + id + " in bank with code " + code);
+            model.addAttribute("bank", new BankData());
+            model.addAttribute("banks", BankInterface.getBanks());
+            return "banks";
+        } else {
+            model.addAttribute("client", clientData);
+            return "accounts";
+        }
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String accountSubmit(Model model, @PathVariable String code, @PathVariable String id) {
-		logger.info("accountSubmit bankCode:{}, clientId:{}", code, id);
+    @RequestMapping(method = RequestMethod.POST)
+    public String accountSubmit(Model model, @PathVariable String code, @PathVariable String id) {
+        logger.info("accountSubmit bankCode:{}, clientId:{}", code, id);
 
-		try {
-			BankInterface.createAccount(code, id);
-		} catch (BankException be) {
-			model.addAttribute("error", "Error: it was not possible to create de account");
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
-			return "accounts";
-		}
+        try {
+            BankInterface.createAccount(code, id);
+        } catch (BankException be) {
+            model.addAttribute("error", "Error: it was not possible to create de account");
+            model.addAttribute("client", BankInterface.getClientDataById(code, id));
+            return "accounts";
+        }
 
-		return "redirect:/banks/" + code + "/clients/" + id + "/accounts";
-	}
+        return "redirect:/banks/" + code + "/clients/" + id + "/accounts";
+    }
 
-	@RequestMapping(value = "/{iban}/operations", method = RequestMethod.GET)
-	public String accountOperations(Model model, @PathVariable String code, @PathVariable String id,
-			@PathVariable String iban) {
-		logger.info("accountOperations bankCode:{}, clientId:{}, iban:{}", code, id, iban);
+    @RequestMapping(value = "/{iban}/operations", method = RequestMethod.GET)
+    public String accountOperations(Model model, @PathVariable String code, @PathVariable String id,
+            @PathVariable String iban) {
+        logger.info("accountOperations bankCode:{}, clientId:{}, iban:{}", code, id, iban);
 
-		try {
-			AccountData account = BankInterface.getAccountData(iban);
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
-			model.addAttribute("account", account);
-			return "account";
-		} catch (BankException be) {
-			model.addAttribute("error", "Error: it was not possible to move to do the operations");
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
-			return "accounts";
-		}
+        try {
+            AccountData account = BankInterface.getAccountData(iban);
+            model.addAttribute("client", BankInterface.getClientDataById(code, id));
+            model.addAttribute("account", account);
+            return "account";
+        } catch (BankException be) {
+            model.addAttribute("error", "Error: it was not possible to move to do the operations");
+            model.addAttribute("client", BankInterface.getClientDataById(code, id));
+            return "accounts";
+        }
 
-	}
+    }
 
-	@RequestMapping(value = "/{iban}/deposit", method = RequestMethod.POST)
-	public String accountDeposit(Model model, @PathVariable String code, @PathVariable String id,
-			@PathVariable String iban, @ModelAttribute AccountData account) {
-		logger.info("accountDeposit bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban, account.getAmount());
+    @RequestMapping(value = "/{iban}/deposit", method = RequestMethod.POST)
+    public String accountDeposit(Model model, @PathVariable String code, @PathVariable String id,
+            @PathVariable String iban, @ModelAttribute AccountData account) {
+        logger.info("accountDeposit bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban, account.getAmount());
 
-		try {
-			BankInterface.deposit(iban, account.getAmount());
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
-			model.addAttribute("account", BankInterface.getAccountData(iban));
-			return "account";
-		} catch (BankException be) {
-			model.addAttribute("error", "Error: it was not possible to execute the operation");
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
-			model.addAttribute("account", BankInterface.getAccountData(iban));
-			return "account";
-		}
-	}
+        try {
+            BankInterface.deposit(iban, account.getAmount());
+            model.addAttribute("client", BankInterface.getClientDataById(code, id));
+            model.addAttribute("account", BankInterface.getAccountData(iban));
+            return "account";
+        } catch (BankException be) {
+            model.addAttribute("error", "Error: it was not possible to execute the operation");
+            model.addAttribute("client", BankInterface.getClientDataById(code, id));
+            model.addAttribute("account", BankInterface.getAccountData(iban));
+            return "account";
+        }
+    }
 
-	@RequestMapping(value = "/{iban}/withdraw", method = RequestMethod.POST)
-	public String accountWithdraw(Model model, @PathVariable String code, @PathVariable String id,
-			@PathVariable String iban, @ModelAttribute AccountData account) {
-		logger.info("accountWithdraw bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban,
-				account.getAmount());
+    @RequestMapping(value = "/{iban}/withdraw", method = RequestMethod.POST)
+    public String accountWithdraw(Model model, @PathVariable String code, @PathVariable String id,
+            @PathVariable String iban, @ModelAttribute AccountData account) {
+        logger.info("accountWithdraw bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban,
+                account.getAmount());
 
-		try {
-			BankInterface.withdraw(iban, account.getAmount());
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
-			model.addAttribute("account", BankInterface.getAccountData(iban));
-			return "account";
-		} catch (BankException be) {
-			model.addAttribute("error", "Error: it was not possible to execute the operation");
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
-			model.addAttribute("account", BankInterface.getAccountData(iban));
-			return "account";
-		}
+        try {
+            BankInterface.withdraw(iban, account.getAmount());
+            model.addAttribute("client", BankInterface.getClientDataById(code, id));
+            model.addAttribute("account", BankInterface.getAccountData(iban));
+            return "account";
+        } catch (BankException be) {
+            model.addAttribute("error", "Error: it was not possible to execute the operation");
+            model.addAttribute("client", BankInterface.getClientDataById(code, id));
+            model.addAttribute("account", BankInterface.getAccountData(iban));
+            return "account";
+        }
 
-	}
+    }
 
 }

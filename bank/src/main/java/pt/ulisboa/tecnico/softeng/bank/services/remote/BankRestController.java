@@ -17,38 +17,38 @@ import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankOperationD
 @RestController
 @RequestMapping(value = "/rest/banks")
 public class BankRestController {
-	private static Logger logger = LoggerFactory.getLogger(BankRestController.class);
+    private static Logger logger = LoggerFactory.getLogger(BankRestController.class);
 
-	@RequestMapping(value = "/accounts/{iban}/processPayment", method = RequestMethod.POST)
-	public ResponseEntity<String> processPayment(@PathVariable String iban, @RequestParam int amount,
-			@RequestParam String adventureId) {
-		logger.info("processPayment iban:{}, amount:{}, adventureId:{}", iban, amount, adventureId);
-		try {
-			return new ResponseEntity<>(BankInterface.processPayment(iban, amount, adventureId), HttpStatus.OK);
-		} catch (BankException be) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
+    @RequestMapping(value = "/accounts/{iban}/processPayment", method = RequestMethod.POST)
+    public ResponseEntity<String> processPayment(@PathVariable String iban, @RequestParam int amount,
+            @RequestParam String adventureId) {
+        logger.info("processPayment iban:{}, amount:{}, adventureId:{}", iban, amount, adventureId);
+        try {
+            return new ResponseEntity<>(BankInterface.processPayment(iban, amount, adventureId), HttpStatus.OK);
+        } catch (BankException be) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
-	public ResponseEntity<String> cancelPayment(@RequestParam String reference) {
-		logger.info("cancelPayment reference:{}", reference);
-		try {
-			return new ResponseEntity<>(BankInterface.cancelPayment(reference), HttpStatus.OK);
-		} catch (BankException be) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public ResponseEntity<String> cancelPayment(@RequestParam String reference) {
+        logger.info("cancelPayment reference:{}", reference);
+        try {
+            return new ResponseEntity<>(BankInterface.cancelPayment(reference), HttpStatus.OK);
+        } catch (BankException be) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-	@RequestMapping(value = "/operation", method = RequestMethod.GET)
-	public ResponseEntity<BankOperationData> getOperationData(@RequestParam String reference) {
-		logger.info("getOperationData reference:{}", reference);
-		try {
-			BankOperationData result = BankInterface.getOperationData(reference);
-			return new ResponseEntity<>(result, HttpStatus.OK);
-		} catch (BankException be) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
+    @RequestMapping(value = "/operation", method = RequestMethod.GET)
+    public ResponseEntity<BankOperationData> getOperationData(@RequestParam String reference) {
+        logger.info("getOperationData reference:{}", reference);
+        try {
+            BankOperationData result = BankInterface.getOperationData(reference);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (BankException be) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

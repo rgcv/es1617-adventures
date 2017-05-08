@@ -16,77 +16,77 @@ import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BulkData;
 
 public class BrokerInterface {
 
-	@Atomic(mode = TxMode.READ)
-	public static List<BrokerData> getBrokers() {
-		List<BrokerData> brokers = new ArrayList<>();
-		for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
-			brokers.add(new BrokerData(broker, CopyDepth.SHALLOW));
-		}
-		return brokers;
-	}
+    @Atomic(mode = TxMode.READ)
+    public static List<BrokerData> getBrokers() {
+        List<BrokerData> brokers = new ArrayList<>();
+        for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
+            brokers.add(new BrokerData(broker, CopyDepth.SHALLOW));
+        }
+        return brokers;
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void createBroker(BrokerData brokerData) {
-		new Broker(brokerData.getCode(), brokerData.getName());
-	}
+    @Atomic(mode = TxMode.WRITE)
+    public static void createBroker(BrokerData brokerData) {
+        new Broker(brokerData.getCode(), brokerData.getName());
+    }
 
-	@Atomic(mode = TxMode.READ)
-	public static BrokerData getBrokerDataByCode(String brokerCode, CopyDepth depth) {
-		Broker broker = getBrokerByCode(brokerCode);
+    @Atomic(mode = TxMode.READ)
+    public static BrokerData getBrokerDataByCode(String brokerCode, CopyDepth depth) {
+        Broker broker = getBrokerByCode(brokerCode);
 
-		if (broker != null) {
-			return new BrokerData(broker, depth);
-		} else {
-			return null;
-		}
-	}
+        if (broker != null) {
+            return new BrokerData(broker, depth);
+        } else {
+            return null;
+        }
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void createAdventure(String brokerCode, AdventureData adventureData) {
-		new Adventure(getBrokerByCode(brokerCode), adventureData.getBegin(), adventureData.getEnd(),
-				adventureData.getAge() != null ? adventureData.getAge() : 0, adventureData.getIban(),
-				adventureData.getAmount() != null ? adventureData.getAmount() : 0);
-	}
+    @Atomic(mode = TxMode.WRITE)
+    public static void createAdventure(String brokerCode, AdventureData adventureData) {
+        new Adventure(getBrokerByCode(brokerCode), adventureData.getBegin(), adventureData.getEnd(),
+                adventureData.getAge() != null ? adventureData.getAge() : 0, adventureData.getIban(),
+                adventureData.getAmount() != null ? adventureData.getAmount() : 0);
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void createBulkRoomBooking(String brokerCode, BulkData bulkData) {
-		new BulkRoomBooking(getBrokerByCode(brokerCode), bulkData.getNumber() != null ? bulkData.getNumber() : 0,
-				bulkData.getArrival(), bulkData.getDeparture());
+    @Atomic(mode = TxMode.WRITE)
+    public static void createBulkRoomBooking(String brokerCode, BulkData bulkData) {
+        new BulkRoomBooking(getBrokerByCode(brokerCode), bulkData.getNumber() != null ? bulkData.getNumber() : 0,
+                bulkData.getArrival(), bulkData.getDeparture());
 
-	}
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void processAdventure(String brokerCode, String id) {
-		Adventure adventure = FenixFramework.getDomainRoot().getBrokerSet().stream()
-				.filter(b -> b.getCode().equals(brokerCode)).flatMap(b -> b.getAdventureSet().stream())
-				.filter(a -> a.getID().equals(id)).findFirst().orElse(null);
+    @Atomic(mode = TxMode.WRITE)
+    public static void processAdventure(String brokerCode, String id) {
+        Adventure adventure = FenixFramework.getDomainRoot().getBrokerSet().stream()
+                .filter(b -> b.getCode().equals(brokerCode)).flatMap(b -> b.getAdventureSet().stream())
+                .filter(a -> a.getID().equals(id)).findFirst().orElse(null);
 
-		adventure.process();
-	}
+        adventure.process();
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void processBulk(String brokerCode, String bulkId) {
-		BulkRoomBooking bulkRoomBooking = FenixFramework.getDomainRoot().getBrokerSet().stream()
-				.filter(b -> b.getCode().equals(brokerCode)).flatMap(b -> b.getRoomBulkBookingSet().stream())
-				.filter(r -> r.getId().equals(bulkId)).findFirst().orElse(null);
+    @Atomic(mode = TxMode.WRITE)
+    public static void processBulk(String brokerCode, String bulkId) {
+        BulkRoomBooking bulkRoomBooking = FenixFramework.getDomainRoot().getBrokerSet().stream()
+                .filter(b -> b.getCode().equals(brokerCode)).flatMap(b -> b.getRoomBulkBookingSet().stream())
+                .filter(r -> r.getId().equals(bulkId)).findFirst().orElse(null);
 
-		bulkRoomBooking.processBooking();
-	}
+        bulkRoomBooking.processBooking();
+    }
 
-	@Atomic(mode = TxMode.WRITE)
-	public static void deleteBrokers() {
-		for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
-			broker.delete();
-		}
-	}
+    @Atomic(mode = TxMode.WRITE)
+    public static void deleteBrokers() {
+        for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
+            broker.delete();
+        }
+    }
 
-	private static Broker getBrokerByCode(String code) {
-		for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
-			if (broker.getCode().equals(code)) {
-				return broker;
-			}
-		}
-		return null;
-	}
+    private static Broker getBrokerByCode(String code) {
+        for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
+            if (broker.getCode().equals(code)) {
+                return broker;
+            }
+        }
+        return null;
+    }
 
 }

@@ -5,70 +5,70 @@ import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityOffer extends ActivityOffer_Base {
-	public ActivityOffer(Activity activity, LocalDate begin, LocalDate end) {
-		checkArguments(activity, begin, end);
+    public ActivityOffer(Activity activity, LocalDate begin, LocalDate end) {
+        checkArguments(activity, begin, end);
 
-		setBegin(begin);
-		setEnd(end);
-		setCapacity(activity.getCapacity());
+        setBegin(begin);
+        setEnd(end);
+        setCapacity(activity.getCapacity());
 
-		setActivity(activity);
-	}
+        setActivity(activity);
+    }
 
-	public void delete() {
-		setActivity(null);
+    public void delete() {
+        setActivity(null);
 
-		for (Booking booking : getBookingSet()) {
-			booking.delete();
-		}
+        for (Booking booking : getBookingSet()) {
+            booking.delete();
+        }
 
-		deleteDomainObject();
-	}
+        deleteDomainObject();
+    }
 
-	private void checkArguments(Activity activity, LocalDate begin, LocalDate end) {
-		if (activity == null || begin == null || end == null) {
-			throw new ActivityException();
-		}
+    private void checkArguments(Activity activity, LocalDate begin, LocalDate end) {
+        if (activity == null || begin == null || end == null) {
+            throw new ActivityException();
+        }
 
-		if (end.isBefore(begin)) {
-			throw new ActivityException();
-		}
-	}
+        if (end.isBefore(begin)) {
+            throw new ActivityException();
+        }
+    }
 
-	int getNumberActiveOfBookings() {
-		int count = 0;
-		for (Booking booking : getBookingSet()) {
-			if (!booking.isCancelled()) {
-				count++;
-			}
-		}
-		return count;
-	}
+    int getNumberActiveOfBookings() {
+        int count = 0;
+        for (Booking booking : getBookingSet()) {
+            if (!booking.isCancelled()) {
+                count++;
+            }
+        }
+        return count;
+    }
 
-	boolean available(LocalDate begin, LocalDate end) {
-		return hasVacancy() && matchDate(begin, end);
-	}
+    boolean available(LocalDate begin, LocalDate end) {
+        return hasVacancy() && matchDate(begin, end);
+    }
 
-	boolean matchDate(LocalDate begin, LocalDate end) {
-		if (begin == null || end == null) {
-			throw new ActivityException();
-		}
+    boolean matchDate(LocalDate begin, LocalDate end) {
+        if (begin == null || end == null) {
+            throw new ActivityException();
+        }
 
-		return begin.equals(getBegin()) && end.equals(getEnd());
-	}
+        return begin.equals(getBegin()) && end.equals(getEnd());
+    }
 
-	boolean hasVacancy() {
-		return getCapacity() > getNumberActiveOfBookings();
-	}
+    boolean hasVacancy() {
+        return getCapacity() > getNumberActiveOfBookings();
+    }
 
-	public Booking getBooking(String reference) {
-		for (Booking booking : getBookingSet()) {
-			if (booking.getReference().equals(reference)
-					|| (booking.isCancelled() && booking.getCancel().equals(reference))) {
-				return booking;
-			}
-		}
-		return null;
-	}
+    public Booking getBooking(String reference) {
+        for (Booking booking : getBookingSet()) {
+            if (booking.getReference().equals(reference)
+                    || (booking.isCancelled() && booking.getCancel().equals(reference))) {
+                return booking;
+            }
+        }
+        return null;
+    }
 
 }

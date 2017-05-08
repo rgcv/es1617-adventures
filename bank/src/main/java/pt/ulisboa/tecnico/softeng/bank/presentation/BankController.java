@@ -15,30 +15,30 @@ import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankData;
 @Controller
 @RequestMapping(value = "/banks")
 public class BankController {
-	private static Logger logger = LoggerFactory.getLogger(BankController.class);
+    private static Logger logger = LoggerFactory.getLogger(BankController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String bankForm(Model model) {
-		logger.info("bankForm");
-		model.addAttribute("bank", new BankData());
-		model.addAttribute("banks", BankInterface.getBanks());
-		return "banks";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String bankForm(Model model) {
+        logger.info("bankForm");
+        model.addAttribute("bank", new BankData());
+        model.addAttribute("banks", BankInterface.getBanks());
+        return "banks";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String bankSubmit(Model model, @ModelAttribute BankData bank) {
-		logger.info("bankSubmit name:{}, code:{}", bank.getName(), bank.getCode());
+    @RequestMapping(method = RequestMethod.POST)
+    public String bankSubmit(Model model, @ModelAttribute BankData bank) {
+        logger.info("bankSubmit name:{}, code:{}", bank.getName(), bank.getCode());
 
-		try {
-			BankInterface.createBank(bank);
-		} catch (BankException be) {
-			model.addAttribute("error", "Error: it was not possible to create the bank");
-			model.addAttribute("bank", bank);
-			model.addAttribute("banks", BankInterface.getBanks());
-			return "banks";
-		}
+        try {
+            BankInterface.createBank(bank);
+        } catch (BankException be) {
+            model.addAttribute("error", "Error: it was not possible to create the bank");
+            model.addAttribute("bank", bank);
+            model.addAttribute("banks", BankInterface.getBanks());
+            return "banks";
+        }
 
-		return "redirect:/banks";
-	}
+        return "redirect:/banks";
+    }
 
 }

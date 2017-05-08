@@ -15,30 +15,30 @@ import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityPr
 @Controller
 @RequestMapping(value = "/providers")
 public class ActivityProviderController {
-	private static Logger logger = LoggerFactory.getLogger(ActivityProviderController.class);
+    private static Logger logger = LoggerFactory.getLogger(ActivityProviderController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String providerForm(Model model) {
-		logger.info("providerForm");
-		model.addAttribute("provider", new ActivityProviderData());
-		model.addAttribute("providers", ActivityInterface.getProviders());
-		return "providers";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String providerForm(Model model) {
+        logger.info("providerForm");
+        model.addAttribute("provider", new ActivityProviderData());
+        model.addAttribute("providers", ActivityInterface.getProviders());
+        return "providers";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String providerSubmit(Model model, @ModelAttribute ActivityProviderData provider) {
-		logger.info("providerSubmit name:{}, code:{}", provider.getName(), provider.getCode());
+    @RequestMapping(method = RequestMethod.POST)
+    public String providerSubmit(Model model, @ModelAttribute ActivityProviderData provider) {
+        logger.info("providerSubmit name:{}, code:{}", provider.getName(), provider.getCode());
 
-		try {
-			ActivityInterface.createProvider(provider);
-		} catch (ActivityException be) {
-			model.addAttribute("error", "Error: it was not possible to create the activity provider");
-			model.addAttribute("provider", provider);
-			model.addAttribute("providers", ActivityInterface.getProviders());
-			return "providers";
-		}
+        try {
+            ActivityInterface.createProvider(provider);
+        } catch (ActivityException be) {
+            model.addAttribute("error", "Error: it was not possible to create the activity provider");
+            model.addAttribute("provider", provider);
+            model.addAttribute("providers", ActivityInterface.getProviders());
+            return "providers";
+        }
 
-		return "redirect:/providers";
-	}
+        return "redirect:/providers";
+    }
 
 }

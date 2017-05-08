@@ -6,39 +6,39 @@ import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class Booking extends Booking_Base {
 
-	public Booking(ActivityOffer offer) {
-		checkArguments(offer);
+    public Booking(ActivityOffer offer) {
+        checkArguments(offer);
 
-		setReference(offer.getActivity().getActivityProvider().getCode()
-				+ Integer.toString(offer.getActivity().getActivityProvider().getBookingCounter()));
+        setReference(offer.getActivity().getActivityProvider().getCode()
+                + Integer.toString(offer.getActivity().getActivityProvider().getBookingCounter()));
 
-		setActivityOffer(offer);
-	}
+        setActivityOffer(offer);
+    }
 
-	public void delete() {
-		setActivityOffer(null);
+    public void delete() {
+        setActivityOffer(null);
 
-		deleteDomainObject();
-	}
+        deleteDomainObject();
+    }
 
-	private void checkArguments(ActivityOffer offer) {
-		if (offer == null) {
-			throw new ActivityException();
-		}
+    private void checkArguments(ActivityOffer offer) {
+        if (offer == null) {
+            throw new ActivityException();
+        }
 
-		if (offer.getCapacity() == offer.getNumberActiveOfBookings()) {
-			throw new ActivityException();
-		}
-	}
+        if (offer.getCapacity() == offer.getNumberActiveOfBookings()) {
+            throw new ActivityException();
+        }
+    }
 
-	public String cancel() {
-		setCancel("CANCEL" + getReference());
-		setCancellationDate(new LocalDate());
-		return getCancel();
-	}
+    public String cancel() {
+        setCancel("CANCEL" + getReference());
+        setCancellationDate(new LocalDate());
+        return getCancel();
+    }
 
-	public boolean isCancelled() {
-		return getCancel() != null;
-	}
+    public boolean isCancelled() {
+        return getCancel() != null;
+    }
 
 }

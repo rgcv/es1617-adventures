@@ -9,121 +9,121 @@ import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityProviderFindOfferMethodTest extends RollbackTestAbstractClass {
-	private static final int MIN_AGE = 25;
-	private static final int MAX_AGE = 80;
-	private static final int CAPACITY = 25;
-	private static final int AGE = 40;
-	private final LocalDate begin = new LocalDate(2016, 12, 19);
-	private final LocalDate end = new LocalDate(2016, 12, 21);
+    private static final int MIN_AGE = 25;
+    private static final int MAX_AGE = 80;
+    private static final int CAPACITY = 25;
+    private static final int AGE = 40;
+    private final LocalDate begin = new LocalDate(2016, 12, 19);
+    private final LocalDate end = new LocalDate(2016, 12, 21);
 
-	private ActivityProvider provider;
-	private Activity activity;
-	private ActivityOffer offer;
+    private ActivityProvider provider;
+    private Activity activity;
+    private ActivityOffer offer;
 
-	@Override
-	public void populate4Test() {
-		this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
-		this.activity = new Activity(this.provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
+    @Override
+    public void populate4Test() {
+        this.provider = new ActivityProvider("XtremX", "ExtremeAdventure");
+        this.activity = new Activity(this.provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
 
-		this.offer = new ActivityOffer(this.activity, this.begin, this.end);
-	}
+        this.offer = new ActivityOffer(this.activity, this.begin, this.end);
+    }
 
-	@Test
-	public void success() {
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
+    @Test
+    public void success() {
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
 
-		Assert.assertEquals(1, offers.size());
-		Assert.assertTrue(offers.contains(this.offer));
-	}
+        Assert.assertEquals(1, offers.size());
+        Assert.assertTrue(offers.contains(this.offer));
+    }
 
-	@Test(expected = ActivityException.class)
-	public void nullBeginDate() {
-		this.provider.findOffer(null, this.end, AGE);
+    @Test(expected = ActivityException.class)
+    public void nullBeginDate() {
+        this.provider.findOffer(null, this.end, AGE);
 
-	}
+    }
 
-	@Test(expected = ActivityException.class)
-	public void nullEndDate() {
-		this.provider.findOffer(this.begin, null, AGE);
+    @Test(expected = ActivityException.class)
+    public void nullEndDate() {
+        this.provider.findOffer(this.begin, null, AGE);
 
-	}
+    }
 
-	@Test
-	public void successAgeEqualMin() {
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MIN_AGE);
+    @Test
+    public void successAgeEqualMin() {
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MIN_AGE);
 
-		Assert.assertEquals(1, offers.size());
-		Assert.assertTrue(offers.contains(this.offer));
-	}
+        Assert.assertEquals(1, offers.size());
+        Assert.assertTrue(offers.contains(this.offer));
+    }
 
-	@Test
-	public void AgeMinusOneThanMinimal() {
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MIN_AGE - 1);
+    @Test
+    public void AgeMinusOneThanMinimal() {
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MIN_AGE - 1);
 
-		Assert.assertTrue(offers.isEmpty());
-	}
+        Assert.assertTrue(offers.isEmpty());
+    }
 
-	@Test
-	public void successAgeEqualMax() {
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MAX_AGE);
+    @Test
+    public void successAgeEqualMax() {
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MAX_AGE);
 
-		Assert.assertEquals(1, offers.size());
-		Assert.assertTrue(offers.contains(this.offer));
-	}
+        Assert.assertEquals(1, offers.size());
+        Assert.assertTrue(offers.contains(this.offer));
+    }
 
-	@Test
-	public void AgePlusOneThanMinimal() {
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MAX_AGE + 1);
+    @Test
+    public void AgePlusOneThanMinimal() {
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, MAX_AGE + 1);
 
-		Assert.assertTrue(offers.isEmpty());
-	}
+        Assert.assertTrue(offers.isEmpty());
+    }
 
-	@Test
-	public void emptyActivitySet() {
-		ActivityProvider otherProvider = new ActivityProvider("Xtrems", "Adventure");
+    @Test
+    public void emptyActivitySet() {
+        ActivityProvider otherProvider = new ActivityProvider("Xtrems", "Adventure");
 
-		List<ActivityOffer> offers = otherProvider.findOffer(this.begin, this.end, AGE);
+        List<ActivityOffer> offers = otherProvider.findOffer(this.begin, this.end, AGE);
 
-		Assert.assertTrue(offers.isEmpty());
-	}
+        Assert.assertTrue(offers.isEmpty());
+    }
 
-	@Test
-	public void emptyActivityOfferSet() {
-		ActivityProvider otherProvider = new ActivityProvider("Xtrems", "Adventure");
-		new Activity(otherProvider, "Bush Walking", 18, 80, 25);
+    @Test
+    public void emptyActivityOfferSet() {
+        ActivityProvider otherProvider = new ActivityProvider("Xtrems", "Adventure");
+        new Activity(otherProvider, "Bush Walking", 18, 80, 25);
 
-		List<ActivityOffer> offers = otherProvider.findOffer(this.begin, this.end, AGE);
+        List<ActivityOffer> offers = otherProvider.findOffer(this.begin, this.end, AGE);
 
-		Assert.assertTrue(offers.isEmpty());
-	}
+        Assert.assertTrue(offers.isEmpty());
+    }
 
-	@Test
-	public void twoMatchActivityOffers() {
-		new ActivityOffer(this.activity, this.begin, this.end);
+    @Test
+    public void twoMatchActivityOffers() {
+        new ActivityOffer(this.activity, this.begin, this.end);
 
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
 
-		Assert.assertEquals(2, offers.size());
-	}
+        Assert.assertEquals(2, offers.size());
+    }
 
-	@Test
-	public void oneMatchActivityOfferAndOneNotMatch() {
-		new ActivityOffer(this.activity, this.begin, this.end.plusDays(1));
+    @Test
+    public void oneMatchActivityOfferAndOneNotMatch() {
+        new ActivityOffer(this.activity, this.begin, this.end.plusDays(1));
 
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
 
-		Assert.assertEquals(1, offers.size());
-	}
+        Assert.assertEquals(1, offers.size());
+    }
 
-	@Test
-	public void oneMatchActivityOfferAndOtherNoCapacity() {
-		Activity otherActivity = new Activity(this.provider, "Bush Walking", MIN_AGE, MAX_AGE, 1);
-		ActivityOffer otherActivityOffer = new ActivityOffer(otherActivity, this.begin, this.end);
-		new Booking(otherActivityOffer);
+    @Test
+    public void oneMatchActivityOfferAndOtherNoCapacity() {
+        Activity otherActivity = new Activity(this.provider, "Bush Walking", MIN_AGE, MAX_AGE, 1);
+        ActivityOffer otherActivityOffer = new ActivityOffer(otherActivity, this.begin, this.end);
+        new Booking(otherActivityOffer);
 
-		List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
+        List<ActivityOffer> offers = this.provider.findOffer(this.begin, this.end, AGE);
 
-		Assert.assertEquals(1, offers.size());
-	}
+        Assert.assertEquals(1, offers.size());
+    }
 
 }

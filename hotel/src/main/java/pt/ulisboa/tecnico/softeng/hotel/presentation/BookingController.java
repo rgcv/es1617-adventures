@@ -18,42 +18,42 @@ import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.RoomData;
 @Controller
 @RequestMapping(value = "/hotels/{code}/rooms/{number}/bookings")
 public class BookingController {
-	private static Logger logger = LoggerFactory.getLogger(BookingController.class);
+    private static Logger logger = LoggerFactory.getLogger(BookingController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String bookingForm(Model model, @PathVariable String code, @PathVariable String number) {
-		logger.info("bookingForm hotelCode:{}, roomNumber", code, number);
+    @RequestMapping(method = RequestMethod.GET)
+    public String bookingForm(Model model, @PathVariable String code, @PathVariable String number) {
+        logger.info("bookingForm hotelCode:{}, roomNumber", code, number);
 
-		RoomData roomData = HotelInterface.getRoomDataByNumber(code, number);
+        RoomData roomData = HotelInterface.getRoomDataByNumber(code, number);
 
-		if (roomData == null) {
-			model.addAttribute("error",
-					"Error: it does not exist a room with number " + number + " in hotel with code " + code);
-			model.addAttribute("hotel", new HotelData());
-			model.addAttribute("hotels", HotelInterface.getHotels());
-			return "hotels";
-		} else {
-			model.addAttribute("booking", new RoomBookingData());
-			model.addAttribute("room", roomData);
-			return "bookings";
-		}
-	}
+        if (roomData == null) {
+            model.addAttribute("error",
+                    "Error: it does not exist a room with number " + number + " in hotel with code " + code);
+            model.addAttribute("hotel", new HotelData());
+            model.addAttribute("hotels", HotelInterface.getHotels());
+            return "hotels";
+        } else {
+            model.addAttribute("booking", new RoomBookingData());
+            model.addAttribute("room", roomData);
+            return "bookings";
+        }
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String bookingSubmit(Model model, @PathVariable String code, @PathVariable String number,
-			@ModelAttribute RoomBookingData booking) {
-		logger.info("bookingSubmit hotelCode:{}, roomNumber:{}, arrival:{}, departure:{}", code, number,
-				booking.getArrival(), booking.getDeparture());
+    @RequestMapping(method = RequestMethod.POST)
+    public String bookingSubmit(Model model, @PathVariable String code, @PathVariable String number,
+            @ModelAttribute RoomBookingData booking) {
+        logger.info("bookingSubmit hotelCode:{}, roomNumber:{}, arrival:{}, departure:{}", code, number,
+                booking.getArrival(), booking.getDeparture());
 
-		try {
-			HotelInterface.createBooking(code, number, booking);
-		} catch (HotelException be) {
-			model.addAttribute("error", "Error: it was not possible to book the room");
-			model.addAttribute("booking", booking);
-			model.addAttribute("room", HotelInterface.getRoomDataByNumber(code, number));
-			return "bookings";
-		}
+        try {
+            HotelInterface.createBooking(code, number, booking);
+        } catch (HotelException be) {
+            model.addAttribute("error", "Error: it was not possible to book the room");
+            model.addAttribute("booking", booking);
+            model.addAttribute("room", HotelInterface.getRoomDataByNumber(code, number));
+            return "bookings";
+        }
 
-		return "redirect:/hotels/" + code + "/rooms/" + number + "/bookings";
-	}
+        return "redirect:/hotels/" + code + "/rooms/" + number + "/bookings";
+    }
 }

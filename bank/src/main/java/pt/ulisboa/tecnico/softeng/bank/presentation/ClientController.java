@@ -17,39 +17,39 @@ import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.ClientData;
 @Controller
 @RequestMapping(value = "/banks/{code}/clients")
 public class ClientController {
-	private static Logger logger = LoggerFactory.getLogger(ClientController.class);
+    private static Logger logger = LoggerFactory.getLogger(ClientController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String clientForm(Model model, @PathVariable String code) {
-		logger.info("clientForm bankCode:{}", code);
+    @RequestMapping(method = RequestMethod.GET)
+    public String clientForm(Model model, @PathVariable String code) {
+        logger.info("clientForm bankCode:{}", code);
 
-		BankData bankData = BankInterface.getBankDataByCode(code);
+        BankData bankData = BankInterface.getBankDataByCode(code);
 
-		if (bankData == null) {
-			model.addAttribute("error", "Error: it does not exist a bank with the code " + code);
-			model.addAttribute("bank", new BankData());
-			model.addAttribute("banks", BankInterface.getBanks());
-			return "banks";
-		}
+        if (bankData == null) {
+            model.addAttribute("error", "Error: it does not exist a bank with the code " + code);
+            model.addAttribute("bank", new BankData());
+            model.addAttribute("banks", BankInterface.getBanks());
+            return "banks";
+        }
 
-		model.addAttribute("client", new ClientData());
-		model.addAttribute("bank", bankData);
-		return "clients";
-	}
+        model.addAttribute("client", new ClientData());
+        model.addAttribute("bank", bankData);
+        return "clients";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String clientSubmit(Model model, @PathVariable String code, @ModelAttribute ClientData client) {
-		logger.info("clientSubmit bankCode:{}, clientName:{}", code, client.getName());
+    @RequestMapping(method = RequestMethod.POST)
+    public String clientSubmit(Model model, @PathVariable String code, @ModelAttribute ClientData client) {
+        logger.info("clientSubmit bankCode:{}, clientName:{}", code, client.getName());
 
-		try {
-			BankInterface.createClient(code, client);
-		} catch (BankException be) {
-			model.addAttribute("error", "Error: it was not possible to create the client");
-			model.addAttribute("client", client);
-			model.addAttribute("bank", BankInterface.getBankDataByCode(code));
-			return "clients";
-		}
+        try {
+            BankInterface.createClient(code, client);
+        } catch (BankException be) {
+            model.addAttribute("error", "Error: it was not possible to create the client");
+            model.addAttribute("client", client);
+            model.addAttribute("bank", BankInterface.getBankDataByCode(code));
+            return "clients";
+        }
 
-		return "redirect:/banks/" + code + "/clients";
-	}
+        return "redirect:/banks/" + code + "/clients";
+    }
 }

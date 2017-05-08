@@ -17,39 +17,39 @@ import pt.ulisboa.tecnico.softeng.hotel.services.local.dataobjects.RoomData;
 @Controller
 @RequestMapping(value = "/hotels/{code}/rooms")
 public class RoomController {
-	private static Logger logger = LoggerFactory.getLogger(RoomController.class);
+    private static Logger logger = LoggerFactory.getLogger(RoomController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String roomForm(Model model, @PathVariable String code) {
-		logger.info("roomForm hotelCode:{}", code);
+    @RequestMapping(method = RequestMethod.GET)
+    public String roomForm(Model model, @PathVariable String code) {
+        logger.info("roomForm hotelCode:{}", code);
 
-		HotelData hotelData = HotelInterface.getHotelDataByCode(code);
+        HotelData hotelData = HotelInterface.getHotelDataByCode(code);
 
-		if (hotelData == null) {
-			model.addAttribute("error", "Error: it does not exist a hotel with the code " + code);
-			model.addAttribute("hotel", new HotelData());
-			model.addAttribute("hotels", HotelInterface.getHotels());
-			return "hotels";
-		} else {
-			model.addAttribute("room", new RoomData());
-			model.addAttribute("hotel", hotelData);
-			return "rooms";
-		}
-	}
+        if (hotelData == null) {
+            model.addAttribute("error", "Error: it does not exist a hotel with the code " + code);
+            model.addAttribute("hotel", new HotelData());
+            model.addAttribute("hotels", HotelInterface.getHotels());
+            return "hotels";
+        } else {
+            model.addAttribute("room", new RoomData());
+            model.addAttribute("hotel", hotelData);
+            return "rooms";
+        }
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String roomSubmit(Model model, @PathVariable String code, @ModelAttribute RoomData roomData) {
-		logger.info("roomSubmit hotelCode:{}, number:{}, type:{}", code, roomData.getNumber(), roomData.getType());
+    @RequestMapping(method = RequestMethod.POST)
+    public String roomSubmit(Model model, @PathVariable String code, @ModelAttribute RoomData roomData) {
+        logger.info("roomSubmit hotelCode:{}, number:{}, type:{}", code, roomData.getNumber(), roomData.getType());
 
-		try {
-			HotelInterface.createRoom(code, roomData);
-		} catch (HotelException be) {
-			model.addAttribute("error", "Error: it was not possible to create the room");
-			model.addAttribute("room", roomData);
-			model.addAttribute("hotel", HotelInterface.getHotelDataByCode(code));
-			return "rooms";
-		}
+        try {
+            HotelInterface.createRoom(code, roomData);
+        } catch (HotelException be) {
+            model.addAttribute("error", "Error: it was not possible to create the room");
+            model.addAttribute("room", roomData);
+            model.addAttribute("hotel", HotelInterface.getHotelDataByCode(code));
+            return "rooms";
+        }
 
-		return "redirect:/hotels/" + code + "/rooms";
-	}
+        return "redirect:/hotels/" + code + "/rooms";
+    }
 }
