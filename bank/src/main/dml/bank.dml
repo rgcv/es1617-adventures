@@ -28,7 +28,6 @@ relation DomainRootHasBankApplication {
     .pt.ist.fenixframework.DomainRoot playsRole root {
         multiplicity 1..1;
     }
-
     Bank playsRole bank {
         multiplicity 0..*;
     }
@@ -38,7 +37,6 @@ relation BankHasAccounts {
     Bank playsRole bank {
         multiplicity 1..1;
     }
-
 	Account playsRole account {
 		multiplicity 0..*;
     }
@@ -48,7 +46,6 @@ relation AccountHasOperations {
 	Account playsRole account {
         multiplicity 1..1;
     }
-    
     Operation playsRole operation {
         multiplicity 0..*;
     }
@@ -58,7 +55,6 @@ relation BankHasClients {
 	Bank playsRole bank {
 		multiplicity 1..1;
 	}
-	
 	Client playsRole client {
 		multiplicity 0..*;
 	}
@@ -68,7 +64,6 @@ relation BankHasOperations {
 	Bank playsRole bank {
 		multiplicity 1..1;
 	}
-	
 	Operation playsRole operation {
 		multiplicity 0..*;
 	}
@@ -78,8 +73,7 @@ relation ClientHasAccounts {
     Client playsRole client {
         multiplicity 1..1;
     }
-    
- 	 Account playsRole account {
+ 	Account playsRole account {
         multiplicity 0..*;
     }
 }

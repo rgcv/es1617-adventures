@@ -31,7 +31,7 @@ public class BulkRoomBookingGetReferenceMethodTest extends RollbackTestAbstractC
 
     @Override
     public void populate4Test() {
-        this.bulk = new BulkRoomBooking(NUMBER, arrival, departure);
+        this.bulk = new BulkRoomBooking(new Broker("BK1111", "Traveling"), NUMBER, arrival, departure);
         this.bulk.getReferences().addAll(Arrays.asList(REF_1, REF_2));
     }
 

@@ -13,7 +13,7 @@ public class Client extends Client_Base {
 		setID(Integer.toString(++Client.counter));
 		setName(name.trim());
 
-		bank.addClient(this);
+		setBank(bank);
 	}
 
 	private void checkArguments(Bank bank, String name) {
@@ -23,8 +23,7 @@ public class Client extends Client_Base {
 	}
 
 	public void delete() {
-		Set<Account> accounts = getAccountSet();
-		for (Account account : accounts) {
+		for (Account account : getAccountSet()) {
 			account.delete();
 		}
 		setBank(null);

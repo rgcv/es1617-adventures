@@ -52,7 +52,7 @@ public class Room extends Room_Base {
 			throw new HotelException();
 		}
 
-		Booking booking = new Booking(getHotel(), arrival, departure);
+		Booking booking = new Booking(this, arrival, departure);
 		super.addBooking(booking);
 
 		return booking;

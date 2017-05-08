@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.softeng.bank.domain;
 
-import java.util.Set;
-
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
 public class Account extends Account_Base {
@@ -10,12 +8,10 @@ public class Account extends Account_Base {
 	public Account(Bank bank, Client client) {
 		checkArguments(bank, client);
 
-		setBank(bank);
+		setBank(bank); // SINCE FenixFramework RELATIONS ARE BIDIRECTIONAL YOU DON'T NEED TO INVOKE bank.addAccount(this);
 		setIBAN(bank.getCode() + Integer.toString(++Account.counter));
 		setClient(client);
 		setBalance(0);
-
-		bank.addAccount(this);
 	}
 
 	private void checkArguments(Bank bank, Client client) {
@@ -50,8 +46,7 @@ public class Account extends Account_Base {
 	}
 
 	public void delete() {
-		Set<Operation> operations = getOperationSet();
-		for (Operation operation : operations) {
+		for (Operation operation : getOperationSet()) {
 			operation.delete();
 		}
 		setBank(null);

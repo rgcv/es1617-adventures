@@ -7,17 +7,17 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 public class Booking extends Booking_Base {
 	private static int counter = 0;
 
-	Booking(Hotel hotel, LocalDate arrival, LocalDate departure) {
-		checkArguments(hotel, arrival, departure);
+	Booking(Room room, LocalDate arrival, LocalDate departure) {
+		checkArguments(room, arrival, departure);
 
-		setReference(hotel.getCode() + Integer.toString(++Booking.counter));
+		setReference(room.getHotel().getCode() + Integer.toString(++Booking.counter));
 		setArrival(arrival);
 		setDeparture(departure);
-
+		setRoom(room);
 	}
 
-	private void checkArguments(Hotel hotel, LocalDate arrival, LocalDate departure) {
-		if (hotel == null || arrival == null || departure == null) {
+	private void checkArguments(Room room, LocalDate arrival, LocalDate departure) {
+		if (room == null || arrival == null || departure == null) {
 			throw new HotelException();
 		}
 

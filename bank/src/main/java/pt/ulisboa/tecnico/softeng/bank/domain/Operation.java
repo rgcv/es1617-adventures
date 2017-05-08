@@ -19,8 +19,7 @@ public class Operation extends Operation_Base {
 		setAccount(account);
 		setValue(value);
 		setTime(DateTime.now());
-
-		account.getBank().addLog(this);
+		setBank(account.getBank());
 	}
 
 	private void checkArguments(Type type, Account account, int value) {

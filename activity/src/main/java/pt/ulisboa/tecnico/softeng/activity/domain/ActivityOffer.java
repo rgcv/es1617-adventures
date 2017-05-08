@@ -5,7 +5,6 @@ import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityOffer extends ActivityOffer_Base {
-    
 
     public ActivityOffer(Activity activity, LocalDate begin, LocalDate end) {
         checkArguments(activity, begin, end);

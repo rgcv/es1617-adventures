@@ -61,6 +61,8 @@ public class BrokerPersistenceTest {
 
         assertEquals(Adventure.State.PROCESS_PAYMENT, adventure.getState().getValue());
         assertEquals(0, adventure.getState().getNumOfRemoteErrors());
+
+        // TODO TESTAR PERSISTÊNCIA DO BulkRoomBooking
     }
 
     @After

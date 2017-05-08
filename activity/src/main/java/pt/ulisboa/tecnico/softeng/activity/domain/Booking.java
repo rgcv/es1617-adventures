@@ -12,7 +12,7 @@ public class Booking extends Booking_Base {
 
         setReference(provider.getCode() + Integer.toString(++Booking.counter));
 
-        offer.addBooking(this);
+        setOffer(offer);
     }
     
     public void delete() {

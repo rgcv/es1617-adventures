@@ -31,7 +31,7 @@ public class BankPersistenceTest {
         Bank bank = new Bank(BANK_NAME, BANK_CODE);
         Client client = new Client(bank, CLIENT_NAME);
         Account account = new Account(bank, client);
-        new Operation(Type.DEPOSIT, account, AMOUNT);
+        account.deposit(AMOUNT);
     }
 
     @Atomic(mode = TxMode.READ)

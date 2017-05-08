@@ -111,7 +111,7 @@ public class ActivityProvider extends ActivityProvider_Base {
 
         for (ActivityProvider provider : providers) {
             for (Activity activity : provider.getActivitySet()) {
-                for (ActivityOffer offer : activity.getOffers()) {
+                for (ActivityOffer offer : activity.getOfferSet()) {
                     Booking booking = offer.getBooking(reference);
                     if (booking != null) {
                         return new ActivityReservationData(provider, offer, booking);

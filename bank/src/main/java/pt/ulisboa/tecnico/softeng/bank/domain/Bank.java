@@ -60,10 +60,6 @@ public class Bank extends Bank_Base {
 		return getClientSet().contains(client);
 	}
 
-	void addLog(Operation operation) {
-		getOperationSet().add(operation);
-	}
-
 	public Account getAccount(String IBAN) {
 		if (IBAN == null || IBAN.trim().equals("")) {
 			throw new BankException();

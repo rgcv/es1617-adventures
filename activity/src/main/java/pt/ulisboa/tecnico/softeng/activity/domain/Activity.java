@@ -56,7 +56,6 @@ public class Activity extends Activity_Base {
         return getOfferSet().size();
     }
 
-
     Set<ActivityOffer> getOffers(LocalDate begin, LocalDate end, int age) {
         Set<ActivityOffer> result = new HashSet<>();
         for (ActivityOffer offer : getOfferSet()) {
@@ -79,10 +78,6 @@ public class Activity extends Activity_Base {
             }
         }
         return null;
-    }
-
-    public Set<ActivityOffer> getOffers() {
-        return getOfferSet();
     }
 
 }
