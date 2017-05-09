@@ -1,6 +1,7 @@
 #!/bin/bash
 
-curl -X POST localhost:8081/shutdown
-curl -X POST localhost:8082/shutdown
-curl -X POST localhost:8083/shutdown
-curl -X POST localhost:8084/shutdown
+for i in {1..4}; do
+  echo -n "Shutting down 808${i}.. "
+  curl -X POST localhost:808$i/shutdown >/dev/null 2>&1
+  if [ $? -eq 0 ]; then echo "OK"; else echo "KO"; fi
+done
