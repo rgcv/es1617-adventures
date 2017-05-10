@@ -150,4 +150,8 @@ public class ActivityInterface {
                 .orElse(null);
     }
 
+    @Atomic(mode = TxMode.WRITE)
+    public static void deleteProviders() {
+        FenixFramework.getDomainRoot().getActivityProviderSet().forEach(ActivityProvider::delete);
+    }
 }
