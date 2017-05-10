@@ -4,7 +4,7 @@ ES 16'17 - Grupo 01
 Elementos do Grupo
 ------------------
 
-| :hash: Number |     :memo: Name     |              :email: Email               |    :octocat: GitHub     |   :package: Grupo   |
+| :hash: Number |     :memo: Name     |              :email: Email               |    :octocat: GitHub     |   :package: Group   |
 |--------------:|---------------------|------------------------------------------|-------------------------|---------------------|
 |     **80818** | Joana Arezes        |          <joanarezes@outlook.com>        | [JoanaArezes]           |     100*Reads*      |
 |     **80858** | Beatriz Grilo       |            <bmsgrilo@gmail.com>          | [BMSGrilo]              |     100*Writes*     |
