@@ -1,24 +1,16 @@
-# Eclipse
 .classpath
 .project
 .settings
-
-# IntelliJ IDEA
-.idea
-*.iml
-
-# Maven
 target
-
-# FenixFramework
 fenix-framework.properties
-
-# JMeter
 jmeter.log
 *.jtl
 *.log
 infer-out
-
-# macOS
 .DS_Store
-
+.idea/
+activity/activity.iml
+bank/bank.iml
+broker/broker.iml
+hotel/hotel.iml
+adventures.iml

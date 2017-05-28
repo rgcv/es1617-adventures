@@ -110,4 +110,9 @@ public class Hotel extends Hotel_Base {
         return null;
     }
 
+    public Room getRoomByNumber(String number) {
+        // TODO
+        return null;
+    }
+
 }

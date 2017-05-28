@@ -29,7 +29,7 @@ public class ActivityController {
         		CopyDepth.ACTIVITIES);
 
         if (activityProviderData == null) {
-        	model.addAttribute("error", "Error: doesnt exist an activity provider with the code " + activityProviderCode);
+        	model.addAttribute("error", "Error: doesn't exist an activity provider with the code " + activityProviderCode);
             model.addAttribute("activity", new ActivityData());
             model.addAttribute("activityProviders", ActivityInterface.getAllActivityProvidersData());
             return "activityProviders";

@@ -16,7 +16,7 @@ import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityOf
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData;
 
 @Controller
-@RequestMapping(value = "/activityProviders/{activityProviderCode}/activities/{activityCode}/activityOffers")
+@RequestMapping(value = "/activityProviders/{activityProviderCode}/activities/{activityCode}/activityOffers") // FIXME avoid camel case in urls
 public class ActivityOfferController {
 	private static Logger logger = LoggerFactory.getLogger(ActivityOfferController.class);
 

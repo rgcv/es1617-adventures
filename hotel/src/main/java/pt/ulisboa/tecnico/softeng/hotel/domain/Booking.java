@@ -5,7 +5,7 @@ import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class Booking extends Booking_Base {
-    Booking(Room room, LocalDate arrival, LocalDate departure) {
+    public Booking(Room room, LocalDate arrival, LocalDate departure) {
         checkArguments(room, arrival, departure);
 
         setReference(room.getHotel().getCode() + Integer.toString(room.getHotel().getCounter()));

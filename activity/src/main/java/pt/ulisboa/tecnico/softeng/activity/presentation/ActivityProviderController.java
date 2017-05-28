@@ -13,7 +13,7 @@ import pt.ulisboa.tecnico.softeng.activity.services.local.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData;
 
 @Controller
-@RequestMapping(value = "/activityProviders")
+@RequestMapping(value = "/activityProviders") // FIXME avoid camel case in URLs
 public class ActivityProviderController {
 	private static Logger logger = LoggerFactory.getLogger(ActivityProviderController.class);
 

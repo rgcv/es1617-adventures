@@ -44,11 +44,11 @@ public class AccountController {
 			return "accounts";
 		}
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value="/client/{clientID}")
 	public String AccountFormByClient(Model model, @PathVariable String bankCode, @PathVariable String clientID) {
 		logger.info("accountFormByClient bankCode: {} clientID: {}", bankCode, clientID);
-		
+
 		BankData bankData = BankInterface.getBankDataByCode(bankCode, CopyDepth.CLIENTS);
 		if(bankData == null) {
 			model.addAttribute("error", "Error: it does not exist a bank with the code " + bankCode);
@@ -56,7 +56,7 @@ public class AccountController {
 			model.addAttribute("banks", BankInterface.getBanks());
 			return "banks";
 		}
-		
+
 		ClientData clientData = BankInterface.getClientDataById(bankCode, clientID, ClientData.CopyDepth.ACCOUNTS);
 		if(clientData == null) {
 			model.addAttribute("error", "Error: it does not exist a client with the ID " + clientID);
@@ -70,7 +70,7 @@ public class AccountController {
 			model.addAttribute("bank", bankData);
 			return "accountsByClient";
 		}
-		
+
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value={"","/client/{clientID}"})
@@ -168,9 +168,9 @@ public class AccountController {
 				@RequestParam(value="value", required=true) Double value) {
 		
 		logger.info("transfer bankCode:{}, fromIBAN:{}, toIBAN:{}, value:{}", bankCode, fromIBAN, toIBAN, value);
-		
+
 		BankData bankData = BankInterface.getBankDataByCode(bankCode, CopyDepth.ACCOUNTS);
-		
+
 		if(bankData == null) {
 			model.addAttribute("error", "Error: it does not exist a bank with the code " + bankCode);
 			model.addAttribute("bank", new BankData());
