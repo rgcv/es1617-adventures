@@ -25,7 +25,7 @@
         <version.com.lazerycode.jmeter>2.1.0</version.com.lazerycode.jmeter>
 
         <version.org.slf4j>1.7.25</version.org.slf4j>
-        <version.ch.qos.logback>1.2.3</version.ch.qos.logback>
+        <version.ch.qos.logback>1.2.13</version.ch.qos.logback>
 
         <version.joda.time>2.9.7</version.joda.time>
 
